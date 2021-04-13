@@ -1,3 +1,5 @@
+#ifndef SERIAL_H
+#define SERIAL_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -85,3 +87,4 @@ int Serial::Init(char * Device_, int Baudrate_)
     }
     return Serial_nFd;
 }
+#endif

@@ -15,7 +15,7 @@
 
 using namespace std::chrono_literals;
 
-// Piezoelectric piezoelectric = Piezoelectric ("/dev/ttyUSB0",B115200);
+Piezoelectric piezoelectric = Piezoelectric ("/dev/ttyUSB0",B115200);
 MPU6050 mpu6050_thigh = MPU6050 ("/dev/ttyUSB1",B115200,"Left_Knee_Thigh");
 MPU6050 mpu6050_calf  = MPU6050 ("/dev/ttyUSB2",B115200,"Left_Knee_Calf");
 
@@ -48,7 +48,7 @@ struct Producer : public rclcpp::Node
 
             //Piezoelectric_Data = piezoelectric.Read();
             MPU6050_Thigh_Angle = mpu6050_thigh.Read();
-            MPU6050_Calf_Angle = mpu6050_calf.Read();
+            //MPU6050_Calf_Angle = mpu6050_calf.Read();
 
             msg->data = {Piezoelectric_Data(0,0),Piezoelectric_Data(1,0),Piezoelectric_Data(2,0),
                         MPU6050_Thigh_Angle(0,0),MPU6050_Thigh_Angle(1,0),MPU6050_Thigh_Angle(2,0),
@@ -61,7 +61,7 @@ struct Producer : public rclcpp::Node
          * @Description: Create a timer, the input need initialize the time and call back function.
          *              The time need to match with the MPU6050 sensor.
          * @Input: time, callback
-        */
+         */
         timer_ = this->create_wall_timer(0.000000868s, callback);
     }
 

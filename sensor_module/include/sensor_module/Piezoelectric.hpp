@@ -1,3 +1,5 @@
+#ifndef PIEZOELECTRIC_H
+#define PIEZOELECTRIC_H
 #include "sensor_module/Serial.hpp"
 #include <eigen3/Eigen/Dense>
 
@@ -70,16 +72,16 @@ Eigen::Matrix<float,3,1> Piezoelectric::Read()
         if (datamid==255)
         {
             decdata[count] = datamid;
-            for (i = 2; i < 8; i++)
+            for (i = 2; i < 5; i++)
             {
                 count++;
                 Serial_len = read(Serial_nFd, hexdata, 1);
                 datamid = (int)hexdata[0];
                 decdata[count] = datamid;
             }
-                forcedata[0] = decdata[3] * 256 + decdata[2];
-                forcedata[1] = decdata[5] * 256 + decdata[4];
-                forcedata[2] = decdata[7] * 256 + decdata[6];
+                forcedata[0] = decdata[2];
+                forcedata[1] = decdata[3];
+                forcedata[2] = decdata[4];
 
                 // for (i = 0; i < 3; i++)
                 // {
@@ -148,3 +150,5 @@ Eigen::Matrix<float,3,1> Piezoelectric::Read()
     return data;
 
 }
+
+#endif

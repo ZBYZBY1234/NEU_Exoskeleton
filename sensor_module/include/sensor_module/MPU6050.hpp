@@ -1,5 +1,6 @@
+#ifndef MPU6050_H
+#define MPU6050_H
 #include "sensor_module/Serial.hpp"
-
 #include <eigen3/Eigen/Dense>
 
 class MPU6050 : public Serial
@@ -76,3 +77,4 @@ Eigen::Matrix<float,3,1> MPU6050::Read()
         }
     }
 }
+#endif
