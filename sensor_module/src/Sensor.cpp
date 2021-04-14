@@ -1,7 +1,7 @@
 /* * @Author: Beal.MS
    * @Date: 2021-04-14 12:16:11
  * @Last Modified by: Beal.MS
- * @Last Modified time: 2021-04-14 12:18:32
+ * @Last Modified time: 2021-04-14 12:23:55
    * @Description: Sensor module colaboration
 */
 #include <chrono>
@@ -23,7 +23,7 @@ using namespace std::chrono_literals;
 #define Piezoelectric_topic                         "Piezoelectric"
 #define MPU6050_Thigh_topic                         "MPU6050_Thigh"
 #define MPU6050_Calf_topic                          "MPU6050_Calf"
-
+#define Sensor_topic                                "Sensor"
 std::string string_thread_id()
 {
     auto hashed = std::hash<std::thread::id>()(std::this_thread::get_id());
@@ -188,6 +188,21 @@ private:
 
     bool                                                                start;
     double                                                              start_time;
+};
+
+class PublisherNode : public rclcpp::Node
+{
+public:
+    PublisherNode()
+    : Node ("PublisherNode"), count_(0)
+    {
+        publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("")
+    }
+
+private:
+    rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr publisher_;
+    size_t count_;
 };
 
 int main(int argc, char * argv[])
