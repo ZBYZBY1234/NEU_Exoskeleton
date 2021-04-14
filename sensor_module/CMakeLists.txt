@@ -44,6 +44,14 @@ add_executable(MPU6050 src/MPU6050.cpp )
 target_link_libraries(MPU6050  ${catkin_LIBRARIES})
 ament_target_dependencies(MPU6050 rclcpp std_msgs)
 
+add_executable(MPU6050_Thigh src/MPU6050_Thigh.cpp )
+target_link_libraries(MPU6050_Thigh  ${catkin_LIBRARIES})
+ament_target_dependencies(MPU6050_Thigh rclcpp std_msgs)
+
+add_executable(MPU6050_Calf src/MPU6050_Calf.cpp )
+target_link_libraries(MPU6050_Calf  ${catkin_LIBRARIES})
+ament_target_dependencies(MPU6050_Calf rclcpp std_msgs)
+
 add_executable(Piezoelectric src/Piezoelectric.cpp )
 target_link_libraries(Piezoelectric  ${catkin_LIBRARIES})
 ament_target_dependencies(Piezoelectric rclcpp std_msgs)
@@ -54,6 +62,8 @@ ament_target_dependencies(Sensor rclcpp std_msgs)
 
 install(TARGETS
 MPU6050
+MPU6050_Thigh
+MPU6050_Calf
 Piezoelectric
 Sensor
 DESTINATION lib/${PROJECT_NAME}

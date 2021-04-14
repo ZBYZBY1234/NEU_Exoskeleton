@@ -74,7 +74,7 @@ private:
     {
         auto message_received_at = timing_string();
         RCLCPP_INFO(
-            this->get_logger(),"Piezoelectric123: THREAD %s => Heard %f %f %f at %f",
+            this->get_logger(),"Piezoelectric: THREAD %s => Heard %f %f %f at %f",
             string_thread_id().c_str(),msg->data[0],msg->data[1],msg->data[2],convertFromString(message_received_at)-start_time
         );
     }
