@@ -28,6 +28,64 @@ double convertFromString(std::string str)
         return x;
     return 0.0;
 }
+
+class SingleThreadedNode : public rclcpp::Node
+{
+public:
+    SingleThreadedNode()
+    : Node("SingleThreadedNode")
+    {
+        callback_group_subscriber1_ = this->create_callback_group(
+            rclcpp::CallbackGroupType::MutuallyExclusive
+        );
+
+        auto sub1_opt = rclcpp::SubscriptionOptions();
+        sub1_opt.callback_group = callback_group_subscriber1_;
+
+        subscription1_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
+            "Piezoelectric",
+            rclcpp::QoS(10),
+            std::bind(
+                &SingleThreadedNode::subscriber1_cb,
+                this,
+                std::placeholders::_1
+            ),
+            sub1_opt
+        );
+        start = true;
+    }
+private:
+    std::string timing_string()
+    {
+        if(start)
+        {
+            rclcpp::Time time = this->now();
+            start_time = convertFromString(std::to_string(time.seconds()));
+            start = false;
+            return std::to_string(time.seconds());
+        }
+        else{
+            rclcpp::Time time = this->now();
+            return std::to_string(time.seconds());
+        }
+    }
+
+    void subscriber1_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
+    {
+        auto message_received_at = timing_string();
+        RCLCPP_INFO(
+            this->get_logger(),"Piezoelectric123: THREAD %s => Heard %f %f %f at %f",
+            string_thread_id().c_str(),msg->data[0],msg->data[1],msg->data[2],convertFromString(message_received_at)-start_time
+        );
+    }
+
+    rclcpp::CallbackGroup::SharedPtr                                    callback_group_subscriber1_;
+    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   subscription1_;
+
+    bool                                                                start;
+    double                                                              start_time;
+};
+
 class DualThreadedNode : public rclcpp::Node
 {
 public:
@@ -91,7 +149,7 @@ private:
     {
         auto message_received_at = timing_string();
         RCLCPP_INFO(
-            this->get_logger(),"THREAD %s => Heard %f %f %f at %f",
+            this->get_logger(),"Piezoelectric: THREAD %s => Heard %f %f %f at %f",
             string_thread_id().c_str(),msg->data[0],msg->data[1],msg->data[2],convertFromString(message_received_at)-start_time
         );
     }
@@ -101,7 +159,7 @@ private:
         auto message_received_at = timing_string();
 
         RCLCPP_INFO(
-            this->get_logger(),"THREAD %s => Heard '%f %f %f' at %f",
+            this->get_logger(),"MPU6050: THREAD %s => Heard '%f %f %f' at %f",
             string_thread_id().c_str(),msg->data[0],msg->data[1],msg->data[2],convertFromString(message_received_at)-start_time
         );
     }
@@ -119,8 +177,10 @@ int main(int argc, char * argv[])
     rclcpp::init(argc, argv);
 
     rclcpp::executors::MultiThreadedExecutor executor;
+    auto subnode2 = std::make_shared<SingleThreadedNode>();
     auto subnode = std::make_shared<DualThreadedNode>();
 
+    executor.add_node(subnode2);
     executor.add_node(subnode);
     executor.spin();
     rclcpp::shutdown();
