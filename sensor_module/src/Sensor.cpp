@@ -1,7 +1,7 @@
 /* * @Author: Beal.MS
    * @Date: 2021-04-14 12:16:11
  * @Last Modified by: Beal.MS
- * @Last Modified time: 2021-04-14 12:36:06
+ * @Last Modified time: 2021-04-14 12:48:33
    * @Description: Sensor module colaboration
 */
 #include <chrono>
@@ -211,22 +211,43 @@ public:
     PublisherNode()
     : Node ("PublisherNode"), count_(0)
     {
+        start = true;
         publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(Sensor_topic, 10);
         auto timer_callback =
         [this]()->void {
+            auto message_received_at = timing_string();
+            double time = convertFromString(message_received_at) - start_time;
             auto message = std_msgs::msg::Float64MultiArray();
             message.data = {Pressor[0], Pressor[1], Pressor[2],
                             Angle_Thigh[0], Angle_Thigh[1], Angle_Thigh[2],
-                            Angle_Calf[0], Angle_Calf[1], Angle_Calf[2]};
+                            Angle_Calf[0], Angle_Calf[1], Angle_Calf[2],
+                            time};
             this->publisher_->publish(message);
         };
         timer_ = this->create_wall_timer(10ms, timer_callback);
     }
 
 private:
+    std::string timing_string()
+    {
+        if(start)
+        {
+            rclcpp::Time time = this->now();
+            start_time = convertFromString(std::to_string(time.seconds()));
+            start = false;
+            return std::to_string(time.seconds());
+        }
+        else{
+            rclcpp::Time time = this->now();
+            return std::to_string(time.seconds());
+        }
+    }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr publisher_;
     size_t count_;
+
+    bool                                                                start;
+    double                                                              start_time;
 };
 
 int main(int argc, char * argv[])
