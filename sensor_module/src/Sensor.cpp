@@ -1,7 +1,7 @@
 /* * @Author: Beal.MS
    * @Date: 2021-04-14 12:16:11
  * @Last Modified by: Beal.MS
- * @Last Modified time: 2021-04-14 12:23:55
+ * @Last Modified time: 2021-04-14 12:36:06
    * @Description: Sensor module colaboration
 */
 #include <chrono>
@@ -24,6 +24,11 @@ using namespace std::chrono_literals;
 #define MPU6050_Thigh_topic                         "MPU6050_Thigh"
 #define MPU6050_Calf_topic                          "MPU6050_Calf"
 #define Sensor_topic                                "Sensor"
+
+float Angle_Thigh[3]={0,0,0};
+float Angle_Calf[3]={0,0,0};
+float Pressor[3]={0,0,0};
+
 std::string string_thread_id()
 {
     auto hashed = std::hash<std::thread::id>()(std::this_thread::get_id());
@@ -91,6 +96,10 @@ private:
             this->get_logger(),"Piezoelectric: THREAD %s => Heard %f %f %f at %f",
             string_thread_id().c_str(),msg->data[0],msg->data[1],msg->data[2],convertFromString(message_received_at)-start_time
         );
+        //Pressor = {msg->data[0], msg->data[1], msg->data[2]};
+        Pressor[0] = msg->data[0];
+        Pressor[1] = msg->data[1];
+        Pressor[2] = msg->data[2];
     }
 
     rclcpp::CallbackGroup::SharedPtr                                    callback_group_subscriber1_;
@@ -167,9 +176,12 @@ private:
     {
         auto message_received_at = timing_string();
         RCLCPP_INFO(
-            this->get_logger(),"Piezoelectric: THREAD %s => Heard %f %f %f at %f",
+            this->get_logger(),"MPU6050_Thigh: THREAD %s => Heard %f %f %f at %f",
             string_thread_id().c_str(),msg->data[0],msg->data[1],msg->data[2],convertFromString(message_received_at)-start_time
         );
+        Angle_Thigh[0] = msg->data[0];
+        Angle_Thigh[1] = msg->data[1];
+        Angle_Thigh[2] = msg->data[2];
     }
 
     void subscriber2_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
@@ -177,9 +189,12 @@ private:
         auto message_received_at = timing_string();
 
         RCLCPP_INFO(
-            this->get_logger(),"MPU6050: THREAD %s => Heard '%f %f %f' at %f",
+            this->get_logger(),"MPU6050_Calf: THREAD %s => Heard '%f %f %f' at %f",
             string_thread_id().c_str(),msg->data[0],msg->data[1],msg->data[2],convertFromString(message_received_at)-start_time
         );
+        Angle_Calf[0] = msg->data[0];
+        Angle_Calf[1] = msg->data[1];
+        Angle_Calf[2] = msg->data[2];
     }
     rclcpp::CallbackGroup::SharedPtr                                    callback_group_subscriber1_;
     rclcpp::CallbackGroup::SharedPtr                                    callback_group_subscriber2_;
@@ -196,7 +211,16 @@ public:
     PublisherNode()
     : Node ("PublisherNode"), count_(0)
     {
-        publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("")
+        publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(Sensor_topic, 10);
+        auto timer_callback =
+        [this]()->void {
+            auto message = std_msgs::msg::Float64MultiArray();
+            message.data = {Pressor[0], Pressor[1], Pressor[2],
+                            Angle_Thigh[0], Angle_Thigh[1], Angle_Thigh[2],
+                            Angle_Calf[0], Angle_Calf[1], Angle_Calf[2]};
+            this->publisher_->publish(message);
+        };
+        timer_ = this->create_wall_timer(10ms, timer_callback);
     }
 
 private:
@@ -212,9 +236,11 @@ int main(int argc, char * argv[])
     rclcpp::executors::MultiThreadedExecutor executor;
     auto piezoelectric_sensor = std::make_shared<SingleThreadedNode>();
     auto mpu6050_sensors = std::make_shared<DualThreadedNode>();
+    auto pubnode = std::make_shared<PublisherNode>();
 
     executor.add_node(piezoelectric_sensor);
     executor.add_node(mpu6050_sensors);
+    executor.add_node(pubnode);
     executor.spin();
     rclcpp::shutdown();
     return 0;
