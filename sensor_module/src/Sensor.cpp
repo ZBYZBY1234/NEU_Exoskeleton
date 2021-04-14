@@ -78,8 +78,8 @@ private:
         {
             rclcpp::Time time = this->now();
             start_time = convertFromString(std::to_string(time.seconds()));
-            return std::to_string(time.seconds());
             start = false;
+            return std::to_string(time.seconds());
         }
         else{
             rclcpp::Time time = this->now();
