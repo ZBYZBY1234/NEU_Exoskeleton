@@ -1,3 +1,9 @@
+/* * @Author: Beal.MS
+   * @Date: 2021-04-14 12:16:11
+ * @Last Modified by: Beal.MS
+ * @Last Modified time: 2021-04-14 12:18:32
+   * @Description: Sensor module colaboration
+*/
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -14,6 +20,10 @@
 
 using namespace std::chrono_literals;
 
+#define Piezoelectric_topic                         "Piezoelectric"
+#define MPU6050_Thigh_topic                         "MPU6050_Thigh"
+#define MPU6050_Calf_topic                          "MPU6050_Calf"
+
 std::string string_thread_id()
 {
     auto hashed = std::hash<std::thread::id>()(std::this_thread::get_id());
@@ -29,6 +39,10 @@ double convertFromString(std::string str)
     return 0.0;
 }
 
+/*
+    * @Name: class SingleThreadedNode
+    * @Description: create a class for Piezoelectric Sensor
+*/
 class SingleThreadedNode : public rclcpp::Node
 {
 public:
@@ -43,7 +57,7 @@ public:
         sub1_opt.callback_group = callback_group_subscriber1_;
 
         subscription1_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-            "Piezoelectric",
+            Piezoelectric_topic,
             rclcpp::QoS(10),
             std::bind(
                 &SingleThreadedNode::subscriber1_cb,
@@ -86,6 +100,10 @@ private:
     double                                                              start_time;
 };
 
+/*
+    * @Name: class DualThreadedNode
+    * @Description: This class for the two MPU6050 sensors which will be used.
+*/
 class DualThreadedNode : public rclcpp::Node
 {
 public:
@@ -105,7 +123,7 @@ public:
         sub2_opt.callback_group = callback_group_subscriber2_;
 
         subscription1_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-            "Piezoelectric",
+            MPU6050_Thigh_topic,
             rclcpp::QoS(10),
             std::bind(
                 &DualThreadedNode::subscriber1_cb,
@@ -116,7 +134,7 @@ public:
         );
 
         subscription2_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-            "MPU6050",
+            MPU6050_Calf_topic,
             rclcpp::QoS(10),
             std::bind(
                 &DualThreadedNode::subscriber2_cb,
@@ -177,11 +195,11 @@ int main(int argc, char * argv[])
     rclcpp::init(argc, argv);
 
     rclcpp::executors::MultiThreadedExecutor executor;
-    auto subnode2 = std::make_shared<SingleThreadedNode>();
-    auto subnode = std::make_shared<DualThreadedNode>();
+    auto piezoelectric_sensor = std::make_shared<SingleThreadedNode>();
+    auto mpu6050_sensors = std::make_shared<DualThreadedNode>();
 
-    executor.add_node(subnode2);
-    executor.add_node(subnode);
+    executor.add_node(piezoelectric_sensor);
+    executor.add_node(mpu6050_sensors);
     executor.spin();
     rclcpp::shutdown();
     return 0;
