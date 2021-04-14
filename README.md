@@ -14,9 +14,3 @@ And this will run the `rviz2` and visual the robot under it.
 ## exoskeleton_control
 
 ## sensor_module
-
-<<<<<<< HEAD
-## plantar-pressure-sensor
-=======
-## plantar-pressure-sensor111
->>>>>>> 2021/4/7 commit
