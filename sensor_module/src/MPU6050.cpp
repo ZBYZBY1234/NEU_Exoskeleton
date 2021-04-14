@@ -43,8 +43,9 @@ struct Producer : public rclcpp::Node
             static int32_t count = 0;
             std_msgs::msg::Float64MultiArray::UniquePtr msg(new std_msgs::msg::Float64MultiArray());
 
-            Eigen::Matrix<float,3,1> Angle;
-            Angle = mpu6050.Read();
+            //Eigen::Matrix<float,3,1> Angle;
+            float * Angle;
+            Angle = mpu6050.Read_Data();
 
             msg->data = {mpu6050.angle_x,mpu6050.angle_y,mpu6050.angle_z};
             pub_ptr->publish(std::move(msg));
