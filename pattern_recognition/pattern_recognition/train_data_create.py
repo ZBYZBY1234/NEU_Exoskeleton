@@ -21,7 +21,7 @@ class MinimalSubscriber(Node):
 
         self.filedir = os.getcwd();
         self.file_path = self.filedir+\
-        '/src/pattern_recognition/csv_file/2021_4_17.csv'
+        '/src/pattern_recognition/csv_file/2021_4_15.csv'
 
         self.csv_head = ['time',
                     'Angle_Thigh',
@@ -41,7 +41,8 @@ class MinimalSubscriber(Node):
         csv_write = csv.writer(self.file)
         num_list = [msg.data[0],msg.data[1],msg.data[2],
                     msg.data[3],msg.data[4],msg.data[5],
-                    msg.data[6],msg.data[7],msg.data[8]]
+                    msg.data[6],msg.data[7],msg.data[8],
+                    msg.data[9]]
         csv_write.writerow(num_list)
 
 
