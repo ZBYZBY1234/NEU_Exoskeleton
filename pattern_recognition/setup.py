@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'talker = pattern_recognition.publisher_member_function:main',
+            'talker = pattern_recognition.train_data_create:main',
         ],
     },
 )
