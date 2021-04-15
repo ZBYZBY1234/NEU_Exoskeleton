@@ -17,7 +17,7 @@ using namespace std::chrono_literals;
  * @Name: MPU6050
  * @Description: Using the MPU6050 Class to let Serial Port be initialized.
 */
-Piezoelectric piezoelectric = Piezoelectric ("/dev/ttyUSB2",B115200);
+Piezoelectric piezoelectric = Piezoelectric ("/dev/ttyUSB0",B115200);
 Eigen::Matrix<float,3,1> data;
 struct Producer : public rclcpp::Node
 {

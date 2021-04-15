@@ -17,7 +17,7 @@ using namespace std::chrono_literals;
  * @Name: MPU6050
  * @Description: Using the MPU6050 Class to let Serial Port be initialized.
 */
-MPU6050 mpu6050 = MPU6050 ("/dev/ttyUSB0",B115200,"Left_Calf");
+MPU6050 mpu6050 = MPU6050 ("/dev/ttyUSB2",B115200,"Left_Calf");
 #define topic               "MPU6050_Calf"
 
 struct Producer : public rclcpp::Node
