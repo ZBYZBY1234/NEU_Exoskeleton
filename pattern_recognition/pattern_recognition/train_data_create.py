@@ -3,6 +3,7 @@ from rclpy.node import Node
 
 from std_msgs.msg import String
 from std_msgs.msg import Float64MultiArray
+import csv
 
 topic = 'Sensor'
 
@@ -20,6 +21,13 @@ class MinimalSubscriber(Node):
     def listener_callback(self, msg):
         self.get_logger().info('I heard: "%f"' % msg.data[0])
 
+def pre_csv_file(file_path, csv_head = [], mode='new'):
+    '''
+    csv file creation
+    '''
+    def create_csv(csv_head = [], path=file_path):
+        with open(path, 'w', newline='') as f:
+            csv_write = 
 
 def main(args=None):
     rclpy.init(args=args)
