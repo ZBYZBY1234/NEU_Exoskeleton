@@ -61,12 +61,11 @@ target_link_libraries(Sensor  ${catkin_LIBRARIES})
 ament_target_dependencies(Sensor rclcpp std_msgs)
 
 install(TARGETS
-MPU6050
 MPU6050_Thigh
 MPU6050_Calf
 Piezoelectric
 Sensor
 DESTINATION lib/${PROJECT_NAME}
 )
-
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 ament_package()

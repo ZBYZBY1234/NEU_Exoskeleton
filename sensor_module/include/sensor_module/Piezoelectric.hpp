@@ -4,7 +4,7 @@
 #include <eigen3/Eigen/Dense>
 
 #define BAUDRATE B115200 ///Baud rate : 115200
-#define DEVICE "/dev/ttyUSB0"//设置你的端口号
+#define DEVICE "/dev/ttyUSB2"//设置你的端口号
 
 
 #define footlimitl 400  //设置足底压力启动值
