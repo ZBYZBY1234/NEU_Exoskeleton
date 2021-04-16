@@ -38,6 +38,10 @@
 
 #define SIZE_OF_COMMAND_BUFFER 30        //command buffer size
 
+/*
+    *@Usage: Definition
+    *@Description: Pin Number
+*/
 #define SHIFT_LATCH_PIN 4                //latch pin for shift register
 #define SHIFT_CLOCK_PIN 3                //clock pin for shift register
 #define SHIFT_DATA_PIN 2                 //serial data pin for shift register
@@ -46,7 +50,17 @@
 #define MODE_PREPARE_SHIFT_REGISTERS 0
 #define SHIFT_OUT_SHIFT_REGISTERS 1
 
+/*
+    *@Usage: Activation
+    *Description: Activate LEDS for Color Coding
+*/
 #define COLOR_CODED_LEDS_TIME 1200000L       //120sec
+#define MAX_LED_TIMER_FOR_PWM_DECAY 750
+uint16_t ledTimerForPWMDecay;
+byte pwmThrehold;
+unsigned long countdownTimerForLeds;// =  COLOR_CODED_LEDS_TIME;
+
+
 
 #define ANTI_FLICKERING_TIME 500             //one msec is 10 so 500 is 50ms
 #define SENSITIVITY_THRESHOLD 520
@@ -57,9 +71,9 @@ byte vuMeterMode = MODE_PREPARE_SHIFT_REGISTERS;
 //registers that contain LED state
 byte shiftRegBytes[5];
 
-#define MAX_LED_TIMER_FOR_PWM_DECAY 750
-uint16_t ledTimerForPWMDecay = MAX_LED_TIMER_FOR_PWM_DECAY;
-byte pwmThrehold = 128;
+
+
+
 byte pwmTime = 0;
 char commandBuffer[SIZE_OF_COMMAND_BUFFER];    //receiving command buffer 30
 
@@ -78,7 +92,7 @@ byte numberOfChannelsPlusOne = numberOfChannels+1;
 //Create two ping-pong buffers
 int interrupt_Number = 198;// Output Compare Registers  value = (16*10^6) / (Fs*8) - 1  set to 1999 for 1000 Hz sampling, set to 3999 for 500 Hz sampling, set to 7999 for 250Hz sampling, 199 for 10000 Hz Sampling
 
-unsigned long countdownTimerForLeds  = 0;// =  COLOR_CODED_LEDS_TIME;
+
 
 volatile uint16_t samplingBuffer[MAX_NUMBER_OF_CHANNELS];//main buffer that contains real measurements
 volatile uint16_t envelopeBuffer[MAX_NUMBER_OF_CHANNELS];//buffer that contains envelope of measurements
@@ -94,7 +108,9 @@ uint16_t movingThresholdSum;
 volatile byte registerIndex = 0;
 
 byte bitMask = 1;
- 
+
+
+
 void setup()
 {
   Serial.begin(115200);      //begin Serial comm
@@ -102,7 +118,7 @@ void setup()
  // Serial.println("StartUp!");
  // Serial.setTimeout(2);
 
-  //set pins to output for shift register
+  // Definition: set pins to output for shift register
   pinMode(SHIFT_LATCH_PIN, OUTPUT);
   pinMode(SHIFT_CLOCK_PIN, OUTPUT);
   pinMode(SHIFT_DATA_PIN, OUTPUT);
@@ -110,7 +126,7 @@ void setup()
   pinMode(COLOR_CODED_LEDS_ENABLE_PIN, OUTPUT);
   digitalWrite(COLOR_CODED_LEDS_ENABLE_PIN, HIGH); 
 
-  //activate LEDS for color coding
+  // Activation: activate LEDS for color coding
   ledTimerForPWMDecay = MAX_LED_TIMER_FOR_PWM_DECAY;  // 750
   pwmThrehold = 128;
   countdownTimerForLeds = COLOR_CODED_LEDS_TIME;   //1200000L
