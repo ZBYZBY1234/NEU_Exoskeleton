@@ -113,45 +113,43 @@ byte bitMask = 1;
 
 void setup()
 {
-  Serial.begin(115200);      //begin Serial comm
-  delay(300); //whait for init of serial
+    Serial.begin(115200);      //begin Serial comm
+    delay(300); //whait for init of serial
  // Serial.println("StartUp!");
  // Serial.setTimeout(2);
 
-  // Definition: set pins to output for shift register
-  pinMode(SHIFT_LATCH_PIN, OUTPUT);
-  pinMode(SHIFT_CLOCK_PIN, OUTPUT);
-  pinMode(SHIFT_DATA_PIN, OUTPUT);
-  pinMode(TURN_ON_LEDS_BUTTON, INPUT);
-  pinMode(COLOR_CODED_LEDS_ENABLE_PIN, OUTPUT);
-  digitalWrite(COLOR_CODED_LEDS_ENABLE_PIN, HIGH); 
+    // * @Definition: set pins to output for shift register
+    pinMode(SHIFT_LATCH_PIN, OUTPUT);
+    pinMode(SHIFT_CLOCK_PIN, OUTPUT);
+    pinMode(SHIFT_DATA_PIN, OUTPUT);
+    pinMode(TURN_ON_LEDS_BUTTON, INPUT);
+    pinMode(COLOR_CODED_LEDS_ENABLE_PIN, OUTPUT);
+    digitalWrite(COLOR_CODED_LEDS_ENABLE_PIN, HIGH); 
 
-  // Activation: activate LEDS for color coding
-  ledTimerForPWMDecay = MAX_LED_TIMER_FOR_PWM_DECAY;  // 750
-  pwmThrehold = 128;
-  countdownTimerForLeds = COLOR_CODED_LEDS_TIME;   //1200000L
+    // * @Activation: activate LEDS for color coding
+    ledTimerForPWMDecay = MAX_LED_TIMER_FOR_PWM_DECAY;  // 750
+    pwmThrehold = 128;
+    countdownTimerForLeds = COLOR_CODED_LEDS_TIME;   //1200000L
 
+    // * @Activation: Init ESP output pins to output and to HIGH
+    //                since ESP is activate LOW
+    pinMode(7, OUTPUT);
+    digitalWrite(7, HIGH);
+    pinMode(8, OUTPUT);
+    digitalWrite(8, HIGH);
+    pinMode(9, OUTPUT);
+    digitalWrite(9, HIGH);
+    pinMode(10, OUTPUT);
+    digitalWrite(10, HIGH);
+    pinMode(11, OUTPUT);
+    digitalWrite(11, HIGH);
+    pinMode(12, OUTPUT);
+    digitalWrite(12, HIGH);
 
-  //init ESP output pins to output and to HIGH
-  //since ESP is active LOW
- 
-  pinMode(7, OUTPUT); 
-  digitalWrite(7, HIGH);  
-  pinMode(8, OUTPUT); 
-  digitalWrite(8, HIGH);   
-  pinMode(9, OUTPUT); 
-  digitalWrite(9, HIGH);  
-  pinMode(10, OUTPUT); 
-  digitalWrite(10, HIGH); 
-  pinMode(11, OUTPUT); 
-  digitalWrite(11, HIGH); 
-  pinMode(12, OUTPUT); 
-  digitalWrite(12, HIGH); 
-
-    
-  clearAllLeds();
-  
-  cli();//stop interrupts
+    // * @Activation: Clear All Leds by using function
+    clearAllLeds();
+    // * @Activation: Stop Interrupts
+    cli();
   
   cbi(ADMUX,REFS0);  // Set ADC reference to AVCC
   cbi(ADMUX,ADLAR);// Left Adjust the result
