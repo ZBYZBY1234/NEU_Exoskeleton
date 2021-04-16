@@ -148,47 +148,48 @@ void setup()
 
     // * @Activation: Clear All Leds by using function
     clearAllLeds();
+
     // * @Activation: Stop Interrupts
     cli();
-  
-  cbi(ADMUX,REFS0);  // Set ADC reference to AVCC
-  cbi(ADMUX,ADLAR);// Left Adjust the result
-  sbi(ADCSRA,ADEN);// Enable ADC
-  sbi(ADCSRA,ADIE);// Enable ADC Interrupt
 
-  //set ADC clock division to 16  
-  sbi(ADCSRA,ADPS2);//1
-  cbi(ADCSRA,ADPS1);//0
-  cbi(ADCSRA,ADPS0);//0
+    // * @Definition: Set ADC Module
+    cbi(ADMUX,REFS0);  // Set ADC reference to AVCC
+    cbi(ADMUX,ADLAR);// Left Adjust the result
+    sbi(ADCSRA,ADEN);// Enable ADC
+    sbi(ADCSRA,ADIE);// Enable ADC Interrupt
+    //set ADC clock division to 16  
+    sbi(ADCSRA,ADPS2);//1
+    cbi(ADCSRA,ADPS1);//0
+    cbi(ADCSRA,ADPS0);//0
 
 
  //set timer1 interrupt at 10kHz
-  TCCR1A = 0;// set entire TCCR1A register to 0
-  TCCR1B = 0;// same for TCCR1B
-  TCNT1  = 0;//initialize counter value to 0;
-  OCR1A = interrupt_Number;// Output Compare Registers  
+    TCCR1A = 0;// set entire TCCR1A register to 0
+    TCCR1B = 0;// same for TCCR1B
+    TCNT1  = 0;//initialize counter value to 0;
+    OCR1A = interrupt_Number;// Output Compare Registers  
   // turn on CTC mode
-  TCCR1B |= (1 << WGM12);
+    TCCR1B |= (1 << WGM12);
   // Set CS11 bit for 8 prescaler
-  TCCR1B |= (1 << CS11);   
-  // enable timer compare interrupt
-  TIMSK1 |= (1 << OCIE1A);
+    TCCR1B |= (1 << CS11);   
+    // enable timer compare interrupt
+    TIMSK1 |= (1 << OCIE1A);
 
 
-   numberOfChannels = 1;
-   regularChannelsIndex = 0;
-   roundRobinChannelIndex = numberOfChannels;
-   adcInterruptIndex = 0;
-   lastADCIndex = 0;
-   ISRADCFALGE = 0;
+    numberOfChannels = 1;
+    regularChannelsIndex = 0;
+    roundRobinChannelIndex = numberOfChannels;
+    adcInterruptIndex = 0;
+    lastADCIndex = 0;
+    ISRADCFALGE = 0;
 
-   vuMeterIndex = 0;
-   ledIndex = 0;
-   movingThresholdSum = 0;
-   registerIndex = 0;
-   bitMask = 1;
+    vuMeterIndex = 0;
+    ledIndex = 0;
+    movingThresholdSum = 0;
+    registerIndex = 0;
+    bitMask = 1;
 
-  sei();                     // Enable Global Interrupts
+    sei();                     // Enable Global Interrupts
 
 }
 
