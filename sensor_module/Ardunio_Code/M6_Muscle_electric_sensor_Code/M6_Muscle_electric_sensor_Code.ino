@@ -38,10 +38,6 @@
 
 #define SIZE_OF_COMMAND_BUFFER 30        //command buffer size
 
-/*
-    *@Usage: Definition
-    *@Description: Pin Number
-*/
 #define SHIFT_LATCH_PIN 4                //latch pin for shift register
 #define SHIFT_CLOCK_PIN 3                //clock pin for shift register
 #define SHIFT_DATA_PIN 2                 //serial data pin for shift register
@@ -50,17 +46,7 @@
 #define MODE_PREPARE_SHIFT_REGISTERS 0
 #define SHIFT_OUT_SHIFT_REGISTERS 1
 
-/*
-    *@Usage: Activation
-    *Description: Activate LEDS for Color Coding
-*/
 #define COLOR_CODED_LEDS_TIME 1200000L       //120sec
-#define MAX_LED_TIMER_FOR_PWM_DECAY 750
-uint16_t ledTimerForPWMDecay;
-byte pwmThrehold;
-unsigned long countdownTimerForLeds;// =  COLOR_CODED_LEDS_TIME;
-
-
 
 #define ANTI_FLICKERING_TIME 500             //one msec is 10 so 500 is 50ms
 #define SENSITIVITY_THRESHOLD 520
@@ -71,9 +57,9 @@ byte vuMeterMode = MODE_PREPARE_SHIFT_REGISTERS;
 //registers that contain LED state
 byte shiftRegBytes[5];
 
-
-
-
+#define MAX_LED_TIMER_FOR_PWM_DECAY 750
+uint16_t ledTimerForPWMDecay = MAX_LED_TIMER_FOR_PWM_DECAY;
+byte pwmThrehold = 128;
 byte pwmTime = 0;
 char commandBuffer[SIZE_OF_COMMAND_BUFFER];    //receiving command buffer 30
 
@@ -83,12 +69,8 @@ volatile  byte adcInterruptIndex;
 volatile  byte lastADCIndex;
 
 
-/*
-    *@Usage: Definition
-    *@Description: Define the number of Channels
-                Set how many analogue inputs to read,
-                starting from A0
-*/
+
+//Set how many analogue inputs to read, starting from A0
 byte numberOfChannels = 1;
 byte numberOfChannelsPlusOne = numberOfChannels+1;
 #define MAX_NUMBER_OF_CHANNELS 6
@@ -96,7 +78,7 @@ byte numberOfChannelsPlusOne = numberOfChannels+1;
 //Create two ping-pong buffers
 int interrupt_Number = 198;// Output Compare Registers  value = (16*10^6) / (Fs*8) - 1  set to 1999 for 1000 Hz sampling, set to 3999 for 500 Hz sampling, set to 7999 for 250Hz sampling, 199 for 10000 Hz Sampling
 
-
+unsigned long countdownTimerForLeds  = 0;// =  COLOR_CODED_LEDS_TIME;
 
 volatile uint16_t samplingBuffer[MAX_NUMBER_OF_CHANNELS];//main buffer that contains real measurements
 volatile uint16_t envelopeBuffer[MAX_NUMBER_OF_CHANNELS];//buffer that contains envelope of measurements
@@ -110,88 +92,90 @@ byte vuMeterIndex;
 byte ledIndex;
 uint16_t movingThresholdSum;
 volatile byte registerIndex = 0;
+byte ISRADCFALGE;
 
 byte bitMask = 1;
-
-
-
+ 
 void setup()
 {
-    Serial.begin(115200);      //begin Serial comm
-    delay(300); //whait for init of serial
+  Serial.begin(115200);      //begin Serial comm
+  delay(300); //whait for init of serial
+ // Serial.println("StartUp!");
+ // Serial.setTimeout(2);
 
-    // * @Definition: set pins to output for shift register
-    pinMode(SHIFT_LATCH_PIN, OUTPUT);
-    pinMode(SHIFT_CLOCK_PIN, OUTPUT);
-    pinMode(SHIFT_DATA_PIN, OUTPUT);
-    pinMode(TURN_ON_LEDS_BUTTON, INPUT);
-    pinMode(COLOR_CODED_LEDS_ENABLE_PIN, OUTPUT);
-    digitalWrite(COLOR_CODED_LEDS_ENABLE_PIN, HIGH); 
+  //set pins to output for shift register
+  pinMode(SHIFT_LATCH_PIN, OUTPUT);
+  pinMode(SHIFT_CLOCK_PIN, OUTPUT);
+  pinMode(SHIFT_DATA_PIN, OUTPUT);
+  pinMode(TURN_ON_LEDS_BUTTON, INPUT);
+  pinMode(COLOR_CODED_LEDS_ENABLE_PIN, OUTPUT);
+  digitalWrite(COLOR_CODED_LEDS_ENABLE_PIN, HIGH); 
 
-    // * @Activation: activate LEDS for color coding
-    ledTimerForPWMDecay = MAX_LED_TIMER_FOR_PWM_DECAY;  // 750
-    pwmThrehold = 128;
-    countdownTimerForLeds = COLOR_CODED_LEDS_TIME;   //1200000L
-
-    // * @Activation: Init ESP output pins to output and to HIGH
-    //                since ESP is activate LOW
-    pinMode(7, OUTPUT);
-    digitalWrite(7, HIGH);
-    pinMode(8, OUTPUT);
-    digitalWrite(8, HIGH);
-    pinMode(9, OUTPUT);
-    digitalWrite(9, HIGH);
-    pinMode(10, OUTPUT);
-    digitalWrite(10, HIGH);
-    pinMode(11, OUTPUT);
-    digitalWrite(11, HIGH);
-    pinMode(12, OUTPUT);
-    digitalWrite(12, HIGH);
-
-    // * @Activation: Clear All Leds by using function
-    clearAllLeds();
-
-    // * @Activation: Stop Interrupts
-    cli();
-
-    // * @Definition: Set ADC Module
-    cbi(ADMUX,REFS0);  // Set ADC reference to AVCC
-    cbi(ADMUX,ADLAR);// Left Adjust the result
-    sbi(ADCSRA,ADEN);// Enable ADC
-    sbi(ADCSRA,ADIE);// Enable ADC Interrupt
-    //set ADC clock division to 16  
-    sbi(ADCSRA,ADPS2);//1
-    cbi(ADCSRA,ADPS1);//0
-    cbi(ADCSRA,ADPS0);//0
+  //activate LEDS for color coding
+  ledTimerForPWMDecay = MAX_LED_TIMER_FOR_PWM_DECAY;  // 750
+  pwmThrehold = 128;
+  countdownTimerForLeds = COLOR_CODED_LEDS_TIME;   //1200000L
 
 
-    //set timer1 interrupt at 10kHz
-    TCCR1A = 0;// set entire TCCR1A register to 0
-    TCCR1B = 0;// same for TCCR1B
-    TCNT1  = 0;//initialize counter value to 0;
-    OCR1A = interrupt_Number;// Output Compare Registers  
-    // turn on CTC mode
-    TCCR1B |= (1 << WGM12);
-    // Set CS11 bit for 8 prescaler
-    TCCR1B |= (1 << CS11);   
-    // enable timer compare interrupt
-    TIMSK1 |= (1 << OCIE1A);
+  //init ESP output pins to output and to HIGH
+  //since ESP is active LOW
+ 
+  pinMode(7, OUTPUT); 
+  digitalWrite(7, HIGH);  
+  pinMode(8, OUTPUT); 
+  digitalWrite(8, HIGH);   
+  pinMode(9, OUTPUT); 
+  digitalWrite(9, HIGH);  
+  pinMode(10, OUTPUT); 
+  digitalWrite(10, HIGH); 
+  pinMode(11, OUTPUT); 
+  digitalWrite(11, HIGH); 
+  pinMode(12, OUTPUT); 
+  digitalWrite(12, HIGH); 
+
+    
+  clearAllLeds();
+  
+  cli();//stop interrupts
+  
+  cbi(ADMUX,REFS0);  // Set ADC reference to AVCC
+  cbi(ADMUX,ADLAR);// Left Adjust the result
+  sbi(ADCSRA,ADEN);// Enable ADC
+  sbi(ADCSRA,ADIE);// Enable ADC Interrupt
+
+  //set ADC clock division to 16  
+  sbi(ADCSRA,ADPS2);//1
+  cbi(ADCSRA,ADPS1);//0
+  cbi(ADCSRA,ADPS0);//0
 
 
-    numberOfChannels = 1;
-    regularChannelsIndex = 0;
-    roundRobinChannelIndex = numberOfChannels;
-    adcInterruptIndex = 0;
-    lastADCIndex = 0;
-    ISRADCFALGE = 0;
+ //set timer1 interrupt at 10kHz
+  TCCR1A = 0;// set entire TCCR1A register to 0
+  TCCR1B = 0;// same for TCCR1B
+  TCNT1  = 0;//initialize counter value to 0;
+  OCR1A = interrupt_Number;// Output Compare Registers  
+  // turn on CTC mode
+  TCCR1B |= (1 << WGM12);
+  // Set CS11 bit for 8 prescaler
+  TCCR1B |= (1 << CS11);   
+  // enable timer compare interrupt
+  TIMSK1 |= (1 << OCIE1A);
 
-    vuMeterIndex = 0;
-    ledIndex = 0;
-    movingThresholdSum = 0;
-    registerIndex = 0;
-    bitMask = 1;
 
-    sei();                     // Enable Global Interrupts
+   numberOfChannels = 1;
+   regularChannelsIndex = 0;
+   roundRobinChannelIndex = numberOfChannels;
+   adcInterruptIndex = 0;
+   lastADCIndex = 0;
+   ISRADCFALGE = 0;
+
+   vuMeterIndex = 0;
+   ledIndex = 0;
+   movingThresholdSum = 0;
+   registerIndex = 0;
+   bitMask = 1;
+
+  sei();                     // Enable Global Interrupts
 
 }
 
@@ -483,16 +467,16 @@ void envelopeISRADC()
 {
 
     
-      Serial.print(samplingBuffer); //Serial.print(" ");
+//      Serial.print(samplingBuffer); //Serial.print(" ");
       
       
-//      Serial.print(samplingBuffer[0]); //Serial.print(" ");
-//      Serial.print(samplingBuffer[1]);// Serial.print(" ");
-//      Serial.print(samplingBuffer[2]);// Serial.print(" ");
-//      Serial.print(samplingBuffer[3]);// Serial.print(" ");
-//      Serial.print(samplingBuffer[4]); //Serial.print(" ");
-//      Serial.print(samplingBuffer[5]); //Serial.print(" ");  
-      //Serial.println(); 
+      Serial.print(samplingBuffer[0]); //Serial.print(" ");
+      Serial.print(samplingBuffer[1]);// Serial.print(" ");
+      Serial.print(samplingBuffer[2]);// Serial.print(" ");
+      Serial.print(samplingBuffer[3]);// Serial.print(" ");
+      Serial.print(samplingBuffer[4]); //Serial.print(" ");
+      Serial.print(samplingBuffer[5]); //Serial.print(" ");  
+      Serial.println(); 
 }
 
 
