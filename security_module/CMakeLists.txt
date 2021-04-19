@@ -33,6 +33,8 @@ if(BUILD_TESTING)
 endif()
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+
 add_executable(Security_Position src/security_position.cpp)
 ament_target_dependencies(Security_Position rclcpp std_msgs)
 install(
