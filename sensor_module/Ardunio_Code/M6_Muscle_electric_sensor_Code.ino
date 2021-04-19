@@ -83,8 +83,12 @@ volatile  byte adcInterruptIndex;
 volatile  byte lastADCIndex;
 
 
-
-//Set how many analogue inputs to read, starting from A0
+/*
+    *@Usage: Definition
+    *@Description: Define the number of Channels
+                Set how many analogue inputs to read,
+                starting from A0
+*/
 byte numberOfChannels = 1;
 byte numberOfChannelsPlusOne = numberOfChannels+1;
 #define MAX_NUMBER_OF_CHANNELS 6
@@ -115,8 +119,6 @@ void setup()
 {
     Serial.begin(115200);      //begin Serial comm
     delay(300); //whait for init of serial
- // Serial.println("StartUp!");
- // Serial.setTimeout(2);
 
     // * @Definition: set pins to output for shift register
     pinMode(SHIFT_LATCH_PIN, OUTPUT);
@@ -163,14 +165,14 @@ void setup()
     cbi(ADCSRA,ADPS0);//0
 
 
- //set timer1 interrupt at 10kHz
+    //set timer1 interrupt at 10kHz
     TCCR1A = 0;// set entire TCCR1A register to 0
     TCCR1B = 0;// same for TCCR1B
     TCNT1  = 0;//initialize counter value to 0;
     OCR1A = interrupt_Number;// Output Compare Registers  
-  // turn on CTC mode
+    // turn on CTC mode
     TCCR1B |= (1 << WGM12);
-  // Set CS11 bit for 8 prescaler
+    // Set CS11 bit for 8 prescaler
     TCCR1B |= (1 << CS11);   
     // enable timer compare interrupt
     TIMSK1 |= (1 << OCIE1A);
