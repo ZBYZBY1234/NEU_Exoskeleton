@@ -37,33 +37,50 @@ public:
     Admittance_Control_Subscription()
     : Node("minimal_subscriber"),Admittance_control()
     {
-
+        /*Subscription Node Initialized*/
         Joint_Subscription = this->create_subscription<sensor_msgs::msg::JointState>(
-            "joint_states", 10, std::bind(&Admittance_Control_Subscription::callback1, this, _1)
+            "joint_states", 10, std::bind(&Admittance_Control_Subscription::Joint_Callback, this, _1)
         );
 
         Force_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             "Piezoelectric", 10, std::bind(&Admittance_Control_Subscription::callback2, this, _1)
         );
 
+        Angle_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
+            "MPU6050_Thigh", 10, std::bind(&Admittance_Control_Subscription::Angle_Callback, this, _1)
+        );
         Joint_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>("topic", 1);
     }
 
 private:
 
-    void callback1(const sensor_msgs::msg::JointState::SharedPtr msg)
+    void Joint_Callback(const sensor_msgs::msg::JointState::SharedPtr msg)
     {
         auto position = msg->position;
         //Feedback Joint Message
-        RCLCPP_INFO(this->get_logger(), "Left: '%f','%f','%f','%f'   Right: '%f','%f','%f','%f'",
+        RCLCPP_INFO(this->get_logger(),
+        "Left: '%f','%f','%f','%f' Right: '%f','%f','%f','%f'",
         -position[0],-position[1],-position[2],-position[3],
         -position[4],-position[5],-position[6],-position[7]);
 
         Feedback_Angle_ << -position[0], -position[1], -position[2], -position[3];
-        Force_ << 0.0, -Force*10, 0.0, 0.0, 0.0, 0.0;
+        Expected_Angle_(0,1) = (Angle_Thigh/180)*PI;
+        Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
-        Left_Angle = main(Feedback_Angle_,Expected_Angle_,Expected_Velocity_,Expected_Acceleration_,Force_);
-        Right_Angle = main(Feedback_Angle_,Expected_Angle_,Expected_Velocity_,Expected_Acceleration_,Force_);
+        Left_Angle = main(
+            Feedback_Angle_,
+            Expected_Angle_,
+            Expected_Velocity_,
+            Expected_Acceleration_,
+            Force_
+            );
+        Right_Angle = main(
+            Feedback_Angle_,
+            Expected_Angle_,
+            Expected_Velocity_,
+            Expected_Acceleration_,
+            Force_
+            );
 
         auto message = std_msgs::msg::Float64MultiArray();
         message.data = {  -Left_Angle(0,0),  -Left_Angle(1,0),  -Left_Angle(2,0),  -Left_Angle(3,0),
@@ -85,16 +102,27 @@ private:
         force[0], force[1], force[2]);
         Force = force[0];
     }
+
+    void Angle_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
+    {
+        auto Angle = msg->data;
+        RCLCPP_INFO(this->get_logger(), "Angle: '%f','%f','%f'",
+        Angle[0], Angle[1], Angle[2]);
+        Angle_Thigh = Angle[0];
+    }
 private:
-    //Subscription Node
+    /*Subscription Node*/
     rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr Joint_Subscription;
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Force_Subscription;
+    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Angle_Subscription;
 
+    /*Publisher Node*/
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_Publisher;
 
-    //Data
+    /*Data*/
     Eigen::Matrix<float,4,1> Left_Angle, Right_Angle;
     float Force;
+    float Angle_Thigh;
 };
 
 int main(int argc, char * argv[])
@@ -104,7 +132,7 @@ int main(int argc, char * argv[])
     Expected_Velocity_ << 0.0,0.0,0.0,0.0;
     Expected_Acceleration_ << 0.0,0.0,0.0,0.0;
 
-  // For Test
+    /*For Test*/
 
   // Force_ << 0.0, -10000.0, 0.0, 0.0, 0.0, 0.0;
   // Admittance_control admittance_control();
@@ -115,7 +143,7 @@ int main(int argc, char * argv[])
   //   admittance_control.main(PI*a,PI*b,PI*c,PI*d, Force_);
   // }
 
-  // ROS Node
+    /*ROS Node*/
 
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<Admittance_Control_Subscription>());
