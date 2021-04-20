@@ -23,10 +23,10 @@ public:
         );
     }
 
-  private:
+private:
     void topic_callback(const std_msgs::msg::String::SharedPtr msg) const
     {
-      RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+        RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
     }
     void callback1(const sensor_msgs::msg::JointState::SharedPtr msg)
     {

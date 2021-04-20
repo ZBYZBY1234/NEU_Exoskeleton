@@ -1,3 +1,5 @@
+#ifndef MOTOR_H
+#define MOTOR_H
 #include "eci/EciDemo113.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,82 +13,87 @@
 #include <fcntl.h>
 
 
-const char* HEX = "0123456789abcdef";
-char    motor_buffer[8];
+
 
 class Motor_Position
 {
-    public:
-        Motor_Position(){};
-        ~Motor_Position(){};
-    public:
-        void PositionControl();
-    private:
-        void  htoi(char s[]);
-        void tohex(int n);
-    private:
-        /*MOTOR ID*/
-        DWORD motorID;
-        /*自由位置定义*/
-        BYTE TX_init_pose;
-        /*关节角度*/
-        float   motor_angle;
-        int     motor_qc;
-
-        int    motor_sixteen;
-};
-
-void Motor_Position::tohex(int n)
-{
-    memset(motor_buffer,0,33*sizeof(int)); 
-	int i = 0;
-    int d = n;
-	int m = 0;
-    int t = 0;
-	char righthip_hexa4[64];
-	const char *hmap = "0123456789ABCDEF";
-	while(d > 0)
-	{
-        m = d % 16;
-        righthip_hexa4[t] = hmap[m];
-        d = d / 16;
-        t++;
-	}
-    printf("%d\n",t);
-	for(i = 0; i < t; i++)
-	{
-		motor_buffer[i]=righthip_hexa4[t - i - 1 ];
-	}
-}
-void Motor_Position::htoi(char s[])
-{
-    int i = 0;
-    Motor_Position::motor_sixteen = 0;
-    for (; (s[i] >= '0' && s[i] <= '9') || (s[i] >= 'a' && s[i] <= 'z') || (s[i] >='A' && s[i] <= 'Z');++i)
+public:
+    Motor_Position(){};
+    ~Motor_Position(){};
+public:
+    void PositionControl();
+private:
+    void htoi(char s[])
     {
-        int x;
-        if (s[i] >= 'A' && s[i] <= 'Z')
+        int i = 0;
+        Motor_Position::motor_sixteen = 0;
+        for (; (s[i] >= '0' && s[i] <= '9') || (s[i] >= 'a' && s[i] <= 'z') || (s[i] >='A' && s[i] <= 'Z');++i)
         {
-            x =  s[i] + 'a' - 'A';
-        }
-        else
-        {
-            x = s[i];
-        }
-        if (x> '9')
-        {
-            Motor_Position::motor_sixteen = 16 * Motor_Position::motor_sixteen + (10 + x - 'a');
-        }
-        else
-        {
-            Motor_Position::motor_sixteen = 16 * Motor_Position::motor_sixteen + (x - '0');
+            int x;
+            if (s[i] >= 'A' && s[i] <= 'Z')
+            {
+                x =  s[i] + 'a' - 'A';
+            }
+            else
+            {
+                x = s[i];
+            }
+            if (x> '9')
+            {
+                Motor_Position::motor_sixteen = 16 * Motor_Position::motor_sixteen + (10 + x - 'a');
+            }
+            else
+            {
+                Motor_Position::motor_sixteen = 16 * Motor_Position::motor_sixteen + (x - '0');
+            }
         }
     }
-}
+
+    void tohex(int n)
+    {
+        memset(motor_buffer,0,33*sizeof(int));
+        int i = 0;
+        int d = n;
+        int m = 0;
+        int t = 0;
+        char hexa4[64];
+	    const char *hmap = "0123456789ABCDEF";
+        while(d > 0)
+        {
+            m = d % 16;
+            hexa4[t] = hmap[m];
+            d = d / 16;
+            t++;
+        }
+        printf("%d\n",t);
+        for(i = 0; i < t; i++)
+        {
+            motor_buffer[i]=hexa4[t - i - 1 ];
+        }
+    }
+private:
+    /*MOTOR ID*/
+    DWORD motorID;
+    /*自由位置定义*/
+    BYTE TX_init_pose;
+    /*关节角度*/
+    float   motor_angle;
+    int     motor_qc;
+    int    motor_sixteen;
+    ECI_RESULT hResult;
+
+    char    motor_buffer[8];
+};
+
+
+
 void Motor_Position::PositionControl()
 {
-    DWORD active_upper_motorID[12] = {0x00, 0x00, 0x00, 0x00, 0x601,0x602,0x603,0x608,0x601,0x602,0x603,0x608};
-    BYTE TX_active_move[12][8]      = {                                   
+    /*
+        *@Description: Motive the Motor.
+    */
+    DWORD active_upper_motorID[12]  = {0x00, 0x00, 0x00, 0x00, 0x601,0x602,0x603,0x608,0x601,0x602,0x603,0x608};
+    BYTE TX_active_move[12][8] = {
                                     {0x00,0X01,0x00,0x00,0x00,0x00,0x00,0x00},/* ACTIVE */
                                     {0x00,0X01,0x00,0x00,0x00,0x00,0x00,0x00},
                                     {0x00,0X01,0x00,0x00,0x00,0x00,0x00,0x00},
@@ -101,11 +108,13 @@ void Motor_Position::PositionControl()
                                     {0x22,0x40,0x60,0x00,0x06,0x00,0x00,0x00},
                                     {0x22,0x40,0x60,0x00,0x06,0x00,0x00,0x00},
                                     {0x22,0x40,0x60,0x00,0x06,0x00,0x00,0x00}
-                            };
-    ECI_RESULT hResult = ECI_OK;
+                                };
+    hResult = ECI_OK;
     hResult = EciDemo113();
     Can_Tx_Data( hResult, TX_active_move, active_upper_motorID);
     printf("Motived!!!\n");
+    //
+
     while (scanf("%f",&motor_angle) != EOF)
     {
         printf("The motor angle you have entered: %f\n",motor_angle);
@@ -126,7 +135,7 @@ void Motor_Position::PositionControl()
         printf("4:righthip：0x%x,%x,%x,%x\n\n",righthip_ox11,righthip_ox12,righthip_ox13,righthip_ox14);
         ECI_RESULT hResult = ECI_OK;
         hResult = EciDemo113();
-        
+
 
         BYTE TX_pos_upper_follow[12][8]      = {                                      
                                         {0x22,0x40,0x60,0x00,0x0F,0x00,0x00,0x00},/* ENABLE */
@@ -144,16 +153,16 @@ void Motor_Position::PositionControl()
                                         {0x22,0x40,0x60,0x00,0x3F,0x00,0x00,0x00},
                                         {0x22,0x40,0x60,0x00,0x3F,0x00,0x00,0x00}
                                 };
-        
+
 
         DWORD Move_upper_motorID[12]   = {0x601,0x603,0x602,0x608,0x601,0x603,0x602,0x608,0x601,0x603,0x602,0x608};
 
         //Motive
-        
-        
+
         Can_Tx_Data( hResult, TX_pos_upper_follow, Move_upper_motorID);
         sleep(1);
         Can_Tx_Data( hResult, TX_pos_upper_follow, Move_upper_motorID);
         sleep(1);
     }
 }
+#endif
