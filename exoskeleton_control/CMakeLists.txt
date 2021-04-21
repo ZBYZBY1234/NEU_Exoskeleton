@@ -31,15 +31,50 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
 )
+add_library(EciDemo113
+    src/Eci/EciDemo113.cpp
+)
+add_library(EciDemoCommon
+    src/Eci/EciDemoCommon.c
+)
+target_link_libraries(EciDemo113 ${catkin_LIBRARIES})
 
-find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
+ament_target_dependencies(EciDemoCommon ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ament_target_dependencies(EciDemo113 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(EciDemo src/Eci/EciDemo113.cpp src/Eci/LinuxEciDemo.cpp)
+target_link_libraries(EciDemo  EciDemoCommon ${catkin_LIBRARIES} "/usr/lib/libeci113DriverLinux.so")
+
+add_executable(Eci_keyboard src/Eci/EciDemo113.cpp src/Eci/Eci_keyboard.cpp)
+target_link_libraries(Eci_keyboard EciDemoCommon ${catkin_LIBRARIES} "/usr/lib/libeci113DriverLinux.so")
+
+# add_executable(Angle_Feedback src/Eci/EciDemo113.cpp src/Test.cpp)
+# # target_link_libraries(Angle_Feedback EciDemoCommon "/usr/lib/libeci113DriverLinux.so")
+# ament_target_dependencies(Angle_Feedback ${catkin_LIBRARIES} rclcpp std_msgs)
+
+add_executable(Server src/Server.c)
+target_link_libraries(Server ${catkin_LIBRARIES})
+
+add_executable(Client src/Client.c)
+target_link_libraries(Client ${catkin_LIBRARIES})
+
+install(TARGETS
+EciDemo
+Eci_keyboard
+# Angle_Feedback
+Server
+Client
+DESTINATION lib/${PROJECT_NAME}
+)
 
 add_executable(Exoskeleton_kinematics src/exoskeleton_kinematics.cpp)
 ament_target_dependencies(Exoskeleton_kinematics ${catkin_LIBRARIES} rclcpp std_msgs)
