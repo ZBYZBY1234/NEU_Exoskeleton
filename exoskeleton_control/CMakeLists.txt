@@ -43,17 +43,20 @@ find_package(sensor_msgs REQUIRED)
 
 add_executable(Exoskeleton_kinematics src/exoskeleton_kinematics.cpp)
 ament_target_dependencies(Exoskeleton_kinematics ${catkin_LIBRARIES} rclcpp std_msgs)
+
 add_executable(Exoskeleton_dynamics src/exoskeleton_dynamics.cpp)
 ament_target_dependencies(Exoskeleton_dynamics ${catkin_LIBRARIES} rclcpp std_msgs)
-add_executable(Admittance_control src/Admittance_control.cpp)
-ament_target_dependencies(Admittance_control ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
+
+add_executable(Admittance_control_Software src/Admittance_control_Software.cpp)
+ament_target_dependencies(Admittance_control_Software ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
+
 add_executable(Position_control src/Position_control.cpp)
 ament_target_dependencies(Position_control ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
 
 install(TARGETS
 Exoskeleton_kinematics
 Exoskeleton_dynamics
-Admittance_control
+Admittance_control_Software
 Position_control
 DESTINATION lib/${PROJECT_NAME}
 )
