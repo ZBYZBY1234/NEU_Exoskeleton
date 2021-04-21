@@ -1,14 +1,11 @@
-#include <eci/EciDemo113.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include<stdio.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<string.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#define _PATH_NAME_ "/home/hemingshan/exo_ws/src/exoskeleton_control/Pipe_File/file.tmp"
+#define _SIZE_ 100
 
 #include <chrono>
 #include <functional>
@@ -23,34 +20,49 @@ using namespace std::chrono_literals;
 /* This example creates a subclass of Node and uses std::bind() to register a
 * member function as a callback from the timer. */
 
+
+
+
+int fd=open(_PATH_NAME_,O_WRONLY);
+
 class MinimalPublisher : public rclcpp::Node
 {
   public:
     MinimalPublisher()
     : Node("minimal_publisher"), count_(0)
     {
-      publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
-      timer_ = this->create_wall_timer(
-      500ms, std::bind(&MinimalPublisher::timer_callback, this));
+        ret=mkfifo(_PATH_NAME_,S_IFIFO|0666);
+        if(ret==-1){
+            printf("make fifo error\n");
+        }
+        memset(buf,'\0',sizeof(buf));
+
+        publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
+        timer_ = this->create_wall_timer(
+            500ms, std::bind(&MinimalPublisher::timer_callback, this));
     }
 
   private:
     void timer_callback()
     {
-      auto message = std_msgs::msg::String();
-      message.data = "Hello, world! " + std::to_string(count_++);
-      RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
-      publisher_->publish(message);
+        fgets(buf,sizeof(buf)-1,stdin);
+        int ret=write(fd,buf,strlen(buf)+1);
+        if(ret<0){
+            printf("write error");
+        }
     }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
     size_t count_;
+    int ret;
+    char buf[_SIZE_];
 };
 
 int main(int argc, char * argv[])
 {
-  rclcpp::init(argc, argv);
-//   rclcpp::spin(std::make_shared<MinimalPublisher>());
-//   rclcpp::shutdown();
-  return 0;
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<MinimalPublisher>());
+    rclcpp::shutdown();
+    close(fd);
+    return 0;
 }

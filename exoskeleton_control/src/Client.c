@@ -13,7 +13,7 @@ int main()
         printf("open file error");
         return 1;
     }
-   double buf[_SIZE_];
+   char buf[_SIZE_];
    memset(buf,'\0',sizeof(buf));
    while(1)
    {
