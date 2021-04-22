@@ -163,3 +163,20 @@ int main(int argc, char * argv[])
     rclcpp::shutdown();
     return 0;
 }
+
+int main(int argc, char * argv[])
+{
+    rclcpp::init(argc, argv);
+
+    rclcpp::executors::MultiThreadedExecutor executor;
+    auto piezoelectric_sensor = std::make_shared<SingleThreadedNode>();
+    auto mpu6050_sensors = std::make_shared<DualThreadedNode>();
+    auto pubnode = std::make_shared<PublisherNode>();
+
+    executor.add_node(piezoelectric_sensor);
+    executor.add_node(mpu6050_sensors);
+    executor.add_node(pubnode);
+    executor.spin();
+    rclcpp::shutdown();
+    return 0;
+}
