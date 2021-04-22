@@ -72,6 +72,112 @@ BYTE TX_pos_upper_follow_[12][8] = {
 };
 DWORD Move_lower_motorID[12]   = {0x605,0x607,0x606,0x608,0x605,0x607,0x606,0x608,0x605,0x607,0x606,0x608};
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Angle_Accept : public rclcpp::Node
+{
+public:
+    Angle_Accept()
+    : Node("Angle_Accept"), count_(0)
+    {
+        publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("Angle_Accept", 10);
+        auto timer_callback =[this]() -> void {
+            auto message = std_msgs::msg::Float64MultiArray();
+
+            Can_Rx_Position( hResult, Rec_pos_lower_position, Move_lower_motorID);
+            OS_Sleep(10);
+            if(Get_position[0][0] == 0 && Get_position[1][0] == 0 && Get_position[2][0] == 0 && Get_position[3][0] == 0)
+            {
+                OS_Sleep(1);
+                Can_Rx_Position( hResult, Rec_pos_lower_position, Move_lower_motorID);
+            }
+            for(i = 0;i < 4;++i)
+            {
+                for(j = 0;j < 4;++j)
+                {
+                    v|=((unsigned int)Get_position[i][j]&0xFFu)<<(j*8);
+                }
+                angle[i] = 360 * v /1638400;
+                v = 0;
+            }
+            for(i = 0;i < 4;++i)
+                printf("%.2f\n",angle[i]);
+            OS_Sleep(50);
+            message.data = {angle[0],angle[1],angle[2],angle[3]};
+            publisher_->publish(message);
+        };
+        timer_ = this->create_wall_timer(500ms, timer_callback);
+    }
+
+private:
+    rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+    size_t count_;
+};
+
+class Angle_Send : public rclcpp::Node
+{
+public:
+    Angle_Send()
+    : Node("Angle_Send")
+    {
+        subscription_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
+            "Joint_State_Send", 10, std::bind(&Angle_Send::topic_callback, this, _1)
+        );
+    }
+
+private:
+    void topic_callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
+    {
+        printf("Recieved!\n");
+        auto angle = msg->data;
+        for (int i = 0; i < 4; i++)
+        {
+            motor_angle[i] = angle[i];
+            motor_qc[i] = 1638400/360*motor_angle[i];
+            TX_pos_upper_follow_[4][i+4] = (-motor_qc[i]>>(8*i)&0xff);
+            TX_pos_upper_follow_[5][i+4] = ( motor_qc[i]>>(8*i)&0xff);
+            TX_pos_upper_follow_[6][i+4] = (-motor_qc[i]>>(8*i)&0xff);
+            TX_pos_upper_follow_[7][i+4] = ( motor_qc[i]>>(8*i)&0xff);
+        }
+        //Motive
+        Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
+        sleep(1);
+        Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
+        sleep(1);
+    }
+    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+};
+
+
+
+
 class Angle_Accept : public rclcpp::Node
 {
 public:
@@ -164,19 +270,3 @@ int main(int argc, char * argv[])
     return 0;
 }
 
-int main(int argc, char * argv[])
-{
-    rclcpp::init(argc, argv);
-
-    rclcpp::executors::MultiThreadedExecutor executor;
-    auto piezoelectric_sensor = std::make_shared<SingleThreadedNode>();
-    auto mpu6050_sensors = std::make_shared<DualThreadedNode>();
-    auto pubnode = std::make_shared<PublisherNode>();
-
-    executor.add_node(piezoelectric_sensor);
-    executor.add_node(mpu6050_sensors);
-    executor.add_node(pubnode);
-    executor.spin();
-    rclcpp::shutdown();
-    return 0;
-}
