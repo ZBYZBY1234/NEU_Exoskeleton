@@ -46,6 +46,9 @@ add_library(EciDemo113
 add_library(EciDemoCommon
     src/Eci/EciDemoCommon.c
 )
+add_library(Shmfifo
+    src/Eci/shmfifo.c
+)
 target_link_libraries(EciDemo113 ${catkin_LIBRARIES})
 
 ament_target_dependencies(EciDemoCommon ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -61,19 +64,33 @@ add_executable(Test  src/Test.cpp)
 # target_link_libraries(Angle_Feedback EciDemoCommon "/usr/lib/libeci113DriverLinux.so")
 ament_target_dependencies(Test ${catkin_LIBRARIES} rclcpp std_msgs)
 
+add_executable(Angle_Feedback  src/Eci/Angle_Feedback.cpp)
+ament_target_dependencies(Angle_Feedback  rclcpp std_msgs)
+target_link_libraries(Angle_Feedback EciDemoCommon "/usr/lib/libeci113DriverLinux.so")
+
 add_executable(Server src/Server.c)
 target_link_libraries(Server ${catkin_LIBRARIES})
 
 add_executable(Client src/Client.c)
 target_link_libraries(Client ${catkin_LIBRARIES})
 
+add_executable(Clientcpp src/Client.cpp)
+target_link_libraries(Clientcpp ${catkin_LIBRARIES})
+
+add_executable(Servercpp src/Server.cpp)
+target_link_libraries(Servercpp ${catkin_LIBRARIES})
+
+add_executable(Socket_Client src/Socket_Client.cpp)
+target_link_libraries(Socket_Client ${catkin_LIBRARIES})
+
+add_executable(Socket_Server src/Socket_Server.cpp)
+target_link_libraries(Socket_Server ${catkin_LIBRARIES})
+
 install(TARGETS
 EciDemo
 Eci_keyboard
-Test
-# Angle_Feedback
-Server
-Client
+Angle_Feedback
+
 DESTINATION lib/${PROJECT_NAME}
 )
 

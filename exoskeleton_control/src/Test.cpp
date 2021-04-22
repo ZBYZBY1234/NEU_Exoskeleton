@@ -1,11 +1,14 @@
+#include <iostream>
 #include<stdio.h>
-#include<unistd.h>
-#include<sys/types.h>
+#include<stdlib.h>
 #include<string.h>
-#include<sys/stat.h>
-#include<fcntl.h>
-#define _PATH_NAME_ "/home/hemingshan/exo_ws/src/exoskeleton_control/Pipe_File/file.tmp"
-#define _SIZE_ 100
+#include<errno.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<unistd.h>
+#define MAXLINE 4096
 
 #include <chrono>
 #include <functional>
@@ -21,41 +24,49 @@ using namespace std::chrono_literals;
 * member function as a callback from the timer. */
 
 
-
-
-int fd=open(_PATH_NAME_,O_WRONLY);
-
 class MinimalPublisher : public rclcpp::Node
 {
   public:
     MinimalPublisher()
     : Node("minimal_publisher"), count_(0)
     {
-        ret=mkfifo(_PATH_NAME_,S_IFIFO|0666);
-        if(ret==-1){
-            printf("make fifo error\n");
+        i = 1;
+        if( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0){
+            printf("create socket error: %s(errno: %d)\n", strerror(errno),errno);
         }
-        memset(buf,'\0',sizeof(buf));
+        memset(&servaddr, 0, sizeof(servaddr));
+        servaddr.sin_family = AF_INET;
+        servaddr.sin_port = htons(6666);
 
+        if( inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr) <= 0){
+            printf("inet_pton error for %s\n","127.0.0.1");
+        }
+
+        if( connect(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0){
+            printf("connect error: %s(errno: %d)\n",strerror(errno),errno);
+        }
+        fgets(sendline, 4096, stdin);
         publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
         timer_ = this->create_wall_timer(
-            500ms, std::bind(&MinimalPublisher::timer_callback, this));
+            1000ms, std::bind(&MinimalPublisher::timer_callback, this));
     }
 
   private:
     void timer_callback()
     {
-        fgets(buf,sizeof(buf)-1,stdin);
-        int ret=write(fd,buf,strlen(buf)+1);
-        if(ret<0){
-            printf("write error");
-        }
+        std::cout<<"In."<<std::endl;
+        send(sockfd, sendline, sizeof(sendline), 0);
     }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
     size_t count_;
-    int ret;
-    char buf[_SIZE_];
+    int                 i;
+
+    int                 sockfd;
+    int                 n;
+    char                recvline[4096];
+    char                sendline[4096];
+    struct sockaddr_in  servaddr;
 };
 
 int main(int argc, char * argv[])
@@ -63,6 +74,5 @@ int main(int argc, char * argv[])
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<MinimalPublisher>());
     rclcpp::shutdown();
-    close(fd);
     return 0;
 }
