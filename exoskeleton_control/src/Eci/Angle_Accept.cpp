@@ -40,17 +40,17 @@ BYTE Rec_pos_lower_position[12][8]      = {
                             };
 DWORD Move_lower_motorID[12]   = {0x605,0x607,0x606,0x608,0x605,0x607,0x606,0x608,0x605,0x607,0x606,0x608};
 
-class Angle_Feedback : public rclcpp::Node
+class Angle_Accept : public rclcpp::Node
 {
 public:
-    Angle_Feedback()
+    Angle_Accept()
     : Node("minimal_publisher"), count_(0)
     {
         publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(
             "topic", 10
         );
         timer_ = this->create_wall_timer(
-            500ms, std::bind(&Angle_Feedback::timer_callback, this)
+            500ms, std::bind(&Angle_Accept::timer_callback, this)
         );
         hResult = ECI_OK;
     }
@@ -97,7 +97,7 @@ private:
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<Angle_Feedback>());
+    rclcpp::spin(std::make_shared<Angle_Accept>());
     rclcpp::shutdown();
     return 0;
 }
