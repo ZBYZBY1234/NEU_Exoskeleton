@@ -1,3 +1,10 @@
+/* * @Author: Beal.MS
+   * @Date: 2021-04-23 12:41:33
+ * @Last Modified by: Beal.MS
+ * @Last Modified time: 2021-04-23 12:49:54
+   * @Description: This Executable Programm is mainly for the basement of the Motors which can
+   * be used to Accept the Motor's Position and Send the Position to the Motors
+*/
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -73,39 +80,18 @@ BYTE TX_pos_upper_follow_[12][8] = {
 DWORD Move_lower_motorID[12]   = {0x605,0x607,0x606,0x608,0x605,0x607,0x606,0x608,0x605,0x607,0x606,0x608};
 ECI_RESULT hResult;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**/
-
+/*
+    *@Description: The Angle_Accept Class for Accepting the Position of Motors
+    * And Send the result of Position to the topic "Joint_State_Accept"
+*/
 class Angle_Accept : public rclcpp::Node
 {
 public:
     Angle_Accept()
     : Node("Angle_Accept"), count_(0)
     {
-        publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("Angle_Accept", 10);
+        publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("Joint_State_Accept", 10);
+
         auto timer_callback =[this]() -> void {
             auto message = std_msgs::msg::Float64MultiArray();
 
@@ -131,6 +117,7 @@ public:
             message.data = {angle[0],angle[1],angle[2],angle[3]};
             publisher_->publish(message);
         };
+
         timer_ = this->create_wall_timer(20ms, timer_callback);
     }
 
@@ -145,6 +132,10 @@ private:
     float angle[4];
 };
 
+/*
+    *@Description: The Angle_Send Class which is mainly for Sending the Motor Position which is got by
+    * The topic "Joint_State_Send"
+*/
 class Angle_Send : public rclcpp::Node
 {
 public:
@@ -159,7 +150,6 @@ public:
 private:
     void topic_callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        printf("Recieved!\n");
         auto angle = msg->data;
         for (int i = 0; i < 4; i++)
         {
@@ -181,104 +171,19 @@ private:
     int motor_qc[4];
 };
 
-
-
-/*----------------------*/
-// class Angle_Accept : public rclcpp::Node
-// {
-// public:
-//     Angle_Accept()
-//     : Node("Angle_Accept"), count_(0)
-//     {
-//         Joint_State_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(
-//             "Joint_State_Accept", 10
-//         );
-//         Joint_State_Subscriber = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-//             "Joint_State_Send", 10,
-//             std::bind(&Angle_Accept::topic_callback, this, std::placeholders::_1));
-//         timer_ = this->create_wall_timer(
-//             10ms, std::bind(&Angle_Accept::timer_callback, this)
-//         );
-//     }
-
-// private:
-//     void timer_callback()
-//     {
-//         auto message = std_msgs::msg::Float64MultiArray();
-
-//         Can_Rx_Position( hResult, Rec_pos_lower_position, Move_lower_motorID);
-//         OS_Sleep(10);
-//         if(Get_position[0][0] == 0 && Get_position[1][0] == 0 && Get_position[2][0] == 0 && Get_position[3][0] == 0)
-//         {
-//             OS_Sleep(1);
-//             Can_Rx_Position( hResult, Rec_pos_lower_position, Move_lower_motorID);
-//         }
-//         for(i = 0;i < 4;++i)
-//         {
-//             for(j = 0;j < 4;++j)
-//             {
-//                 v|=((unsigned int)Get_position[i][j]&0xFFu)<<(j*8);
-//             }
-//             angle[i] = 360 * v /1638400;
-//             v = 0;
-//         }
-//         for(i = 0;i < 4;++i)
-//             printf("%.2f\n",angle[i]);
-//         OS_Sleep(50);
-//         message.data = {angle[0],angle[1],angle[2],angle[3]};
-//         Joint_State_Publisher->publish(message);
-//     }
-//     void topic_callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
-//     {
-//         // ECI_RESULT hResult = ECI_OK;
-//         // hResult = EciDemo113();
-//         printf("Recieved!\n");
-//         auto angle = msg->data;
-//         for (int i = 0; i < 4; i++)
-//         {
-//             motor_angle[i] = angle[i];
-//             motor_qc[i] = 1638400/360*motor_angle[i];
-//             TX_pos_upper_follow_[4][i+4] = (-motor_qc[i]>>(8*i)&0xff);
-//             TX_pos_upper_follow_[5][i+4] = ( motor_qc[i]>>(8*i)&0xff);
-//             TX_pos_upper_follow_[6][i+4] = (-motor_qc[i]>>(8*i)&0xff);
-//             TX_pos_upper_follow_[7][i+4] = ( motor_qc[i]>>(8*i)&0xff);
-//         }
-//         //Motive
-//         Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
-//         sleep(1);
-//         Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
-//         sleep(1);
-//     }
-//     rclcpp::TimerBase::SharedPtr timer_;
-//     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_State_Publisher;
-//     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_State_Subscriber;
-//     size_t count_;
-
-//     ECI_RESULT hResult;
-//     int i;
-//     int j;
-//     int v;
-
-//     float motor_angle[4];
-//     float angle[4];
-//     int motor_qc[4];
-//     int motor_sixteen[4];
-// };
-
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
-    // rclcpp::spin(std::make_shared<Angle_Accept>());
-    // rclcpp::shutdown();
+
     hResult = ECI_OK;
     hResult = EciDemo113();
     Can_Tx_Data( hResult, TX_Active_Move, Move_lower_motorID);
+
     rclcpp::executors::MultiThreadedExecutor executor;
     auto Angle_Accept_Node = std::make_shared<Angle_Accept>();
     auto Angle_Send_Node = std::make_shared<Angle_Send>();
     executor.add_node(Angle_Send_Node);
     executor.add_node(Angle_Accept_Node);
-
     executor.spin();
 
     rclcpp::shutdown();
