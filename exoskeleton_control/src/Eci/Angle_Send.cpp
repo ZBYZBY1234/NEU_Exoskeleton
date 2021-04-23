@@ -28,7 +28,7 @@ class MinimalPublisher : public rclcpp::Node
       auto message = std_msgs::msg::Float64MultiArray();
       message.data = {10.0,10.0,10.0,10.0};
       publisher_->publish(message);
-      printf("Published!");
+      printf("Published!\n");
     }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr publisher_;

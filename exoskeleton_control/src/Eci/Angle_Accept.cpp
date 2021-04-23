@@ -172,9 +172,7 @@ private:
         }
         //Motive
         Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
-        sleep(1);
         Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
-        sleep(1);
     }
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr subscription_;
 
