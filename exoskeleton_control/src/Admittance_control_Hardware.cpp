@@ -67,12 +67,12 @@ private:
         //Feedback Joint Message
         RCLCPP_INFO(this->get_logger(),
         "Left: '%f','%f','%f','%f' Right: '%f','%f','%f','%f'",
-        -position[0],-position[1],-position[2],-position[3],
-        -position[0],-position[1],-position[2],-position[3]);
+        position[0],position[1],position[2],position[3],
+        position[0],position[1],position[2],position[3]);
 
-        Feedback_Angle_ << -position[0], -position[1], -position[2], -position[3];
+        Feedback_Angle_ << position[0], position[1], position[2], position[3];
         Expected_Angle_(0,1) = Angle_Thigh + 90;
-        Expected_Angle_(0,2) = Angle_Calf  + 98;
+        Expected_Angle_(0,2) = Angle_Calf  + 92;
 
         Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
@@ -92,16 +92,29 @@ private:
             );
 
         auto message = std_msgs::msg::Float64MultiArray();
-        message.data = {  -Left_Angle(0,0),  -Left_Angle(1,0),  -Left_Angle(2,0),  -Left_Angle(3,0),
-                        -Right_Angle(0,0), -Right_Angle(1,0), -Right_Angle(2,0), -Right_Angle(3,0) };
-
+        // message.data = {    Left_Angle(0,0),    Left_Angle(1,0),    Left_Angle(2,0),    Left_Angle(3,0),
+        //                     Right_Angle(0,0),   Right_Angle(1,0),   Right_Angle(2,0),   Right_Angle(3,0) };
+        message.data = {
+            Left_Angle(0,0),
+            Left_Angle(1,0),
+            0.0,
+            0.0
+        };
         Joint_Publisher->publish(message);
 
       //延迟函数
       // sleep(1);
 
-        std::cout<<"Left: " << -Left_Angle(0,0)  << -Left_Angle(1,0)  << -Left_Angle(2,0)  << -Left_Angle(3,0)  <<" ,Published!!!"<<std::endl;
-        std::cout<<"Right: "<< -Right_Angle(0,0) << -Right_Angle(1,0) << -Right_Angle(2,0) << -Right_Angle(3,0) <<" ,Published!!!"<<std::endl;
+        std::cout<<"Left: " << Left_Angle(0,0) <<
+        " " << Left_Angle(1,0)*180/PI <<
+        " " << Left_Angle(2,0)*180/PI <<
+        " " << Left_Angle(3,0)  <<
+        " ,Published!!!"<<std::endl;
+        std::cout<<"Right: "<<  Right_Angle(0,0) <<
+        " " << Right_Angle(1,0)*180/PI <<
+        " " << Right_Angle(2,0)*180/PI <<
+        " " << Right_Angle(3,0) <<
+        " ,Published!!!"<<std::endl;
     }
 
     void Sensor_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
