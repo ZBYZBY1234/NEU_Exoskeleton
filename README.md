@@ -4,7 +4,7 @@ This package is built by `ROS2` foxy version, which aim to have the real-time co
 
 |                     Version: NEUX 1.0.0                      |      |      |      |
 | :----------------------------------------------------------: | ---- | ---- | ---- |
-| https://img.shields.io/github/v/release/MingshanHe/Graduate_Design?style=flat-square |      |      |      |
+| ![](https://img.shields.io/github/v/release/MingshanHe/Graduate_Design?style=flat-square) |      |      |      |
 
 
 
