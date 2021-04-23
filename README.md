@@ -2,9 +2,9 @@
 
 This package is built by `ROS2` foxy version, which aim to have the real-time control version.
 
-|                     Version: NEUX 1.0.0                      |                  Environment: Ubuntu 20.04                   |      |      |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | ---- | ---- |
-| ![](https://img.shields.io/github/v/release/MingshanHe/Graduate_Design?style=flat-square) | ![](https://img.shields.io/travis/MingshanHe/robotictool?style=flat-square) |      |      |
+|                     Version: NEUX 1.0.0                      |                      Build: Environment                      |                     Contribution: Stars                      |                        Size: Packages                        |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![](https://img.shields.io/github/v/release/MingshanHe/Graduate_Design?style=flat-square) | ![](https://img.shields.io/travis/MingshanHe/robotictool?style=flat-square) | ![](https://img.shields.io/github/stars/MingshanHe?style=flat-square) | ![](https://img.shields.io/github/repo-size/MingshanHe/Graduate_Design?style=flat-square) |
 
 ## Run Environment
 
