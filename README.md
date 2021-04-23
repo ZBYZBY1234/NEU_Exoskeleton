@@ -2,6 +2,12 @@
 
 This package is built by `ROS2` foxy version, which aim to have the real-time control version.
 
+|                     Version: NEUX 1.0.0                      |      |      |      |
+| :----------------------------------------------------------: | ---- | ---- | ---- |
+| https://img.shields.io/github/v/release/MingshanHe/Graduate_Design?style=flat-square |      |      |      |
+
+
+
 ## exoskeleton_description
 
 This package is mainly about the `rviz2` for showing the state of the exoskeleton robot and visualization. The command is mainly like following and run it under the root folder in the package.
