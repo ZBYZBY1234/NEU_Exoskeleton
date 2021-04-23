@@ -13,4 +13,12 @@ $ ros2 launch exoskeleton_description view_robot_launch.py
 And this will run the `rviz2` and visual the robot under it.
 ## exoskeleton_control
 
+This package is mainly about the **Control Algorithm** which could be used in exoskeleton robot. I have mainly designed the Admittance and Impedance control. There are have two mode for this Project: Software simulation and Hardware simulation.
+
 ## sensor_module
+
+This package is mainly about the Sensor to get the data of the Control Algorithm Inputs.
+
+## joint_state_publisher
+
+This package is developed by official and can be used to control the joint by position mode.
