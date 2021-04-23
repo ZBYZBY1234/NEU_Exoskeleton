@@ -32,6 +32,9 @@ bool flag_;
 #define Joint_Subscription_Topic    "joint_states"
 #define Sensor_Subscription_Topic   "Sensor"
 
+#define Joint_Thigh_Offset          PI/2-atan(0.23966/0.28189)
+#define JOint_Calf_Off
+
 class Admittance_Control_Subscription :
     public rclcpp::Node,
     public Admittance_control
