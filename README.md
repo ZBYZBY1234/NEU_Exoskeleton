@@ -6,7 +6,10 @@ This package is built by `ROS2` foxy version, which aim to have the real-time co
 | :----------------------------------------------------------: | :----------------------------------------------------------: | ---- | ---- |
 | ![](https://img.shields.io/github/v/release/MingshanHe/Graduate_Design?style=flat-square) | ![](https://img.shields.io/travis/MingshanHe/robotictool?style=flat-square) |      |      |
 
+## Run Environment
 
+* Operating System: Ubuntu 20.04<code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/ubuntu/ubuntu.png" alt="ubuntu"></code>
+* Robot Operate System: Foxy<code><img height="20" src="Pictures/ros.jpeg" alt="ros"></code>
 
 ## exoskeleton_description
 
