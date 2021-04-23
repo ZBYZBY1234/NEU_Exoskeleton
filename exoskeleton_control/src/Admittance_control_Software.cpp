@@ -9,7 +9,7 @@
 #include <iostream>
 #include "exoskeleton_control/Admittance_control.hpp"
 #include <unistd.h>
-
+#include <math.h>
 #include <memory>
 #include <chrono>
 #include <functional>
@@ -32,8 +32,8 @@ bool flag_;
 #define Joint_Subscription_Topic    "joint_states"
 #define Sensor_Subscription_Topic   "Sensor"
 
-#define Joint_Thigh_Offset          PI/2-atan(0.23966/0.28189)
-#define JOint_Calf_Off
+#define Joint_Thigh_Offset          -0.7046042369967704
+#define JOint_Calf_Offset           -0.7046042369967704+0.4744191163880517
 
 class Admittance_Control_Subscription :
     public rclcpp::Node,
@@ -71,8 +71,8 @@ private:
         -position[4],-position[5],-position[6],-position[7]);
 
         Feedback_Angle_ << -position[0], -position[1], -position[2], -position[3];
-        Expected_Angle_(0,1) = (Angle_Thigh/180)*PI;
-        Expected_Angle_(0,2) = (Angle_Calf /180)*PI;
+        Expected_Angle_(0,1) = ((Angle_Thigh)/180)*PI-Joint_Thigh_Offset;
+        Expected_Angle_(0,2) = ((Angle_Calf - Angle_Thigh )/180)*PI-JOint_Calf_Offset;
 
         Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
@@ -102,14 +102,6 @@ private:
 
         std::cout<<"Left: " << -Left_Angle(0,0)  << -Left_Angle(1,0)  << -Left_Angle(2,0)  << -Left_Angle(3,0)  <<" ,Published!!!"<<std::endl;
         std::cout<<"Right: "<< -Right_Angle(0,0) << -Right_Angle(1,0) << -Right_Angle(2,0) << -Right_Angle(3,0) <<" ,Published!!!"<<std::endl;
-    }
-
-    void callback2(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
-    {
-        auto force = msg->data;
-        RCLCPP_INFO(this->get_logger(), "Force: '%f','%f','%f'",
-        force[0], force[1], force[2]);
-        Force = force[0];
     }
 
     void Sensor_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)

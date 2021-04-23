@@ -111,8 +111,6 @@ public:
                 angle[i] = 360 * v /1638400;
                 v = 0;
             }
-            for(i = 0;i < 4;++i)
-                printf("%.2f\n",angle[i]);
             //OS_Sleep(50);
             message.data = {angle[0],angle[1],angle[2],angle[3]};
             publisher_->publish(message);

@@ -82,14 +82,23 @@ ament_target_dependencies(Exoskeleton_dynamics ${catkin_LIBRARIES} rclcpp std_ms
 add_executable(Admittance_control_Software src/Admittance_control_Software.cpp)
 ament_target_dependencies(Admittance_control_Software ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
 
+add_executable(Admittance_control_Hardware src/Admittance_control_Hardware.cpp)
+ament_target_dependencies(Admittance_control_Hardware ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
+
 add_executable(Position_control src/Position_control.cpp)
 ament_target_dependencies(Position_control ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
+
+add_executable(Test src/Eci/Test.cpp)
+ament_target_dependencies(Test ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
+
 
 install(TARGETS
 Exoskeleton_kinematics
 Exoskeleton_dynamics
 Admittance_control_Software
+Admittance_control_Hardware
 Position_control
+Test
 DESTINATION lib/${PROJECT_NAME}
 )
 
