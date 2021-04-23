@@ -12,12 +12,14 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
+#define     USB_DEVICE  "/dev/ttyUSB0"
+
 using namespace std::chrono_literals;
 /*
  * @Name: MPU6050
  * @Description: Using the MPU6050 Class to let Serial Port be initialized.
 */
-Piezoelectric piezoelectric = Piezoelectric ("/dev/ttyUSB0",B115200);
+Piezoelectric piezoelectric = Piezoelectric (USB_DEVICE, B115200);
 Eigen::Matrix<float,3,1> data;
 struct Producer : public rclcpp::Node
 {
