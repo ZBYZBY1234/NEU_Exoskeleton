@@ -41,21 +41,22 @@ class Admittance_Control_Subscription :
 {
 public:
     Admittance_Control_Subscription()
-    : Node("minimal_subscriber"),Admittance_control()
+    : Node("Admittance_Control_Subscription"),Admittance_control()
     {
         /*Subscription Node Initialized*/
+        // Subscription 1
         Joint_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Joint_Subscription_Topic,
             10,
             std::bind(&Admittance_Control_Subscription::Joint_Callback, this, _1)
         );
-
+        // Subscription 2
         Sensor_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Sensor_Subscription_Topic,
             10,
             std::bind(&Admittance_Control_Subscription::Sensor_Callback, this, _1)
         );
-
+        /*Publish Node Initialized*/
         Joint_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_Publisher_Topic, 1);
     }
 
@@ -102,9 +103,6 @@ private:
         };
         Joint_Publisher->publish(message);
 
-      //延迟函数
-      // sleep(1);
-
         std::cout<<"Left: " << Left_Angle(0,0) <<
         " " << Left_Angle(1,0)*180/PI <<
         " " << Left_Angle(2,0)*180/PI <<
@@ -127,6 +125,7 @@ private:
         // "Angle_Calf: '%f','%f','%f'",
         // Sensor_Data[6], Sensor_Data[7], Sensor_Data[8]
         // );
+        //TODO: Force
         Angle_Thigh = Sensor_Data[3];
         Angle_Calf  = Sensor_Data[6];
     }

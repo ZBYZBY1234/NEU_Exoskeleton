@@ -60,7 +60,6 @@ target_link_libraries(Eci_keyboard EciDemoCommon ${catkin_LIBRARIES} "/usr/lib/l
 add_executable(Angle_Accept  src/Eci/Angle_Accept.cpp)
 ament_target_dependencies(Angle_Accept  rclcpp std_msgs)
 target_link_libraries(Angle_Accept EciDemoCommon EciDemo113 "/usr/lib/libeci113DriverLinux.so")
-
 add_executable(Angle_Send  src/Eci/Angle_Send.cpp)
 ament_target_dependencies(Angle_Send  rclcpp std_msgs)
 target_link_libraries(Angle_Send EciDemoCommon EciDemo113 "/usr/lib/libeci113DriverLinux.so")
@@ -73,20 +72,15 @@ Angle_Send
 DESTINATION lib/${PROJECT_NAME}
 )
 
-add_executable(Exoskeleton_kinematics src/exoskeleton_kinematics.cpp)
+add_executable(Exoskeleton_kinematics src/Kinematic_Dynamic/exoskeleton_kinematics.cpp)
 ament_target_dependencies(Exoskeleton_kinematics ${catkin_LIBRARIES} rclcpp std_msgs)
-
-add_executable(Exoskeleton_dynamics src/exoskeleton_dynamics.cpp)
+add_executable(Exoskeleton_dynamics src/Kinematic_Dynamic/exoskeleton_dynamics.cpp)
 ament_target_dependencies(Exoskeleton_dynamics ${catkin_LIBRARIES} rclcpp std_msgs)
 
-add_executable(Admittance_control_Software src/Admittance_control_Software.cpp)
+add_executable(Admittance_control_Software src/Admittance_Control/Admittance_control_Software.cpp)
 ament_target_dependencies(Admittance_control_Software ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
-
-add_executable(Admittance_control_Hardware src/Admittance_control_Hardware.cpp)
+add_executable(Admittance_control_Hardware src/Admittance_Control/Admittance_control_Hardware.cpp)
 ament_target_dependencies(Admittance_control_Hardware ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
-
-add_executable(Position_control src/Position_control.cpp)
-ament_target_dependencies(Position_control ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
 
 add_executable(Test src/Eci/Test.cpp)
 ament_target_dependencies(Test ${catkin_LIBRARIES} rclcpp std_msgs sensor_msgs)
@@ -97,7 +91,6 @@ Exoskeleton_kinematics
 Exoskeleton_dynamics
 Admittance_control_Software
 Admittance_control_Hardware
-Position_control
 Test
 DESTINATION lib/${PROJECT_NAME}
 )
