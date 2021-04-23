@@ -40,19 +40,17 @@ include_directories(
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-add_executable(MPU6050 src/MPU6050.cpp )
+add_executable(MPU6050 src/IMU/MPU6050.cpp )
 target_link_libraries(MPU6050  ${catkin_LIBRARIES})
 ament_target_dependencies(MPU6050 rclcpp std_msgs)
-
-add_executable(MPU6050_Thigh src/MPU6050_Thigh.cpp )
+add_executable(MPU6050_Thigh src/IMU/MPU6050_Thigh.cpp )
 target_link_libraries(MPU6050_Thigh  ${catkin_LIBRARIES})
 ament_target_dependencies(MPU6050_Thigh rclcpp std_msgs)
-
-add_executable(MPU6050_Calf src/MPU6050_Calf.cpp )
+add_executable(MPU6050_Calf src/IMU/MPU6050_Calf.cpp )
 target_link_libraries(MPU6050_Calf  ${catkin_LIBRARIES})
 ament_target_dependencies(MPU6050_Calf rclcpp std_msgs)
 
-add_executable(Piezoelectric src/Piezoelectric.cpp )
+add_executable(Piezoelectric src/Force/Piezoelectric.cpp )
 target_link_libraries(Piezoelectric  ${catkin_LIBRARIES})
 ament_target_dependencies(Piezoelectric rclcpp std_msgs)
 
