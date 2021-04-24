@@ -4,7 +4,7 @@ This package is built by `ROS2` foxy version, which aim to have the real-time co
 
 |                     Version: NEUX 1.0.0                      |                      Build: Environment                      |                        Size: Packages                        |                   Language: Python && C++                    |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![](https://img.shields.io/github/v/release/MingshanHe/Graduate_Design?style=flat-square) | ![](https://img.shields.io/badge/build-passing-${color}.svg?style=flat-square) | ![](https://img.shields.io/github/repo-size/MingshanHe/Graduate_Design?style=flat-square) | ![](https://img.shields.io/badge/language-Python-green.svg?style=flat-square)![](https://img.shields.io/badge/language-C++-green.svg?style=flat-square) |
+| ![](https://img.shields.io/github/v/release/MingshanHe/Graduate_Design?style=flat-square) | ![](https://img.shields.io/badge/build-passing-${color}.svg?style=flat-square) | ![](https://img.shields.io/github/repo-size/MingshanHe/Graduate_Design?style=flat-square) | ![](https://img.shields.io/badge/language-Python-green.svg?style=flat-square)  ![](https://img.shields.io/badge/language-C++-green.svg?style=flat-square) |
 
 ## Run Environment
 
