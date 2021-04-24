@@ -1,0 +1,2 @@
+/usr/bin/ar qc libEciDemoCommon.a  CMakeFiles/EciDemoCommon.dir/src/Eci/EciDemoCommon.c.o
+/usr/bin/ranlib libEciDemoCommon.a

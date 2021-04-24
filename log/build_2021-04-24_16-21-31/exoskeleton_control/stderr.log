@@ -1,0 +1,232 @@
+In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/OsEci.h:22[m[K,
+                 from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/ECI_cantype.h:18[m[K,
+                 from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/ECI_hwtype.h:17[m[K,
+                 from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:17[m[K,
+                 from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemoCommon.c:17[m[K:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/ECI_error.h:64:19:[m[K [01;35m[Kwarning: [m[KISO C restricts enumerator values to range of ‘[01m[Kint[m[K’ [[01;35m[K-Wpedantic[m[K]
+   64 |   ECI_ERR_FIRST = [01;35m[K([m[KSEV_ECI_ERROR | 0x0000),
+      |                   [01;35m[K^[m[K
+In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:17[m[K,
+                 from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemoCommon.c:17[m[K:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/ECI_hwtype.h:144:39:[m[K [01;35m[Kwarning: [m[KISO C restricts enumerator values to range of ‘[01m[Kint[m[K’ [[01;35m[K-Wpedantic[m[K]
+  144 |   ECI_SETTINGS_FLAG_NO_FW_DOWNLOAD  = [01;35m[K0x80000000[m[K
+      |                                       [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:4[m[K:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:55:2:[m[K [01;35m[Kwarning: [m[Kextra ‘[01m[K;[m[K’ [[01;35m[K-Wpedantic[m[K]
+   55 | }[01;35m[K;[m[K
+      |  [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciDemo113()[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::dwFlags[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+   65 |   ECI_HW_PARA stcHwPara   = {0[01;35m[K}[m[K;
+      |                               [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:66:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_INFO::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+   66 |   ECI_HW_INFO stcHwInfo   = {0[01;35m[K}[m[K;
+      |                               [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciCanDemo113(DWORD, DWORD)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:138:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CONFIG::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  138 |     ECI_CTRL_CONFIG stcCtrlConfig = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:155:43:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CAPABILITIES::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  155 |     ECI_CTRL_CAPABILITIES stcCtrlCaps = {0[01;35m[K}[m[K;
+      |                                           [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Tx_Data(HRESULT, BYTE (*)[8], DWORD*)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:179:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  179 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:226:49:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  226 |         ECI_CTRL_MESSAGE  astcCtrlMsg[20] = {{0}[01;35m[K}[m[K;
+      |                                                 [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:249:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  249 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Rx_Data(HRESULT)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:257:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  257 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:314:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  314 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT close_can_rtx_data(HRESULT)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:340:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  340 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:4[m[K:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:55:2:[m[K [01;35m[Kwarning: [m[Kextra ‘[01m[K;[m[K’ [[01;35m[K-Wpedantic[m[K]
+   55 | }[01;35m[K;[m[K
+      |  [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciDemo113()[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::dwFlags[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+   65 |   ECI_HW_PARA stcHwPara   = {0[01;35m[K}[m[K;
+      |                               [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:66:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_INFO::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+   66 |   ECI_HW_INFO stcHwInfo   = {0[01;35m[K}[m[K;
+      |                               [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciCanDemo113(DWORD, DWORD)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:138:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CONFIG::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  138 |     ECI_CTRL_CONFIG stcCtrlConfig = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:155:43:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CAPABILITIES::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  155 |     ECI_CTRL_CAPABILITIES stcCtrlCaps = {0[01;35m[K}[m[K;
+      |                                           [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Tx_Data(HRESULT, BYTE (*)[8], DWORD*)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:179:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  179 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:226:49:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  226 |         ECI_CTRL_MESSAGE  astcCtrlMsg[20] = {{0}[01;35m[K}[m[K;
+      |                                                 [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:249:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  249 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Rx_Data(HRESULT)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:257:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  257 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:314:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  314 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT close_can_rtx_data(HRESULT)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:340:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  340 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:4[m[K:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:55:2:[m[K [01;35m[Kwarning: [m[Kextra ‘[01m[K;[m[K’ [[01;35m[K-Wpedantic[m[K]
+   55 | }[01;35m[K;[m[K
+      |  [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciDemo113()[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::dwFlags[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+   65 |   ECI_HW_PARA stcHwPara   = {0[01;35m[K}[m[K;
+      |                               [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:66:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_INFO::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+   66 |   ECI_HW_INFO stcHwInfo   = {0[01;35m[K}[m[K;
+      |                               [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciCanDemo113(DWORD, DWORD)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:138:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CONFIG::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  138 |     ECI_CTRL_CONFIG stcCtrlConfig = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:155:43:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CAPABILITIES::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  155 |     ECI_CTRL_CAPABILITIES stcCtrlCaps = {0[01;35m[K}[m[K;
+      |                                           [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Tx_Data(HRESULT, BYTE (*)[8], DWORD*)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:179:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  179 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:226:49:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  226 |         ECI_CTRL_MESSAGE  astcCtrlMsg[20] = {{0}[01;35m[K}[m[K;
+      |                                                 [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:249:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  249 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Rx_Data(HRESULT)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:257:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  257 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:314:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  314 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT close_can_rtx_data(HRESULT)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:340:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  340 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:[m[K In function ‘[01m[Kint main(int, char**, char**)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:460:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KLK_rxflag[m[K’ [[01;35m[K-Wunused-variable[m[K]
+  460 |     int [01;35m[KLK_rxflag[m[K=1;
+      |         [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:461:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KLH_rxflag[m[K’ [[01;35m[K-Wunused-variable[m[K]
+  461 |     int [01;35m[KLH_rxflag[m[K=1;
+      |         [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:462:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KRK_rxflag[m[K’ [[01;35m[K-Wunused-variable[m[K]
+  462 |     int [01;35m[KRK_rxflag[m[K=1;
+      |         [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:463:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KRH_rxflag[m[K’ [[01;35m[K-Wunused-variable[m[K]
+  463 |     int [01;35m[KRH_rxflag[m[K=1;
+      |         [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:478:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Klefthip_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+  478 |     int [01;35m[Klefthip_len[m[K=0;
+      |         [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:479:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kleftknee_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+  479 |     int [01;35m[Kleftknee_len[m[K=0;
+      |         [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:480:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Krighthip_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+  480 |     int [01;35m[Krighthip_len[m[K=0;
+      |         [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:481:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Krightknee_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+  481 |     int [01;35m[Krightknee_len[m[K=0;
+      |         [01;35m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:483:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kleft_hip_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+  483 |     int [01;35m[Kleft_hip_len[m[K=0;
+      |         [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:484:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kleft_knee_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+  484 |     int [01;35m[Kleft_knee_len[m[K=0;
+      |         [01;35m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:485:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kright_hip_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+  485 |     int [01;35m[Kright_hip_len[m[K=0;
+      |         [01;35m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:486:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kright_knee_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+  486 |     int [01;35m[Kright_knee_len[m[K=0;
+      |         [01;35m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:494:11:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kleftknee_angle_move[m[K’ [[01;35m[K-Wunused-variable[m[K]
+  494 |     float [01;35m[Kleftknee_angle_move[m[K;
+      |           [01;35m[K^~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:496:11:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Krightknee_angle_move[m[K’ [[01;35m[K-Wunused-variable[m[K]
+  496 |     float [01;35m[Krightknee_angle_move[m[K;
+      |           [01;35m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:526:10:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KTX_pos_move[m[K’ [[01;35m[K-Wunused-variable[m[K]
+  526 |     BYTE [01;35m[KTX_pos_move[m[K[12][8]      = {
+      |          [01;35m[K^~~~~~~~~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:430:24:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kargc[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+  430 | int   main( [01;35m[Kint        argc[m[K,
+      |             [01;35m[K~~~~~~~~~~~^~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:431:24:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kargv[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+  431 |             [01;35m[Kchar**     argv[m[K,
+      |             [01;35m[K~~~~~~~~~~~^~~~[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:432:24:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kenvp[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+  432 |             [01;35m[Kchar**     envp[m[K )
+      |             [01;35m[K~~~~~~~~~~~^~~~[m[K
+In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:4[m[K:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:55:2:[m[K [01;35m[Kwarning: [m[Kextra ‘[01m[K;[m[K’ [[01;35m[K-Wpedantic[m[K]
+   55 | }[01;35m[K;[m[K
+      |  [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciDemo113()[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::dwFlags[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+   65 |   ECI_HW_PARA stcHwPara   = {0[01;35m[K}[m[K;
+      |                               [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:66:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_INFO::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+   66 |   ECI_HW_INFO stcHwInfo   = {0[01;35m[K}[m[K;
+      |                               [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciCanDemo113(DWORD, DWORD)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:138:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CONFIG::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  138 |     ECI_CTRL_CONFIG stcCtrlConfig = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:155:43:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CAPABILITIES::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  155 |     ECI_CTRL_CAPABILITIES stcCtrlCaps = {0[01;35m[K}[m[K;
+      |                                           [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Tx_Data(HRESULT, BYTE (*)[8], DWORD*)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:179:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  179 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:226:49:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  226 |         ECI_CTRL_MESSAGE  astcCtrlMsg[20] = {{0}[01;35m[K}[m[K;
+      |                                                 [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:249:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  249 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Rx_Data(HRESULT)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:257:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+  257 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+      |                                       [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:314:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  314 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT close_can_rtx_data(HRESULT)[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:340:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+  340 | [01;35m[K}[m[K
+      | [01;35m[K^[m[K
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Kinematic_Dynamic/exoskeleton_kinematics.cpp:[m[K In function ‘[01m[Kint main()[m[K’:
+[01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Kinematic_Dynamic/exoskeleton_kinematics.cpp:11:30:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kangle[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+   11 |     Eigen::Matrix<float,4,1> [01;35m[Kangle[m[K = exoskeleton_kinetic.inverse_kinematics(T_end);
+      |                              [01;35m[K^~~~~[m[K

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libEciDemo113.a  CMakeFiles/EciDemo113.dir/src/Eci/EciDemo113.cpp.o
+/usr/bin/ranlib libEciDemo113.a

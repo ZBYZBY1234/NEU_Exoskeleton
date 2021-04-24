@@ -1,0 +1,4 @@
+source;share/exoskeleton_control/local_setup.bash
+source;share/exoskeleton_control/local_setup.dsv
+source;share/exoskeleton_control/local_setup.sh
+source;share/exoskeleton_control/local_setup.zsh

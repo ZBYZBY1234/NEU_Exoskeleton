@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/hemingshan/exo_ws/src/exoskeleton_control/include/exoskeleton_dynamics/exoskeleton_dynamics.hpp
+iostream
+-
+eigen3/Eigen/Dense
+-
+math.h
+-
+
+/home/hemingshan/exo_ws/src/exoskeleton_control/src/Kinematic_Dynamic/exoskeleton_dynamics.cpp
+iostream
+-
+exoskeleton_dynamics/exoskeleton_dynamics.hpp
+/home/hemingshan/exo_ws/src/exoskeleton_control/src/Kinematic_Dynamic/exoskeleton_dynamics/exoskeleton_dynamics.hpp
+

@@ -1,0 +1,77 @@
+[0.787s] Invoking command in '/home/hemingshan/exo_ws/src/build/security_module': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake /home/hemingshan/exo_ws/src/security_module -DCMAKE_INSTALL_PREFIX=/home/hemingshan/exo_ws/src/install/security_module
+[0.928s] -- The C compiler identification is GNU 9.3.0
+[1.044s] -- The CXX compiler identification is GNU 9.3.0
+[1.053s] -- Check for working C compiler: /usr/bin/cc
+[1.165s] -- Check for working C compiler: /usr/bin/cc -- works
+[1.168s] -- Detecting C compiler ABI info
+[1.278s] -- Detecting C compiler ABI info - done
+[1.302s] -- Detecting C compile features
+[1.303s] -- Detecting C compile features - done
+[1.307s] -- Check for working CXX compiler: /usr/bin/c++
+[1.470s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[1.475s] -- Detecting CXX compiler ABI info
+[1.585s] -- Detecting CXX compiler ABI info - done
+[1.602s] -- Detecting CXX compile features
+[1.603s] -- Detecting CXX compile features - done
+[1.606s] -- Found ament_cmake: 0.9.8 (/opt/ros/foxy/share/ament_cmake/cmake)
+[1.636s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.5", minimum required is "3") 
+[1.637s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[1.960s] -- Found ament_lint_auto: 0.9.6 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[2.091s] -- Found rclcpp: 2.3.0 (/opt/ros/foxy/share/rclcpp/cmake)
+[2.138s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.145s] -- Found rosidl_adapter: 1.2.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[2.246s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[2.292s] -- Found FastRTPS: /opt/ros/foxy/include  
+[2.419s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.504s] -- Found rmw_implementation_cmake: 1.0.2 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[2.506s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.507s] -- Looking for pthread.h
+[2.620s] -- Looking for pthread.h - found
+[2.620s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[2.832s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+[2.833s] -- Looking for pthread_create in pthreads
+[3.106s] -- Looking for pthread_create in pthreads - not found
+[3.107s] -- Looking for pthread_create in pthread
+[3.464s] -- Looking for pthread_create in pthread - found
+[3.465s] -- Found Threads: TRUE  
+[3.885s] -- Found sensor_msgs: 2.0.3 (/opt/ros/foxy/share/sensor_msgs/cmake)
+[4.179s] -- Added test 'copyright' to check source files copyright and LICENSE
+[4.181s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[4.181s] -- Configured cppcheck include dirs: 
+[4.182s] -- Configured cppcheck exclude dirs and/or files: 
+[4.185s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[4.185s] -- Configured cpplint exclude dirs and/or files: 
+[4.187s] -- Added test 'lint_cmake' to check CMake code style
+[4.190s] -- Added test 'uncrustify' to check C / C++ code style
+[4.190s] -- Configured uncrustify additional arguments: 
+[4.193s] -- Added test 'xmllint' to check XML markup files
+[4.199s] -- Configuring done
+[4.221s] -- Generating done
+[4.224s] -- Build files have been written to: /home/hemingshan/exo_ws/src/build/security_module
+[4.246s] Invoked command in '/home/hemingshan/exo_ws/src/build/security_module' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake /home/hemingshan/exo_ws/src/security_module -DCMAKE_INSTALL_PREFIX=/home/hemingshan/exo_ws/src/install/security_module
+[4.247s] Invoking command in '/home/hemingshan/exo_ws/src/build/security_module': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake --build /home/hemingshan/exo_ws/src/build/security_module -- -j8 -l8
+[4.500s] [35m[1mScanning dependencies of target Security_Position[0m
+[4.668s] [ 50%] [32mBuilding CXX object CMakeFiles/Security_Position.dir/src/security_position.cpp.o[0m
+[22.923s] [100%] [32m[1mLinking CXX executable Security_Position[0m
+[23.297s] [100%] Built target Security_Position
+[23.308s] Invoked command in '/home/hemingshan/exo_ws/src/build/security_module' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake --build /home/hemingshan/exo_ws/src/build/security_module -- -j8 -l8
+[23.331s] Invoking command in '/home/hemingshan/exo_ws/src/build/security_module': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake --install /home/hemingshan/exo_ws/src/build/security_module
+[23.342s] -- Install configuration: ""
+[23.342s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/lib/security_module/Security_Position
+[23.344s] -- Set runtime path of "/home/hemingshan/exo_ws/src/install/security_module/lib/security_module/Security_Position" to ""
+[23.344s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/ament_index/resource_index/package_run_dependencies/security_module
+[23.345s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/ament_index/resource_index/parent_prefix_path/security_module
+[23.345s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/environment/ament_prefix_path.sh
+[23.345s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/environment/ament_prefix_path.dsv
+[23.345s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/environment/path.sh
+[23.345s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/environment/path.dsv
+[23.345s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/local_setup.bash
+[23.346s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/local_setup.sh
+[23.346s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/local_setup.zsh
+[23.346s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/local_setup.dsv
+[23.346s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/package.dsv
+[23.346s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/ament_index/resource_index/packages/security_module
+[23.346s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/cmake/security_moduleConfig.cmake
+[23.346s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/cmake/security_moduleConfig-version.cmake
+[23.346s] -- Installing: /home/hemingshan/exo_ws/src/install/security_module/share/security_module/package.xml
+[23.350s] Invoked command in '/home/hemingshan/exo_ws/src/build/security_module' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake --install /home/hemingshan/exo_ws/src/build/security_module

@@ -1,0 +1,366 @@
+[0.060s] Invoking command in '/home/hemingshan/exo_ws/src/build/exoskeleton_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake /home/hemingshan/exo_ws/src/exoskeleton_control -DCMAKE_INSTALL_PREFIX=/home/hemingshan/exo_ws/src/install/exoskeleton_control
+[0.841s] -- The C compiler identification is GNU 9.3.0
+[0.841s] -- The CXX compiler identification is GNU 9.3.0
+[0.841s] -- Check for working C compiler: /usr/bin/cc
+[0.841s] -- Check for working C compiler: /usr/bin/cc -- works
+[0.842s] -- Detecting C compiler ABI info
+[0.842s] -- Detecting C compiler ABI info - done
+[0.842s] -- Detecting C compile features
+[0.842s] -- Detecting C compile features - done
+[0.842s] -- Check for working CXX compiler: /usr/bin/c++
+[0.842s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[0.843s] -- Detecting CXX compiler ABI info
+[0.843s] -- Detecting CXX compiler ABI info - done
+[0.843s] -- Detecting CXX compile features
+[0.843s] -- Detecting CXX compile features - done
+[0.843s] -- Found ament_cmake: 0.9.8 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.843s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.5", minimum required is "3") 
+[0.843s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[1.093s] -- Found ament_lint_auto: 0.9.6 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[1.213s] -- Found rclcpp: 2.3.0 (/opt/ros/foxy/share/rclcpp/cmake)
+[1.278s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.290s] -- Found rosidl_adapter: 1.2.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[1.448s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[1.513s] -- Found FastRTPS: /opt/ros/foxy/include  
+[1.648s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.723s] -- Found rmw_implementation_cmake: 1.0.2 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[1.726s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.727s] -- Looking for pthread.h
+[1.802s] -- Looking for pthread.h - found
+[1.803s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.901s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+[1.901s] -- Looking for pthread_create in pthreads
+[1.983s] -- Looking for pthread_create in pthreads - not found
+[1.986s] -- Looking for pthread_create in pthread
+[2.074s] -- Looking for pthread_create in pthread - found
+[2.075s] -- Found Threads: TRUE  
+[2.262s] -- Found sensor_msgs: 2.0.3 (/opt/ros/foxy/share/sensor_msgs/cmake)
+[2.451s] -- Added test 'copyright' to check source files copyright and LICENSE
+[2.455s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.456s] -- Configured cppcheck include dirs: /home/hemingshan/exo_ws/src/exoskeleton_control/include
+[2.457s] -- Configured cppcheck exclude dirs and/or files: 
+[2.460s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[2.460s] -- Configured cpplint exclude dirs and/or files: 
+[2.463s] -- Added test 'lint_cmake' to check CMake code style
+[2.466s] -- Added test 'uncrustify' to check C / C++ code style
+[2.466s] -- Configured uncrustify additional arguments: 
+[2.467s] -- Added test 'xmllint' to check XML markup files
+[2.472s] -- Configuring done
+[2.529s] -- Generating done
+[2.538s] -- Build files have been written to: /home/hemingshan/exo_ws/src/build/exoskeleton_control
+[2.551s] Invoked command in '/home/hemingshan/exo_ws/src/build/exoskeleton_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake /home/hemingshan/exo_ws/src/exoskeleton_control -DCMAKE_INSTALL_PREFIX=/home/hemingshan/exo_ws/src/install/exoskeleton_control
+[2.556s] Invoking command in '/home/hemingshan/exo_ws/src/build/exoskeleton_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake --build /home/hemingshan/exo_ws/src/build/exoskeleton_control -- -j8 -l8
+[2.625s] [35m[1mScanning dependencies of target EciDemoCommon[0m
+[2.627s] [35m[1mScanning dependencies of target Admittance_control_Software[0m
+[2.628s] [35m[1mScanning dependencies of target Exoskeleton_dynamics[0m
+[2.629s] [35m[1mScanning dependencies of target EciDemo113[0m
+[2.633s] [35m[1mScanning dependencies of target Test[0m
+[2.646s] [35m[1mScanning dependencies of target Admittance_control_Hardware[0m
+[2.661s] [  4%] [32mBuilding C object CMakeFiles/EciDemoCommon.dir/src/Eci/EciDemoCommon.c.o[0m
+[2.663s] [  8%] [32mBuilding CXX object CMakeFiles/EciDemo113.dir/src/Eci/EciDemo113.cpp.o[0m
+[2.666s] [35m[1mScanning dependencies of target Exoskeleton_kinematics[0m
+[2.674s] [ 12%] [32mBuilding CXX object CMakeFiles/Exoskeleton_dynamics.dir/src/Kinematic_Dynamic/exoskeleton_dynamics.cpp.o[0m
+[2.686s] [ 16%] [32mBuilding CXX object CMakeFiles/Exoskeleton_kinematics.dir/src/Kinematic_Dynamic/exoskeleton_kinematics.cpp.o[0m
+[2.707s] In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/OsEci.h:22[m[K,
+[2.707s]                  from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/ECI_cantype.h:18[m[K,
+[2.707s]                  from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/ECI_hwtype.h:17[m[K,
+[2.707s]                  from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:17[m[K,
+[2.708s]                  from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemoCommon.c:17[m[K:
+[2.708s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/ECI_error.h:64:19:[m[K [01;35m[Kwarning: [m[KISO C restricts enumerator values to range of ‘[01m[Kint[m[K’ [[01;35m[K-Wpedantic[m[K]
+[2.708s]    64 |   ECI_ERR_FIRST = [01;35m[K([m[KSEV_ECI_ERROR | 0x0000),
+[2.708s]       |                   [01;35m[K^[m[K
+[2.709s] In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:17[m[K,
+[2.709s]                  from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemoCommon.c:17[m[K:
+[2.709s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/ECI_hwtype.h:144:39:[m[K [01;35m[Kwarning: [m[KISO C restricts enumerator values to range of ‘[01m[Kint[m[K’ [[01;35m[K-Wpedantic[m[K]
+[2.709s]   144 |   ECI_SETTINGS_FLAG_NO_FW_DOWNLOAD  = [01;35m[K0x80000000[m[K
+[2.709s]       |                                       [01;35m[K^~~~~~~~~~[m[K
+[2.725s] In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:4[m[K:
+[2.725s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:55:2:[m[K [01;35m[Kwarning: [m[Kextra ‘[01m[K;[m[K’ [[01;35m[K-Wpedantic[m[K]
+[2.725s]    55 | }[01;35m[K;[m[K
+[2.725s]       |  [01;35m[K^[m[K
+[2.726s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciDemo113()[m[K’:
+[2.726s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::dwFlags[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[2.726s]    65 |   ECI_HW_PARA stcHwPara   = {0[01;35m[K}[m[K;
+[2.726s]       |                               [01;35m[K^[m[K
+[2.726s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[2.726s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:66:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_INFO::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[2.727s]    66 |   ECI_HW_INFO stcHwInfo   = {0[01;35m[K}[m[K;
+[2.727s]       |                               [01;35m[K^[m[K
+[2.727s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciCanDemo113(DWORD, DWORD)[m[K’:
+[2.727s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:138:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CONFIG::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[2.727s]   138 |     ECI_CTRL_CONFIG stcCtrlConfig = {0[01;35m[K}[m[K;
+[2.728s]       |                                       [01;35m[K^[m[K
+[2.728s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:155:43:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CAPABILITIES::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[2.728s]   155 |     ECI_CTRL_CAPABILITIES stcCtrlCaps = {0[01;35m[K}[m[K;
+[2.728s]       |                                           [01;35m[K^[m[K
+[2.729s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Tx_Data(HRESULT, BYTE (*)[8], DWORD*)[m[K’:
+[2.729s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:179:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[2.730s]   179 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+[2.730s]       |                                       [01;35m[K^[m[K
+[2.730s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:226:49:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[2.730s]   226 |         ECI_CTRL_MESSAGE  astcCtrlMsg[20] = {{0}[01;35m[K}[m[K;
+[2.730s]       |                                                 [01;35m[K^[m[K
+[2.731s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:249:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[2.731s]   249 | [01;35m[K}[m[K
+[2.731s]       | [01;35m[K^[m[K
+[2.731s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Rx_Data(HRESULT)[m[K’:
+[2.731s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:257:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[2.731s]   257 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+[2.731s]       |                                       [01;35m[K^[m[K
+[2.732s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:314:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[2.732s]   314 | [01;35m[K}[m[K
+[2.732s]       | [01;35m[K^[m[K
+[2.732s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT close_can_rtx_data(HRESULT)[m[K’:
+[2.732s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:340:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[2.732s]   340 | [01;35m[K}[m[K
+[2.732s]       | [01;35m[K^[m[K
+[2.745s] [ 24%] [32mBuilding CXX object CMakeFiles/Test.dir/src/Eci/Test.cpp.o[0m
+[2.746s] [ 24%] [32mBuilding CXX object CMakeFiles/Admittance_control_Software.dir/src/Admittance_Control/Admittance_control_Software.cpp.o[0m
+[2.748s] [ 28%] [32mBuilding CXX object CMakeFiles/Admittance_control_Hardware.dir/src/Admittance_Control/Admittance_control_Hardware.cpp.o[0m
+[2.792s] [ 32%] [32m[1mLinking CXX static library libEciDemo113.a[0m
+[2.806s] [ 36%] [32m[1mLinking C static library libEciDemoCommon.a[0m
+[2.908s] [ 36%] Built target EciDemoCommon
+[2.935s] [35m[1mScanning dependencies of target Eci_keyboard[0m
+[2.948s] [ 36%] Built target EciDemo113
+[2.959s] [35m[1mScanning dependencies of target EciDemo[0m
+[2.984s] [ 40%] [32mBuilding CXX object CMakeFiles/Eci_keyboard.dir/src/Eci/EciDemo113.cpp.o[0m
+[2.997s] [35m[1mScanning dependencies of target Angle_Send[0m
+[3.038s] [ 44%] [32mBuilding CXX object CMakeFiles/EciDemo.dir/src/Eci/EciDemo113.cpp.o[0m
+[3.051s] In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:4[m[K:
+[3.051s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:55:2:[m[K [01;35m[Kwarning: [m[Kextra ‘[01m[K;[m[K’ [[01;35m[K-Wpedantic[m[K]
+[3.052s]    55 | }[01;35m[K;[m[K
+[3.052s]       |  [01;35m[K^[m[K
+[3.052s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciDemo113()[m[K’:
+[3.053s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::dwFlags[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.053s]    65 |   ECI_HW_PARA stcHwPara   = {0[01;35m[K}[m[K;
+[3.053s]       |                               [01;35m[K^[m[K
+[3.053s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.053s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:66:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_INFO::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.053s]    66 |   ECI_HW_INFO stcHwInfo   = {0[01;35m[K}[m[K;
+[3.054s]       |                               [01;35m[K^[m[K
+[3.054s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciCanDemo113(DWORD, DWORD)[m[K’:
+[3.054s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:138:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CONFIG::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.054s]   138 |     ECI_CTRL_CONFIG stcCtrlConfig = {0[01;35m[K}[m[K;
+[3.054s]       |                                       [01;35m[K^[m[K
+[3.055s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:155:43:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CAPABILITIES::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.055s]   155 |     ECI_CTRL_CAPABILITIES stcCtrlCaps = {0[01;35m[K}[m[K;
+[3.055s]       |                                           [01;35m[K^[m[K
+[3.056s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Tx_Data(HRESULT, BYTE (*)[8], DWORD*)[m[K’:
+[3.056s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:179:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.056s]   179 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+[3.056s]       |                                       [01;35m[K^[m[K
+[3.056s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:226:49:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.057s]   226 |         ECI_CTRL_MESSAGE  astcCtrlMsg[20] = {{0}[01;35m[K}[m[K;
+[3.057s]       |                                                 [01;35m[K^[m[K
+[3.057s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:249:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[3.057s]   249 | [01;35m[K}[m[K
+[3.057s]       | [01;35m[K^[m[K
+[3.057s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Rx_Data(HRESULT)[m[K’:
+[3.058s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:257:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.058s]   257 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+[3.058s]       |                                       [01;35m[K^[m[K
+[3.058s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:314:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[3.058s]   314 | [01;35m[K}[m[K
+[3.058s]       | [01;35m[K^[m[K
+[3.059s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT close_can_rtx_data(HRESULT)[m[K’:
+[3.059s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:340:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[3.059s]   340 | [01;35m[K}[m[K
+[3.059s]       | [01;35m[K^[m[K
+[3.113s] [ 48%] [32mBuilding CXX object CMakeFiles/Angle_Send.dir/src/Eci/Angle_Send.cpp.o[0m
+[3.119s] In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:4[m[K:
+[3.120s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:55:2:[m[K [01;35m[Kwarning: [m[Kextra ‘[01m[K;[m[K’ [[01;35m[K-Wpedantic[m[K]
+[3.120s]    55 | }[01;35m[K;[m[K
+[3.120s]       |  [01;35m[K^[m[K
+[3.120s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciDemo113()[m[K’:
+[3.121s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::dwFlags[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.121s]    65 |   ECI_HW_PARA stcHwPara   = {0[01;35m[K}[m[K;
+[3.121s]       |                               [01;35m[K^[m[K
+[3.122s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.123s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:66:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_INFO::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.123s]    66 |   ECI_HW_INFO stcHwInfo   = {0[01;35m[K}[m[K;
+[3.124s]       |                               [01;35m[K^[m[K
+[3.125s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciCanDemo113(DWORD, DWORD)[m[K’:
+[3.125s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:138:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CONFIG::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.126s]   138 |     ECI_CTRL_CONFIG stcCtrlConfig = {0[01;35m[K}[m[K;
+[3.126s]       |                                       [01;35m[K^[m[K
+[3.131s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:155:43:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CAPABILITIES::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.131s]   155 |     ECI_CTRL_CAPABILITIES stcCtrlCaps = {0[01;35m[K}[m[K;
+[3.131s]       |                                           [01;35m[K^[m[K
+[3.137s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Tx_Data(HRESULT, BYTE (*)[8], DWORD*)[m[K’:
+[3.137s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:179:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.137s]   179 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+[3.138s]       |                                       [01;35m[K^[m[K
+[3.138s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:226:49:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.138s]   226 |         ECI_CTRL_MESSAGE  astcCtrlMsg[20] = {{0}[01;35m[K}[m[K;
+[3.138s]       |                                                 [01;35m[K^[m[K
+[3.138s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:249:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[3.138s]   249 | [01;35m[K}[m[K
+[3.138s]       | [01;35m[K^[m[K
+[3.139s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Rx_Data(HRESULT)[m[K’:
+[3.139s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:257:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[3.139s]   257 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+[3.139s]       |                                       [01;35m[K^[m[K
+[3.139s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:314:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[3.139s]   314 | [01;35m[K}[m[K
+[3.139s]       | [01;35m[K^[m[K
+[3.140s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT close_can_rtx_data(HRESULT)[m[K’:
+[3.140s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:340:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[3.140s]   340 | [01;35m[K}[m[K
+[3.140s]       | [01;35m[K^[m[K
+[3.174s] [ 52%] [32mBuilding CXX object CMakeFiles/Eci_keyboard.dir/src/Eci/Eci_keyboard.cpp.o[0m
+[3.187s] [ 56%] [32mBuilding CXX object CMakeFiles/EciDemo.dir/src/Eci/LinuxEciDemo.cpp.o[0m
+[3.431s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:[m[K In function ‘[01m[Kint main(int, char**, char**)[m[K’:
+[3.431s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:460:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KLK_rxflag[m[K’ [[01;35m[K-Wunused-variable[m[K]
+[3.432s]   460 |     int [01;35m[KLK_rxflag[m[K=1;
+[3.432s]       |         [01;35m[K^~~~~~~~~[m[K
+[3.432s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:461:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KLH_rxflag[m[K’ [[01;35m[K-Wunused-variable[m[K]
+[3.432s]   461 |     int [01;35m[KLH_rxflag[m[K=1;
+[3.432s]       |         [01;35m[K^~~~~~~~~[m[K
+[3.432s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:462:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KRK_rxflag[m[K’ [[01;35m[K-Wunused-variable[m[K]
+[3.433s]   462 |     int [01;35m[KRK_rxflag[m[K=1;
+[3.433s]       |         [01;35m[K^~~~~~~~~[m[K
+[3.433s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:463:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KRH_rxflag[m[K’ [[01;35m[K-Wunused-variable[m[K]
+[3.433s]   463 |     int [01;35m[KRH_rxflag[m[K=1;
+[3.433s]       |         [01;35m[K^~~~~~~~~[m[K
+[3.433s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:478:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Klefthip_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+[3.433s]   478 |     int [01;35m[Klefthip_len[m[K=0;
+[3.434s]       |         [01;35m[K^~~~~~~~~~~[m[K
+[3.434s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:479:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kleftknee_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+[3.434s]   479 |     int [01;35m[Kleftknee_len[m[K=0;
+[3.434s]       |         [01;35m[K^~~~~~~~~~~~[m[K
+[3.434s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:480:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Krighthip_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+[3.434s]   480 |     int [01;35m[Krighthip_len[m[K=0;
+[3.435s]       |         [01;35m[K^~~~~~~~~~~~[m[K
+[3.435s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:481:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Krightknee_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+[3.435s]   481 |     int [01;35m[Krightknee_len[m[K=0;
+[3.435s]       |         [01;35m[K^~~~~~~~~~~~~[m[K
+[3.435s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:483:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kleft_hip_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+[3.435s]   483 |     int [01;35m[Kleft_hip_len[m[K=0;
+[3.435s]       |         [01;35m[K^~~~~~~~~~~~[m[K
+[3.436s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:484:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kleft_knee_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+[3.436s]   484 |     int [01;35m[Kleft_knee_len[m[K=0;
+[3.436s]       |         [01;35m[K^~~~~~~~~~~~~[m[K
+[3.436s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:485:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kright_hip_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+[3.436s]   485 |     int [01;35m[Kright_hip_len[m[K=0;
+[3.437s]       |         [01;35m[K^~~~~~~~~~~~~[m[K
+[3.437s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:486:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kright_knee_len[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+[3.437s]   486 |     int [01;35m[Kright_knee_len[m[K=0;
+[3.437s]       |         [01;35m[K^~~~~~~~~~~~~~[m[K
+[3.437s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:494:11:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kleftknee_angle_move[m[K’ [[01;35m[K-Wunused-variable[m[K]
+[3.437s]   494 |     float [01;35m[Kleftknee_angle_move[m[K;
+[3.438s]       |           [01;35m[K^~~~~~~~~~~~~~~~~~~[m[K
+[3.438s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:496:11:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Krightknee_angle_move[m[K’ [[01;35m[K-Wunused-variable[m[K]
+[3.438s]   496 |     float [01;35m[Krightknee_angle_move[m[K;
+[3.439s]       |           [01;35m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[3.439s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:526:10:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KTX_pos_move[m[K’ [[01;35m[K-Wunused-variable[m[K]
+[3.439s]   526 |     BYTE [01;35m[KTX_pos_move[m[K[12][8]      = {
+[3.439s]       |          [01;35m[K^~~~~~~~~~~[m[K
+[3.439s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:430:24:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kargc[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+[3.439s]   430 | int   main( [01;35m[Kint        argc[m[K,
+[3.439s]       |             [01;35m[K~~~~~~~~~~~^~~~[m[K
+[3.439s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:431:24:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kargv[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+[3.440s]   431 |             [01;35m[Kchar**     argv[m[K,
+[3.440s]       |             [01;35m[K~~~~~~~~~~~^~~~[m[K
+[3.440s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/LinuxEciDemo.cpp:432:24:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kenvp[m[K’ [[01;35m[K-Wunused-parameter[m[K]
+[3.440s]   432 |             [01;35m[Kchar**     envp[m[K )
+[3.440s]       |             [01;35m[K~~~~~~~~~~~^~~~[m[K
+[3.458s] [ 60%] [32m[1mLinking CXX executable Eci_keyboard[0m
+[3.605s] [ 64%] [32m[1mLinking CXX executable EciDemo[0m
+[3.957s] [ 64%] Built target Eci_keyboard
+[4.032s] [35m[1mScanning dependencies of target Angle_Driver[0m
+[4.047s] [ 64%] Built target EciDemo
+[4.164s] [ 68%] [32mBuilding CXX object CMakeFiles/Angle_Driver.dir/src/Eci/Angle_Driver.cpp.o[0m
+[4.174s] [ 72%] [32mBuilding CXX object CMakeFiles/Angle_Driver.dir/src/Eci/EciDemo113.cpp.o[0m
+[4.309s] In file included from [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:4[m[K:
+[4.309s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/include/eci/EciDemoCommon.h:55:2:[m[K [01;35m[Kwarning: [m[Kextra ‘[01m[K;[m[K’ [[01;35m[K-Wpedantic[m[K]
+[4.309s]    55 | }[01;35m[K;[m[K
+[4.310s]       |  [01;35m[K^[m[K
+[4.310s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciDemo113()[m[K’:
+[4.310s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::dwFlags[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[4.310s]    65 |   ECI_HW_PARA stcHwPara   = {0[01;35m[K}[m[K;
+[4.310s]       |                               [01;35m[K^[m[K
+[4.310s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:65:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_PARA::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[4.311s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:66:31:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_HW_INFO::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[4.311s]    66 |   ECI_HW_INFO stcHwInfo   = {0[01;35m[K}[m[K;
+[4.311s]       |                               [01;35m[K^[m[K
+[4.312s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT EciCanDemo113(DWORD, DWORD)[m[K’:
+[4.312s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:138:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CONFIG::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[4.312s]   138 |     ECI_CTRL_CONFIG stcCtrlConfig = {0[01;35m[K}[m[K;
+[4.312s]       |                                       [01;35m[K^[m[K
+[4.312s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:155:43:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_CAPABILITIES::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[4.313s]   155 |     ECI_CTRL_CAPABILITIES stcCtrlCaps = {0[01;35m[K}[m[K;
+[4.313s]       |                                           [01;35m[K^[m[K
+[4.330s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Tx_Data(HRESULT, BYTE (*)[8], DWORD*)[m[K’:
+[4.330s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:179:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[4.330s]   179 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+[4.331s]       |                                       [01;35m[K^[m[K
+[4.331s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:226:49:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[4.331s]   226 |         ECI_CTRL_MESSAGE  astcCtrlMsg[20] = {{0}[01;35m[K}[m[K;
+[4.331s]       |                                                 [01;35m[K^[m[K
+[4.331s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:249:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[4.331s]   249 | [01;35m[K}[m[K
+[4.331s]       | [01;35m[K^[m[K
+[4.332s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT Can_Rx_Data(HRESULT)[m[K’:
+[4.332s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:257:39:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[KECI_CTRL_MESSAGE::u[m[K’ [[01;35m[K-Wmissing-field-initializers[m[K]
+[4.332s]   257 |     ECI_CTRL_MESSAGE stcCtrlMsg   = {0[01;35m[K}[m[K;
+[4.332s]       |                                       [01;35m[K^[m[K
+[4.332s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:314:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[4.332s]   314 | [01;35m[K}[m[K
+[4.332s]       | [01;35m[K^[m[K
+[4.332s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:[m[K In function ‘[01m[KHRESULT close_can_rtx_data(HRESULT)[m[K’:
+[4.333s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Eci/EciDemo113.cpp:340:1:[m[K [01;35m[Kwarning: [m[Kno return statement in function returning non-void [[01;35m[K-Wreturn-type[m[K]
+[4.333s]   340 | [01;35m[K}[m[K
+[4.333s]       | [01;35m[K^[m[K
+[5.395s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Kinematic_Dynamic/exoskeleton_kinematics.cpp:[m[K In function ‘[01m[Kint main()[m[K’:
+[5.395s] [01m[K/home/hemingshan/exo_ws/src/exoskeleton_control/src/Kinematic_Dynamic/exoskeleton_kinematics.cpp:11:30:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kangle[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+[5.395s]    11 |     Eigen::Matrix<float,4,1> [01;35m[Kangle[m[K = exoskeleton_kinetic.inverse_kinematics(T_end);
+[5.396s]       |                              [01;35m[K^~~~~[m[K
+[9.569s] [ 76%] [32m[1mLinking CXX executable Exoskeleton_kinematics[0m
+[10.004s] [ 76%] Built target Exoskeleton_kinematics
+[10.693s] [ 80%] [32m[1mLinking CXX executable Exoskeleton_dynamics[0m
+[11.238s] [ 80%] Built target Exoskeleton_dynamics
+[16.198s] [ 84%] [32m[1mLinking CXX executable Angle_Send[0m
+[17.125s] [ 84%] Built target Angle_Send
+[20.237s] [ 88%] [32m[1mLinking CXX executable Test[0m
+[20.769s] [ 88%] Built target Test
+[21.171s] [ 92%] [32m[1mLinking CXX executable Angle_Driver[0m
+[21.570s] [ 92%] Built target Angle_Driver
+[26.377s] [ 96%] [32m[1mLinking CXX executable Admittance_control_Hardware[0m
+[26.858s] [ 96%] Built target Admittance_control_Hardware
+[27.857s] [100%] [32m[1mLinking CXX executable Admittance_control_Software[0m
+[28.345s] [100%] Built target Admittance_control_Software
+[28.357s] Invoked command in '/home/hemingshan/exo_ws/src/build/exoskeleton_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake --build /home/hemingshan/exo_ws/src/build/exoskeleton_control -- -j8 -l8
+[28.399s] Invoking command in '/home/hemingshan/exo_ws/src/build/exoskeleton_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake --install /home/hemingshan/exo_ws/src/build/exoskeleton_control
+[28.408s] -- Install configuration: ""
+[28.408s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/EciDemo
+[28.408s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Eci_keyboard
+[28.409s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Angle_Send
+[28.409s] -- Set runtime path of "/home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Angle_Send" to ""
+[28.410s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Angle_Driver
+[28.412s] -- Set runtime path of "/home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Angle_Driver" to ""
+[28.412s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Exoskeleton_kinematics
+[28.412s] -- Set runtime path of "/home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Exoskeleton_kinematics" to ""
+[28.412s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Exoskeleton_dynamics
+[28.413s] -- Set runtime path of "/home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Exoskeleton_dynamics" to ""
+[28.413s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Admittance_control_Software
+[28.417s] -- Set runtime path of "/home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Admittance_control_Software" to ""
+[28.417s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Admittance_control_Hardware
+[28.421s] -- Set runtime path of "/home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Admittance_control_Hardware" to ""
+[28.421s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Test
+[28.423s] -- Set runtime path of "/home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Test" to ""
+[28.423s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/ament_index/resource_index/package_run_dependencies/exoskeleton_control
+[28.423s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/ament_index/resource_index/parent_prefix_path/exoskeleton_control
+[28.423s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/environment/ament_prefix_path.sh
+[28.423s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/environment/ament_prefix_path.dsv
+[28.423s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/environment/path.sh
+[28.423s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/environment/path.dsv
+[28.424s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/local_setup.bash
+[28.424s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/local_setup.sh
+[28.424s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/local_setup.zsh
+[28.424s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/local_setup.dsv
+[28.424s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/package.dsv
+[28.424s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/ament_index/resource_index/packages/exoskeleton_control
+[28.424s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/cmake/exoskeleton_controlConfig.cmake
+[28.424s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/cmake/exoskeleton_controlConfig-version.cmake
+[28.424s] -- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/package.xml
+[28.429s] Invoked command in '/home/hemingshan/exo_ws/src/build/exoskeleton_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/hemingshan/exo_ws/install/pattern_recognition:/opt/ros/foxy /usr/bin/cmake --install /home/hemingshan/exo_ws/src/build/exoskeleton_control

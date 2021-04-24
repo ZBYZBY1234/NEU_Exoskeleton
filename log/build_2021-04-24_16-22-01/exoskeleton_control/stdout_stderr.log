@@ -1,0 +1,36 @@
+[  8%] Built target EciDemo113
+[ 16%] Built target EciDemoCommon
+[ 32%] Built target Exoskeleton_kinematics
+[ 32%] Built target Exoskeleton_dynamics
+[ 40%] Built target Test
+[ 48%] Built target Admittance_control_Hardware
+[ 56%] Built target Admittance_control_Software
+[ 68%] Built target EciDemo
+[ 80%] Built target Eci_keyboard
+[ 88%] Built target Angle_Send
+[100%] Built target Angle_Driver
+-- Install configuration: ""
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/EciDemo
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Eci_keyboard
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Angle_Send
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Angle_Driver
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Exoskeleton_kinematics
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Exoskeleton_dynamics
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Admittance_control_Software
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Admittance_control_Hardware
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/lib/exoskeleton_control/Test
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/ament_index/resource_index/package_run_dependencies/exoskeleton_control
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/ament_index/resource_index/parent_prefix_path/exoskeleton_control
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/environment/ament_prefix_path.sh
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/environment/path.sh
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/environment/path.dsv
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/local_setup.bash
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/local_setup.sh
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/local_setup.zsh
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/local_setup.dsv
+-- Installing: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/package.dsv
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/ament_index/resource_index/packages/exoskeleton_control
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/cmake/exoskeleton_controlConfig.cmake
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/cmake/exoskeleton_controlConfig-version.cmake
+-- Up-to-date: /home/hemingshan/exo_ws/src/install/exoskeleton_control/share/exoskeleton_control/package.xml

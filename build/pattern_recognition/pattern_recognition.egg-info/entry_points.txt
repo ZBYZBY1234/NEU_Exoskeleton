@@ -1,0 +1,3 @@
+[console_scripts]
+talker = pattern_recognition.train_data_create:main
+
