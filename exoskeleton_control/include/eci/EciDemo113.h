@@ -29,7 +29,6 @@
 //////////////////////////////////////////////////////////////////////////
 // static function prototypes
 ECI_RESULT Can_Tx_Data(ECI_RESULT hResult,BYTE tx_data[6][8],DWORD *Move_motorID);
-ECI_RESULT Can_Rx_Position(ECI_RESULT hResult,BYTE tx_data[6][8],DWORD *Move_motorID);
 ECI_RESULT EciDemo113(void);
 ECI_RESULT close_can_rtx_data(ECI_RESULT hResult);
 
