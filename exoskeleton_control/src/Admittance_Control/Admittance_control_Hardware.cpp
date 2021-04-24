@@ -45,11 +45,11 @@ public:
     {
         /*Subscription Node Initialized*/
         // Subscription 1
-        Joint_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-            Joint_Subscription_Topic,
-            10,
-            std::bind(&Admittance_Control_Subscription::Joint_Callback, this, _1)
-        );
+        // Joint_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
+        //     Joint_Subscription_Topic,
+        //     10,
+        //     std::bind(&Admittance_Control_Subscription::Joint_Callback, this, _1)
+        // );
         // Subscription 2
         Sensor_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Sensor_Subscription_Topic,
@@ -72,10 +72,10 @@ private:
         position[0],position[1],position[2],position[3]);
 
         Feedback_Angle_ << position[0], position[1], position[2], position[3];
-        Angle_Thigh = Angle_Thigh + 90;
-        Angle_Calf  = Angle_Calf  + 92;
-        Expected_Angle_(0,1) = Angle_Thigh;
-        Expected_Angle_(0,2) = Angle_Thigh - Angle_Calf;
+        Sensor_Angle_Thigh = Sensor_Angle_Thigh + 90;
+        Sensor_Angle_Calf  = Sensor_Angle_Calf  + 92;
+        Expected_Angle_(0,1) = Sensor_Angle_Thigh;
+        Expected_Angle_(0,2) = Sensor_Angle_Thigh - Sensor_Angle_Calf;
         if(Expected_Angle_(0,2) < 0)
         {
             Expected_Angle_(0,2) = 0;
@@ -125,20 +125,65 @@ private:
     void Sensor_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Sensor_Data = msg->data;
-        // RCLCPP_INFO(this->get_logger(), "Piezoelectric: '%f','%f','%f'",
-        // Sensor_Data[0], Sensor_Data[1], Sensor_Data[2],
-        // "Angle_Thigh: '%f','%f','%f'",
-        // Sensor_Data[3], Sensor_Data[4], Sensor_Data[5],
-        // "Angle_Calf: '%f','%f','%f'",
-        // Sensor_Data[6], Sensor_Data[7], Sensor_Data[8]
-        // );
+
         //TODO: Force
-        Angle_Thigh = Sensor_Data[3];
-        Angle_Calf  = Sensor_Data[6];
+        Sensor_Angle_Thigh = Sensor_Data[3]+90;
+        Sensor_Angle_Calf  = Sensor_Data[6]+90;
+        Exoskeleton_Angle_Thigh = Sensor_Data[9]-90;
+        Exoskeleton_Angle_Calf  = Sensor_Data[12]-90;
+
+        Feedback_Angle_ << 0.0, Exoskeleton_Angle_Thigh/180*PI, Exoskeleton_Angle_Calf/180*PI, 0.0;
+
+        Expected_Angle_(0,1) = Sensor_Angle_Thigh/180*PI;
+        Expected_Angle_(0,2) = (Sensor_Angle_Thigh - Sensor_Angle_Calf)/180*PI;
+        if(Expected_Angle_(0,2) < 0)
+        {
+            Expected_Angle_(0,2) = 0;
+        }
+
+        Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
+        std::cout<<"Expected_Angle: "<<Expected_Angle_<<std::endl;
+        std::cout<<"Feedback_Angle: "<<Feedback_Angle_<<std::endl;
+        Left_Angle = main(
+            Feedback_Angle_,
+            Expected_Angle_,
+            Expected_Velocity_,
+            Expected_Acceleration_,
+            Force_
+            );
+        Right_Angle = main(
+            Feedback_Angle_,
+            Expected_Angle_,
+            Expected_Velocity_,
+            Expected_Acceleration_,
+            Force_
+            );
+
+        auto message = std_msgs::msg::Float64MultiArray();
+        // message.data = {    Left_Angle(0,0),    Left_Angle(1,0),    Left_Angle(2,0),    Left_Angle(3,0),
+        //                     Right_Angle(0,0),   Right_Angle(1,0),   Right_Angle(2,0),   Right_Angle(3,0) };
+        message.data = {
+            Left_Angle(1,0),
+            Left_Angle(2,0),
+            Right_Angle(1,0),
+            Right_Angle(2,0)
+        };
+        Joint_Publisher->publish(message);
+
+        std::cout<<"Left: " << Left_Angle(0,0) <<
+        " " << Left_Angle(1,0)*180/PI <<
+        " " << Left_Angle(2,0)*180/PI <<
+        " " << Left_Angle(3,0)  <<
+        " ,Published!!!"<<std::endl;
+        std::cout<<"Right: "<<  Right_Angle(0,0) <<
+        " " << Right_Angle(1,0)*180/PI <<
+        " " << Right_Angle(2,0)*180/PI <<
+        " " << Right_Angle(3,0) <<
+        " ,Published!!!"<<std::endl;
     }
 private:
     /*Subscription Node*/
-    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_Subscription;
+    // rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_Subscription;
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Sensor_Subscription;
 
     /*Publisher Node*/
@@ -148,8 +193,10 @@ private:
     Eigen::Matrix<float,4,1> Left_Angle, Right_Angle;
     float Force;
 
-    float Angle_Thigh;
-    float Angle_Calf;
+    float Sensor_Angle_Thigh;
+    float Sensor_Angle_Calf;
+    float Exoskeleton_Angle_Thigh;
+    float Exoskeleton_Angle_Calf;
 };
 
 int main(int argc, char * argv[])

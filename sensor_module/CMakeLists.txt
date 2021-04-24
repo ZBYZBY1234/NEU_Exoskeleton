@@ -46,12 +46,12 @@ ament_target_dependencies(MPU6050 rclcpp std_msgs)
 add_executable(MPU6050_Thigh src/IMU/MPU6050_Thigh.cpp )
 target_link_libraries(MPU6050_Thigh  ${catkin_LIBRARIES})
 ament_target_dependencies(MPU6050_Thigh rclcpp std_msgs)
-add_executable(Exoskeleton_Thigh src/IMU/Exoskeleton_Thigh.cpp )
-target_link_libraries(Exoskeleton_Thigh  ${catkin_LIBRARIES})
-ament_target_dependencies(Exoskeleton_Thigh rclcpp std_msgs)
 add_executable(MPU6050_Calf src/IMU/MPU6050_Calf.cpp )
 target_link_libraries(MPU6050_Calf  ${catkin_LIBRARIES})
 ament_target_dependencies(MPU6050_Calf rclcpp std_msgs)
+add_executable(Exoskeleton_Thigh src/IMU/Exoskeleton_Thigh.cpp )
+target_link_libraries(Exoskeleton_Thigh  ${catkin_LIBRARIES})
+ament_target_dependencies(Exoskeleton_Thigh rclcpp std_msgs)
 add_executable(Exoskeleton_Calf src/IMU/Exoskeleton_Calf.cpp )
 target_link_libraries(Exoskeleton_Calf  ${catkin_LIBRARIES})
 ament_target_dependencies(Exoskeleton_Calf rclcpp std_msgs)
@@ -67,6 +67,8 @@ ament_target_dependencies(Sensor rclcpp std_msgs)
 install(TARGETS
 MPU6050_Thigh
 MPU6050_Calf
+Exoskeleton_Thigh
+Exoskeleton_Calf
 Piezoelectric
 Sensor
 DESTINATION lib/${PROJECT_NAME}

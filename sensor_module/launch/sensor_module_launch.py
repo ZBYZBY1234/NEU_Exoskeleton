@@ -33,6 +33,18 @@ def generate_launch_description():
         name="MPU6050_Calf"
     )
 
+    Exoskeleton_Left_Thigh_cmd = Node(
+        package="sensor_module",
+        executable="Exoskeleton_Thigh",
+        name="Exoskeleton_Thigh"
+    )
+
+    Exoskeleton_Left_Calf_cmd = Node(
+        package="sensor_module",
+        executable="Exoskeleton_Calf",
+        name="Exoskeleton_Calf"
+    )
+
     Sensor_cmd = Node(
         package="sensor_module",
         executable="Sensor",
@@ -44,5 +56,7 @@ def generate_launch_description():
     ld.add_action(Piezoelectric_cmd)
     ld.add_action(MPU6050_Left_Thigh_cmd)
     ld.add_action(MPU6050_Left_Calf_cmd)
+    ld.add_action(Exoskeleton_Left_Thigh_cmd)
+    ld.add_action(Exoskeleton_Left_Calf_cmd)
     ld.add_action(Sensor_cmd)
     return ld

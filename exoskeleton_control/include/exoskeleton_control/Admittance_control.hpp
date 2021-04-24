@@ -180,7 +180,7 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
             Feedback_Velocity,
             Expected_Acceleration,
             Expected_Velocity);
-        std::cout<<"dAngle: "<<Angle<<std::endl;
+        std::cout<<"dAngle: "<<Angle.transpose()<<std::endl;
         std::cout<<"Feedback_Angle: "<<Feedback_Angle<<std::endl;
         Angle = Angle + Feedback_Angle.transpose();
 
