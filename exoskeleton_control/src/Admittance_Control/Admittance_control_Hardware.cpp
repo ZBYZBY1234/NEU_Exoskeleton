@@ -72,8 +72,14 @@ private:
         position[0],position[1],position[2],position[3]);
 
         Feedback_Angle_ << position[0], position[1], position[2], position[3];
-        Expected_Angle_(0,1) = Angle_Thigh + 90;
-        Expected_Angle_(0,2) = Angle_Calf  + 92;
+        Angle_Thigh = Angle_Thigh + 90;
+        Angle_Calf  = Angle_Calf  + 92;
+        Expected_Angle_(0,1) = Angle_Thigh;
+        Expected_Angle_(0,2) = Angle_Thigh - Angle_Calf;
+        if(Expected_Angle_(0,2) < 0)
+        {
+            Expected_Angle_(0,2) = 0;
+        }
 
         Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
@@ -96,10 +102,10 @@ private:
         // message.data = {    Left_Angle(0,0),    Left_Angle(1,0),    Left_Angle(2,0),    Left_Angle(3,0),
         //                     Right_Angle(0,0),   Right_Angle(1,0),   Right_Angle(2,0),   Right_Angle(3,0) };
         message.data = {
-            Left_Angle(0,0),
             Left_Angle(1,0),
-            0.0,
-            0.0
+            Left_Angle(2,0),
+            Right_Angle(1,0),
+            Right_Angle(2,0)
         };
         Joint_Publisher->publish(message);
 
@@ -113,6 +119,7 @@ private:
         " " << Right_Angle(2,0)*180/PI <<
         " " << Right_Angle(3,0) <<
         " ,Published!!!"<<std::endl;
+        usleep(30000);
     }
 
     void Sensor_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
