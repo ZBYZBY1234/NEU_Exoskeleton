@@ -2,14 +2,14 @@
 
 This package is built by `ROS2` foxy version, which aim to have the real-time control version.
 
-|                     Version: NEUX 1.0.0                      |                      Build: Environment                      |                     Contribution: Stars                      |                        Size: Packages                        |
+|                     Version: NEUX 1.0.0                      |                      Build: Environment                      |                        Size: Packages                        |                   Language: Python && C++                    |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![](https://img.shields.io/github/v/release/MingshanHe/Graduate_Design?style=flat-square) | ![](https://img.shields.io/travis/MingshanHe/robotictool?style=flat-square) | ![](https://img.shields.io/github/stars/MingshanHe?style=flat-square) | ![](https://img.shields.io/github/repo-size/MingshanHe/Graduate_Design?style=flat-square) |
+| ![](https://img.shields.io/github/v/release/MingshanHe/Graduate_Design?style=flat-square) | ![](https://img.shields.io/badge/build-passing-${color}.svg?style=flat-square) | ![](https://img.shields.io/github/repo-size/MingshanHe/Graduate_Design?style=flat-square) | ![](https://img.shields.io/badge/language-Python-green.svg?style=flat-square)![](https://img.shields.io/badge/language-C++-green.svg?style=flat-square) |
 
 ## Run Environment
 
-* Operating System: Ubuntu 20.04<code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/ubuntu/ubuntu.png" alt="ubuntu"></code>
-* Robot Operate System: Foxy<code><img height="20" src="Pictures/ros.jpeg" alt="ros"></code>
+* Operating System: Ubuntu 20.04     <code><img height="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/ubuntu/ubuntu.png" alt="ubuntu"></code>
+* Robot Operate System: Foxy             <code><img height=40 src="Image/ros.jpeg" alt="ros"></code>
 
 ## exoskeleton_description
 
