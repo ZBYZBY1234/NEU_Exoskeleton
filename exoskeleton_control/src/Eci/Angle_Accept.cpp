@@ -153,10 +153,10 @@ private:
         {
             motor_angle[i] = angle[i];
             motor_qc[i] = 1638400/360*motor_angle[i];
-            TX_pos_upper_follow_[4][i+4] = (-motor_qc[i]>>(8*i)&0xff);
-            TX_pos_upper_follow_[5][i+4] = ( motor_qc[i]>>(8*i)&0xff);
-            TX_pos_upper_follow_[6][i+4] = (-motor_qc[i]>>(8*i)&0xff);
-            TX_pos_upper_follow_[7][i+4] = ( motor_qc[i]>>(8*i)&0xff);
+            TX_pos_upper_follow_[4][i+4] = (-motor_qc[0]>>(8*i)&0xff);
+            TX_pos_upper_follow_[5][i+4] = ( motor_qc[1]>>(8*i)&0xff);
+            TX_pos_upper_follow_[6][i+4] = (-motor_qc[2]>>(8*i)&0xff);
+            TX_pos_upper_follow_[7][i+4] = ( motor_qc[3]>>(8*i)&0xff);
         }
         //Motive
         Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);

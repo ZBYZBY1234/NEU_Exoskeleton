@@ -14,7 +14,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // include files
-#include "eci/EciDemoCommon.h"
+#include <eci/EciDemoCommon.h>
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,8 @@
 
 /** Look up table to convert the CAN FD DLC code into the real CAN data length */
 static const BYTE ECI_CAN_FD_DLC_LUT[16] = { 0,1,2,3,4,5,6,7,8,12,16,20,24,32,48,64 };
-
+int data;
+WORD Get_position[12][64];
 //////////////////////////////////////////////////////////////////////////
 // global variables
 
@@ -263,9 +264,17 @@ void EciPrintCtrlMessage(const ECI_CTRL_MESSAGE* pstcCtrlMsg)
       if((ECI_STRUCT_VERSION_V0 == pstcCtrlMsg->u.sCanMessage.dwVer) ||
          (ECI_STRUCT_VERSION_V1 == pstcCtrlMsg->u.sCanMessage.dwVer) )
       {
-        OS_Printf( "Time: %10u, Type: %2u, ID: %08X, Flags: %c%c%c%c%c%c ",
-                   pstcCtrlMsg->u.sCanMessage.u.V1.dwTime,
-                   pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.type,
+        // OS_Printf( "Time: %10u, Type: %2u, ID: %08X, Flags: %c%c%c%c%c%c ",
+        //            pstcCtrlMsg->u.sCanMessage.u.V1.dwTime,
+        //            pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.type,
+        //            pstcCtrlMsg->u.sCanMessage.u.V1.dwMsgId,
+        //            pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.ext ? 'E' : ' ',
+        //            pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.rtr ? 'R' : ' ',
+        //            pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.srr ? 'S' : ' ',
+        //            pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.edl ? 'L' : ' ',
+        //            pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.brs ? 'B' : ' ',
+        //            pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.ovr ? 'O' : ' ');
+        OS_Printf( "ID: %08X, Flags: %c%c%c%c%c%c ",
                    pstcCtrlMsg->u.sCanMessage.u.V1.dwMsgId,
                    pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.ext ? 'E' : ' ',
                    pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.rtr ? 'R' : ' ',
@@ -273,7 +282,7 @@ void EciPrintCtrlMessage(const ECI_CTRL_MESSAGE* pstcCtrlMsg)
                    pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.edl ? 'L' : ' ',
                    pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.brs ? 'B' : ' ',
                    pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.ovr ? 'O' : ' ');
-        
+
         //*** Print Data if not RTR
         if(!pstcCtrlMsg->u.sCanMessage.u.V1.uMsgInfo.Bits.rtr)
         {
@@ -291,8 +300,28 @@ void EciPrintCtrlMessage(const ECI_CTRL_MESSAGE* pstcCtrlMsg)
             BYTE bIndex = 0;
             OS_Printf("Data: ");
             for(bIndex=0; bIndex < bRealLen; bIndex++)
-              { OS_Printf("%02X ", pstcCtrlMsg->u.sCanMessage.u.V1.abData[bIndex]);}
+              { 
+                OS_Printf("%02X ", pstcCtrlMsg->u.sCanMessage.u.V1.abData[bIndex]);
+                 //printf("存放反馈角度数据在EciDemoCommon.c文件处");
+                /* 存放反馈角度数据 */ 
+                if(pstcCtrlMsg->u.sLinMessage.u.V0.abData[0] == 0x43)
+                {
+                  if(bIndex > 3)
+                  {
+                    if(pstcCtrlMsg->u.sCanMessage.u.V1.dwMsgId == 0x00000585)
+                      Get_position[0][bIndex - 4] = pstcCtrlMsg->u.sLinMessage.u.V0.abData[bIndex];
+                    else if(pstcCtrlMsg->u.sCanMessage.u.V1.dwMsgId == 0x00000586)
+                      Get_position[1][bIndex - 4] = pstcCtrlMsg->u.sLinMessage.u.V0.abData[bIndex];
+                    else if(pstcCtrlMsg->u.sCanMessage.u.V1.dwMsgId == 0x00000587)
+                      Get_position[2][bIndex - 4] = pstcCtrlMsg->u.sLinMessage.u.V0.abData[bIndex];
+                    else if(pstcCtrlMsg->u.sCanMessage.u.V1.dwMsgId == 0x00000588)
+                      Get_position[3][bIndex - 4] = pstcCtrlMsg->u.sLinMessage.u.V0.abData[bIndex];
+                  }      
+                }
+              }
+              //printf("存放反馈角度数据在EciDemoCommon.c文件处");
           }
+          
         }
         else
         {
@@ -301,7 +330,6 @@ void EciPrintCtrlMessage(const ECI_CTRL_MESSAGE* pstcCtrlMsg)
       }//endif Struct Version 0 and Struct Version 1
       break;
     }//end case ECI_CTRL_CAN
-
 
     //*** LIN
     case ECI_CTRL_LIN:

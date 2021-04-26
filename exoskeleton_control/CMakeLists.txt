@@ -57,9 +57,9 @@ target_link_libraries(EciDemo  EciDemoCommon ${catkin_LIBRARIES} "/usr/lib/libec
 add_executable(Eci_keyboard src/Eci/EciDemo113.cpp src/Eci/Eci_keyboard.cpp)
 target_link_libraries(Eci_keyboard EciDemoCommon ${catkin_LIBRARIES} "/usr/lib/libeci113DriverLinux.so")
 
-# add_executable(Angle_Accept  src/Eci/Angle_Accept.cpp)
-# ament_target_dependencies(Angle_Accept  rclcpp std_msgs)
-# target_link_libraries(Angle_Accept EciDemoCommon EciDemo113 "/usr/lib/libeci113DriverLinux.so")
+add_executable(Angle_Accept  src/Eci/Angle_Accept.cpp)
+ament_target_dependencies(Angle_Accept  rclcpp std_msgs)
+target_link_libraries(Angle_Accept EciDemoCommon EciDemo113 "/usr/lib/libeci113DriverLinux.so")
 add_executable(Angle_Send  src/Eci/Angle_Send.cpp)
 ament_target_dependencies(Angle_Send  rclcpp std_msgs)
 target_link_libraries(Angle_Send EciDemoCommon EciDemo113 "/usr/lib/libeci113DriverLinux.so")
@@ -71,7 +71,7 @@ target_link_libraries(Angle_Driver EciDemoCommon EciDemo113 "/usr/lib/libeci113D
 install(TARGETS
 EciDemo
 Eci_keyboard
-# Angle_Accept
+Angle_Accept
 Angle_Send
 Angle_Driver
 DESTINATION lib/${PROJECT_NAME}
