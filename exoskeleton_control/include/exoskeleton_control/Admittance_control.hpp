@@ -106,7 +106,7 @@ Admittance_control::Admittance_control()
 {
     //系数设定
 
-    m_M_JointSpace  << 100.0,10.0,10.0,100.0;
+    m_M_JointSpace  << 10.0,1.0,1.0,10.0;
     m_D_JointSpace  << 100.0,100.0,100.0,100.0;
     m_K_JointSpace  << 100.0,1000.0,1000.0,100.0;
 

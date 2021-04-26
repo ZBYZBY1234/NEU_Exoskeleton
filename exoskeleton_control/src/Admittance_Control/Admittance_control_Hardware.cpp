@@ -111,10 +111,10 @@ private:
             Right_Angle(2,0)=0;
         }
         message.data = {
-            10,
-            10.0,
-            0.0,
-            0.0
+            Left_Angle(1,0),
+            Right_Angle(1,0),
+            Left_Angle(2,0),
+            Right_Angle(2,0)
         };
         Joint_Publisher->publish(message);
 

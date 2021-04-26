@@ -93,10 +93,10 @@ private:
     void topic_callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Angle = msg->data;
-        motor_angle[0] = Angle[0];  //Right Thigh
-        motor_angle[1] = -Angle[1]; //Left  Thigh
-        motor_angle[2] = Angle[2];
-        motor_angle[3] = Angle[3];
+        motor_angle[0] = Angle[0]/PI*180;  //Left  Thigh
+        motor_angle[1] = Angle[1]/PI*180;  //Right Thigh
+        motor_angle[2] = Angle[2]/PI*180;  //Left  Calf
+        motor_angle[3] = Angle[3]/PI*180;  //Right Calf
         motor_qc[0] = 1638400/360*motor_angle[0];
         motor_qc[1] = 1638400/360*motor_angle[1];
         motor_qc[2] = 1638400/360*motor_angle[2];
@@ -104,10 +104,10 @@ private:
         for (int i = 0; i < 4; i++)
         {
             std::cout<<"Motor_Qc: %d"<<motor_qc[i]<<std::endl;
-            TX_pos_upper_follow_[4][i+4] = ( motor_qc[i]>>(8*i)&0xff);
-            TX_pos_upper_follow_[5][i+4] = ( motor_qc[i]>>(8*i)&0xff);
-            TX_pos_upper_follow_[6][i+4] = ( motor_qc[i]>>(8*i)&0xff);
-            TX_pos_upper_follow_[7][i+4] = ( motor_qc[i]>>(8*i)&0xff);
+            TX_pos_upper_follow_[4][i+4] = ( -motor_qc[0]>>(8*i)&0xff);
+            TX_pos_upper_follow_[5][i+4] = ( motor_qc[1]>>(8*i)&0xff);
+            TX_pos_upper_follow_[6][i+4] = ( -motor_qc[2]>>(8*i)&0xff);
+            TX_pos_upper_follow_[7][i+4] = ( motor_qc[3]>>(8*i)&0xff);
         }
         //Motive
         Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
