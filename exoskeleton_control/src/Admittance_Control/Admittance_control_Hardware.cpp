@@ -44,83 +44,17 @@ public:
     : Node("Admittance_Control_Subscription"),Admittance_control()
     {
         /*Subscription Node Initialized*/
-        // Subscription 1
-        // Joint_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-        //     Joint_Subscription_Topic,
-        //     10,
-        //     std::bind(&Admittance_Control_Subscription::Joint_Callback, this, _1)
-        // );
-        // Subscription 2
         Sensor_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Sensor_Subscription_Topic,
             10,
             std::bind(&Admittance_Control_Subscription::Sensor_Callback, this, _1)
         );
+
         /*Publish Node Initialized*/
         Joint_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_Publisher_Topic, 1);
     }
 
 private:
-
-    void Joint_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
-    {
-        auto position = msg->data;
-        //Feedback Joint Message
-        RCLCPP_INFO(this->get_logger(),
-        "Left: '%f','%f','%f','%f' Right: '%f','%f','%f','%f'",
-        position[0],position[1],position[2],position[3],
-        position[0],position[1],position[2],position[3]);
-
-        Feedback_Angle_ << position[0], position[1], position[2], position[3];
-        Sensor_Angle_Thigh = Sensor_Angle_Thigh + 90;
-        Sensor_Angle_Calf  = Sensor_Angle_Calf  + 92;
-        Expected_Angle_(0,1) = Sensor_Angle_Thigh;
-        Expected_Angle_(0,2) = Sensor_Angle_Thigh - Sensor_Angle_Calf;
-        if(Expected_Angle_(0,2) < 0)
-        {
-            Expected_Angle_(0,2) = 0;
-        }
-
-        Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
-
-        Left_Angle = main(
-            Feedback_Angle_,
-            Expected_Angle_,
-            Expected_Velocity_,
-            Expected_Acceleration_,
-            Force_
-            );
-        Right_Angle = main(
-            Feedback_Angle_,
-            Expected_Angle_,
-            Expected_Velocity_,
-            Expected_Acceleration_,
-            Force_
-            );
-
-        auto message = std_msgs::msg::Float64MultiArray();
-        // message.data = {    Left_Angle(0,0),    Left_Angle(1,0),    Left_Angle(2,0),    Left_Angle(3,0),
-        //                     Right_Angle(0,0),   Right_Angle(1,0),   Right_Angle(2,0),   Right_Angle(3,0) };
-        message.data = {
-            Left_Angle(1,0),
-            Left_Angle(2,0),
-            Right_Angle(1,0),
-            Right_Angle(2,0)
-        };
-        Joint_Publisher->publish(message);
-
-        std::cout<<"Left: " << Left_Angle(0,0) <<
-        " " << Left_Angle(1,0)*180/PI <<
-        " " << Left_Angle(2,0)*180/PI <<
-        " " << Left_Angle(3,0)  <<
-        " ,Published!!!"<<std::endl;
-        std::cout<<"Right: "<<  Right_Angle(0,0) <<
-        " " << Right_Angle(1,0)*180/PI <<
-        " " << Right_Angle(2,0)*180/PI <<
-        " " << Right_Angle(3,0) <<
-        " ,Published!!!"<<std::endl;
-        usleep(30000);
-    }
 
     void Sensor_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
@@ -138,6 +72,7 @@ private:
         (Exoskeleton_Angle_Calf - Exoskeleton_Angle_Thigh)/180*PI,
         0.0;
 
+        /*Calculate the Position for Publish.*/
         Expected_Angle_(0,1) = Sensor_Angle_Thigh/180*PI;
         Expected_Angle_(0,2) = (Sensor_Angle_Calf - Sensor_Angle_Thigh)/180*PI;
         if(Expected_Angle_(0,2) < 0)
@@ -195,7 +130,6 @@ private:
     }
 private:
     /*Subscription Node*/
-    // rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_Subscription;
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Sensor_Subscription;
 
     /*Publisher Node*/
@@ -219,7 +153,6 @@ int main(int argc, char * argv[])
     Expected_Acceleration_ << 0.0,0.0,0.0,0.0;
 
     /*ROS Node*/
-
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<Admittance_Control_Subscription>());
     rclcpp::shutdown();
