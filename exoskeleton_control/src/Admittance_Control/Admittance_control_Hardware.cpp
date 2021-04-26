@@ -1,7 +1,7 @@
 /* * @Author: Beal.MS
    * @Date: 2021-04-21 10:55:36
  * @Last Modified by: Beal.MS
- * @Last Modified time: 2021-04-26 20:50:32
+ * @Last Modified time: 2021-04-26 22:19:52
    * @Description: This is for Hardware to control exoskeleton
 */
 
@@ -155,7 +155,7 @@ int main(int argc, char * argv[])
     Expected_Velocity_ << 0.0,0.0,0.0,0.0;
     Expected_Acceleration_ << 0.0,0.0,0.0,0.0;
 
-    /*ROS Node*/
+    /* ROS Node */
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<Admittance_Control_Subscription>());
     rclcpp::shutdown();
