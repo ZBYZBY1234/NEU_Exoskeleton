@@ -147,7 +147,7 @@ void Motor_Position::PositionControl()
         printf("4:righthip：0x%x,%x,%x,%x\n\n",righthip_ox11,righthip_ox12,righthip_ox13,righthip_ox14);
         ECI_RESULT hResult = ECI_OK;
         hResult = EciDemo113();
-
+        printf("Motor_Qc: %d",motor_qc);
         for (int i = 0; i < 4; i++)
         {
             TX_pos_upper_follow_[4][i+4] = (-motor_qc>>(8*i)&0xff);

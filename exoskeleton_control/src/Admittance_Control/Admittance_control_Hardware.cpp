@@ -80,7 +80,8 @@ private:
         {
             Expected_Angle_(0,2) = 0;
         }
-
+        std::cout<<"Feedback_Angle_: "<<Feedback_Angle_<<std::endl;
+        std::cout<<"Expected_Angle_: "<<Expected_Angle_<<std::endl;
         /*Calculate the Position for Publish.*/
 
         Left_Angle = main(
@@ -110,23 +111,23 @@ private:
             Right_Angle(2,0)=0;
         }
         message.data = {
-            Left_Angle(1,0),
-            Left_Angle(2,0),
-            Right_Angle(1,0),
-            Right_Angle(2,0)
+            10,
+            10.0,
+            0.0,
+            0.0
         };
         Joint_Publisher->publish(message);
 
-        std::cout<<"Left: " << Left_Angle(0,0) <<
-        " " << Left_Angle(1,0)*180/PI <<
-        " " << Left_Angle(2,0)*180/PI <<
-        " " << Left_Angle(3,0)  <<
-        " ,Published!!!"<<std::endl;
-        std::cout<<"Right: "<<  Right_Angle(0,0) <<
-        " " << Right_Angle(1,0)*180/PI <<
-        " " << Right_Angle(2,0)*180/PI <<
-        " " << Right_Angle(3,0) <<
-        " ,Published!!!"<<std::endl;
+        // std::cout<<"Left: " << Left_Angle(0,0) <<
+        // " " << Left_Angle(1,0)*180/PI <<
+        // " " << Left_Angle(2,0)*180/PI <<
+        // " " << Left_Angle(3,0)  <<
+        // " ,Published!!!"<<std::endl;
+        // std::cout<<"Right: "<<  Right_Angle(0,0) <<
+        // " " << Right_Angle(1,0)*180/PI <<
+        // " " << Right_Angle(2,0)*180/PI <<
+        // " " << Right_Angle(3,0) <<
+        // " ,Published!!!"<<std::endl;
     }
 private:
     /*Subscription Node*/
