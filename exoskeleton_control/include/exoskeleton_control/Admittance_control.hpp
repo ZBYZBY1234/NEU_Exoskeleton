@@ -1,11 +1,12 @@
 /* * @Author: Beal.MS
    * @Date: 2021-03-20 12:01:47
  * @Last Modified by: Beal.MS
- * @Last Modified time: 2021-03-20 23:32:51
+ * @Last Modified time: 2021-04-26 22:30:58
    * @Description: Admittance Control
    * @input: Expected_Angle, Expected_Velocity_DecareSpace, Force
    * @output: Position_Angle
 */
+
 #include "exoskeleton_kinematics/exoskeleton_kinematics.hpp"
 #include "exoskeleton_dynamics/exoskeleton_dynamics.hpp"
 #include <cmath>
@@ -130,68 +131,73 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
     const Eigen::Matrix<float,6,1> Force_
     )
 {
-        //--------------------------关节空间(Joint Space)--------------------------//
-        // Get the Feedback Angle of each Joint
-        Feedback_Angle = Feedback_Angle_;
-        Expected_Angle = Expected_Angle_;
-        Expected_Velocity = Expected_Velocity_;
-        Expected_Acceleration = Expected_Acceleration_;
-        Force_ext = Force_;
+    //--------------------------关节空间(Joint Space)--------------------------//
+    // Get the Feedback Angle of each Joint
+    Feedback_Angle = Feedback_Angle_;
+    Expected_Angle = Expected_Angle_;
+    Expected_Velocity = Expected_Velocity_;
+    Expected_Acceleration = Expected_Acceleration_;
+    Force_ext = Force_;
 
-        Expected_T_end = Exoskeleton_kinetic::forward_kinematics(Expected_Angle(0,0),Expected_Angle(0,1),Expected_Angle(0,2),Expected_Angle(0,3));
-        Feedback_T_end = Exoskeleton_kinetic::forward_kinematics(Feedback_Angle(0,0),Feedback_Angle(0,1),Feedback_Angle(0,2),Feedback_Angle(0,3));
+    Expected_T_end = Exoskeleton_kinetic::forward_kinematics(Expected_Angle(0,0),Expected_Angle(0,1),Expected_Angle(0,2),Expected_Angle(0,3));
+    Feedback_T_end = Exoskeleton_kinetic::forward_kinematics(Feedback_Angle(0,0),Feedback_Angle(0,1),Feedback_Angle(0,2),Feedback_Angle(0,3));
 
-        // Get the Transform Matrix RR.
-        //TODO:不确定是否需要对 Force_ext 变换至基坐标系下 进行描述。
-        Expected_RR  << Expected_T_end(0,0), Expected_T_end(0,1), Expected_T_end(0,2), 0, 0, 0,
-                        Expected_T_end(1,0), Expected_T_end(1,1), Expected_T_end(1,2), 0, 0, 0,
-                        Expected_T_end(2,0), Expected_T_end(2,1), Expected_T_end(2,2), 0, 0, 0,
-                        0, 0, 0, Expected_T_end(0,0), Expected_T_end(0,1), Expected_T_end(0,2),
-                        0, 0, 0, Expected_T_end(1,0), Expected_T_end(1,1), Expected_T_end(1,2),
-                        0, 0, 0, Expected_T_end(2,0), Expected_T_end(2,1), Expected_T_end(2,2);
-        Feedback_RR <<  Feedback_T_end(0,0), Feedback_T_end(0,1), Feedback_T_end(0,2), 0, 0, 0,
-                        Feedback_T_end(1,0), Feedback_T_end(1,1), Feedback_T_end(1,2), 0, 0, 0,
-                        Feedback_T_end(2,0), Feedback_T_end(2,1), Feedback_T_end(2,2), 0, 0, 0,
-                        0, 0, 0, Feedback_T_end(0,0), Feedback_T_end(0,1), Feedback_T_end(0,2),
-                        0, 0, 0, Feedback_T_end(1,0), Feedback_T_end(1,1), Feedback_T_end(1,2),
-                        0, 0, 0, Feedback_T_end(2,0), Feedback_T_end(2,1), Feedback_T_end(2,2);
+    // Get the Transform Matrix RR.
+    //TODO:不确定是否需要对 Force_ext 变换至基坐标系下 进行描述。
+    Expected_RR  << Expected_T_end(0,0), Expected_T_end(0,1), Expected_T_end(0,2), 0, 0, 0,
+                    Expected_T_end(1,0), Expected_T_end(1,1), Expected_T_end(1,2), 0, 0, 0,
+                    Expected_T_end(2,0), Expected_T_end(2,1), Expected_T_end(2,2), 0, 0, 0,
+                    0, 0, 0, Expected_T_end(0,0), Expected_T_end(0,1), Expected_T_end(0,2),
+                    0, 0, 0, Expected_T_end(1,0), Expected_T_end(1,1), Expected_T_end(1,2),
+                    0, 0, 0, Expected_T_end(2,0), Expected_T_end(2,1), Expected_T_end(2,2);
+    Feedback_RR <<  Feedback_T_end(0,0), Feedback_T_end(0,1), Feedback_T_end(0,2), 0, 0, 0,
+                    Feedback_T_end(1,0), Feedback_T_end(1,1), Feedback_T_end(1,2), 0, 0, 0,
+                    Feedback_T_end(2,0), Feedback_T_end(2,1), Feedback_T_end(2,2), 0, 0, 0,
+                    0, 0, 0, Feedback_T_end(0,0), Feedback_T_end(0,1), Feedback_T_end(0,2),
+                    0, 0, 0, Feedback_T_end(1,0), Feedback_T_end(1,1), Feedback_T_end(1,2),
+                    0, 0, 0, Feedback_T_end(2,0), Feedback_T_end(2,1), Feedback_T_end(2,2);
 
-        //TODO:
-        //工具坐标系下描述
-        Jn_Tool = Exoskeleton_kinetic::Jaccobi(
-            Feedback_Angle(0,0),
-            Feedback_Angle(0,1),
-            Feedback_Angle(0,2),
-            Feedback_Angle(0,3),
-            Feedback_RR,
-            false);
+    //TODO:
+    //工具坐标系下描述
+    Jn_Tool = Exoskeleton_kinetic::Jaccobi(
+        Feedback_Angle(0,0),
+        Feedback_Angle(0,1),
+        Feedback_Angle(0,2),
+        Feedback_Angle(0,3),
+        Feedback_RR,
+        false);
 
-        //TODO:转换末端力至关节力
-        T_ext = Jn_Tool.transpose()*Force_ext;
+    //TODO:转换末端力至关节力
+    T_ext = Jn_Tool.transpose()*Force_ext;
+    //TODO:髋关节及膝关节外部力矩识别
+    T_ext(0,0) = 0.0;  // Hip Joint
+    T_ext(1,0) = 0.0000;  // Thigh Joint
+    T_ext(2,0) = 0.0000;  // Calf Joint
+    T_ext(3,0) = 0.0;  // Ankle Joint
 
-        Feedback_Velocity = Feedback_Velocity_Fun();
+    Feedback_Velocity = Feedback_Velocity_Fun();
 
-        Eigen::Matrix<float,4,1> Angle;
+    Eigen::Matrix<float,4,1> Angle;
 
-        Angle = Admittance_Control_Algorithm_JointSpace (
-            T_ext,
-            Feedback_Angle,
-            Expected_Angle,
-            Feedback_Velocity,
-            Expected_Acceleration,
-            Expected_Velocity);
-        // std::cout<<"dAngle: "<<Angle.transpose()<<std::endl;
-        // std::cout<<"Feedback_Angle: "<<Feedback_Angle<<std::endl;
-        Angle = Angle + Feedback_Angle.transpose();
+    Angle = Admittance_Control_Algorithm_JointSpace (
+        T_ext,
+        Feedback_Angle,
+        Expected_Angle,
+        Feedback_Velocity,
+        Expected_Acceleration,
+        Expected_Velocity);
+    // std::cout<<"dAngle: "<<Angle.transpose()<<std::endl;
+    // std::cout<<"Feedback_Angle: "<<Feedback_Angle<<std::endl;
+    Angle = Angle + Feedback_Angle.transpose();
 
-        Past_Feedback_Angle(0,0) = Feedback_Angle(0,0);
-        Past_Feedback_Angle(0,1) = Feedback_Angle(0,1);
-        Past_Feedback_Angle(0,2) = Feedback_Angle(0,2);
-        Past_Feedback_Angle(0,3) = Feedback_Angle(0,3);
+    Past_Feedback_Angle(0,0) = Feedback_Angle(0,0);
+    Past_Feedback_Angle(0,1) = Feedback_Angle(0,1);
+    Past_Feedback_Angle(0,2) = Feedback_Angle(0,2);
+    Past_Feedback_Angle(0,3) = Feedback_Angle(0,3);
 
-        // std::cout<<"Angle: "<<std::endl;
-        // std::cout<<Angle<<std::endl;
-        return Angle;
+    // std::cout<<"Angle: "<<std::endl;
+    // std::cout<<Angle<<std::endl;
+    return Angle;
 
 }
 
