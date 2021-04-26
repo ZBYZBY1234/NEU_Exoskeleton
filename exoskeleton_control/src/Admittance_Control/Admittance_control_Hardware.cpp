@@ -61,9 +61,11 @@ private:
         auto Sensor_Data = msg->data;
 
         //TODO: Force
+        Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
+        /*IMU Data Pretreatment*/
+
         Sensor_Angle_Thigh = Sensor_Data[3]-90;
         Sensor_Angle_Calf  = Sensor_Data[6]-90;
-
         Exoskeleton_Angle_Thigh = Sensor_Data[9]-90;
         Exoskeleton_Angle_Calf  = Sensor_Data[12]-90;
 
@@ -72,7 +74,6 @@ private:
         (Exoskeleton_Angle_Calf - Exoskeleton_Angle_Thigh)/180*PI,
         0.0;
 
-        /*Calculate the Position for Publish.*/
         Expected_Angle_(0,1) = Sensor_Angle_Thigh/180*PI;
         Expected_Angle_(0,2) = (Sensor_Angle_Calf - Sensor_Angle_Thigh)/180*PI;
         if(Expected_Angle_(0,2) < 0)
@@ -80,9 +81,8 @@ private:
             Expected_Angle_(0,2) = 0;
         }
 
-        Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
-        // std::cout<<"Expected_Angle: "<<Expected_Angle_<<std::endl;
-        // std::cout<<"Feedback_Angle: "<<Feedback_Angle_<<std::endl;
+        /*Calculate the Position for Publish.*/
+
         Left_Angle = main(
             Feedback_Angle_,
             Expected_Angle_,
