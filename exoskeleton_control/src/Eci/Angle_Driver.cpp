@@ -1,3 +1,10 @@
+/* * @Author: Beal.MS
+   * @Date: 2021-04-26 20:35:42
+ * @Last Modified by: Beal.MS
+ * @Last Modified time: 2021-04-26 20:36:59
+   * @Description: This is the Motor Driver to Accept and Send Angle
+   * Position.
+*/
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -111,9 +118,7 @@ private:
         }
         //Motive
         Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
-        // sleep(1);
         Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
-        // sleep(1);
 
         std::cout<<"Angle: "<<motor_angle[0]<<
         " "<<motor_angle[1]<<
@@ -121,6 +126,7 @@ private:
         " "<<motor_angle[3]<<std::endl;
     }
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr subscription_;
+
     ECI_RESULT hResult;
     float motor_angle[4];
     int motor_qc[4];
