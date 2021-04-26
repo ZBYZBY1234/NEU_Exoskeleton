@@ -1,7 +1,7 @@
 /* * @Author: Beal.MS
    * @Date: 2021-04-21 10:55:36
-   * @Last Modified by:   Beal.MS
-   * @Last Modified time: 2021-04-21 10:55:36
+ * @Last Modified by: Beal.MS
+ * @Last Modified time: 2021-04-26 20:50:32
    * @Description: This is for Hardware to control exoskeleton
 */
 
@@ -43,14 +43,14 @@ public:
     Admittance_Control_Subscription()
     : Node("Admittance_Control_Subscription"),Admittance_control()
     {
-        /*Subscription Node Initialized*/
+        /* Subscription Node Initialized */
         Sensor_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Sensor_Subscription_Topic,
             10,
             std::bind(&Admittance_Control_Subscription::Sensor_Callback, this, _1)
         );
 
-        /*Publish Node Initialized*/
+        /* Publish Node Initialized */
         Joint_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_Publisher_Topic, 1);
     }
 
@@ -60,8 +60,10 @@ private:
     {
         auto Sensor_Data = msg->data;
 
+        /* Force/Torque Data */
         //TODO: Force
         Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
+
         /*IMU Data Pretreatment*/
 
         Sensor_Angle_Thigh = Sensor_Data[3]-90;
@@ -82,6 +84,7 @@ private:
         }
         std::cout<<"Feedback_Angle_: "<<Feedback_Angle_<<std::endl;
         std::cout<<"Expected_Angle_: "<<Expected_Angle_<<std::endl;
+
         /*Calculate the Position for Publish.*/
 
         Left_Angle = main(
@@ -100,8 +103,6 @@ private:
             );
 
         auto message = std_msgs::msg::Float64MultiArray();
-        // message.data = {    Left_Angle(0,0),    Left_Angle(1,0),    Left_Angle(2,0),    Left_Angle(3,0),
-        //                     Right_Angle(0,0),   Right_Angle(1,0),   Right_Angle(2,0),   Right_Angle(3,0) };
         if (Left_Angle(2,0)<0)
         {
             Left_Angle(2,0) = 0;
@@ -111,14 +112,10 @@ private:
             Right_Angle(2,0)=0;
         }
         message.data = {
-            // Left_Angle(1,0),
-            // Right_Angle(1,0),
-            // Left_Angle(2,0),
-            // Right_Angle(2,0)
-            10,
-            10,
-            0,
-            0
+            Left_Angle(1,0),
+            Right_Angle(1,0),
+            Left_Angle(2,0),
+            Right_Angle(2,0)
         };
         Joint_Publisher->publish(message);
 
@@ -134,13 +131,14 @@ private:
         // " ,Published!!!"<<std::endl;
     }
 private:
-    /*Subscription Node*/
+
+    /* Subscription Node */
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Sensor_Subscription;
 
-    /*Publisher Node*/
+    /* Publisher Node */
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_Publisher;
 
-    /*Data*/
+    /* Data */
     Eigen::Matrix<float,4,1> Left_Angle, Right_Angle;
     float Force;
 
@@ -152,7 +150,7 @@ private:
 
 int main(int argc, char * argv[])
 {
-
+    /* Data Preinitialized */
     Expected_Angle_ << 0.0,0.0,0.0,0.0;
     Expected_Velocity_ << 0.0,0.0,0.0,0.0;
     Expected_Acceleration_ << 0.0,0.0,0.0,0.0;
