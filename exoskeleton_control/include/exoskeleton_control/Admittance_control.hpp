@@ -1,7 +1,7 @@
 /* * @Author: Beal.MS
    * @Date: 2021-03-20 12:01:47
  * @Last Modified by: Beal.MS
- * @Last Modified time: 2021-04-26 22:30:58
+ * @Last Modified time: 2021-04-26 22:32:51
    * @Description: Admittance Control
    * @input: Expected_Angle, Expected_Velocity_DecareSpace, Force
    * @output: Position_Angle
@@ -169,6 +169,7 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
 
     //TODO:转换末端力至关节力
     T_ext = Jn_Tool.transpose()*Force_ext;
+
     //TODO:髋关节及膝关节外部力矩识别
     T_ext(0,0) = 0.0;  // Hip Joint
     T_ext(1,0) = 0.0000;  // Thigh Joint

@@ -28,6 +28,9 @@ This package is mainly about the **Control Algorithm** which could be used in ex
 
 This package is mainly about the Sensor to get the data of the Control Algorithm Inputs.
 
+* IMU (Inertial Measurement Unit)
+* Piezoelectric Module
+
 ## joint_state_publisher
 
 This package is developed by official and can be used to control the joint by position mode.
