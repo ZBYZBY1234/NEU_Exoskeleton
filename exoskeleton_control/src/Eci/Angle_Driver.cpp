@@ -1,7 +1,7 @@
 /* * @Author: Beal.MS
    * @Date: 2021-04-26 20:35:42
  * @Last Modified by: Beal.MS
- * @Last Modified time: 2021-04-26 20:36:59
+ * @Last Modified time: 2021-04-26 20:41:40
    * @Description: This is the Motor Driver to Accept and Send Angle
    * Position.
 */
@@ -87,10 +87,12 @@ public:
     Angle_Driver()
     : Node("Angle_Driver")
     {
+        /* Motor Initialization */
         hResult = ECI_OK;
         hResult = EciDemo113();
         Can_Tx_Data( hResult, TX_Active_Move, Move_lower_motorID);
         printf("Motived!!!\n");
+
         subscription_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Angle_Driver_Topic, 10, std::bind(&Angle_Driver::topic_callback, this, std::placeholders::_1)
         );
@@ -99,6 +101,7 @@ public:
 private:
     void topic_callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
+        /* Motive Angle Pretreatment */
         auto Angle = msg->data;
         motor_angle[0] = Angle[0]/PI*180;  //Left  Thigh
         motor_angle[1] = Angle[1]/PI*180;  //Right Thigh
@@ -116,7 +119,7 @@ private:
             TX_pos_upper_follow_[6][i+4] = ( -motor_qc[2]>>(8*i)&0xff);
             TX_pos_upper_follow_[7][i+4] = ( motor_qc[3]>>(8*i)&0xff);
         }
-        //Motive
+        /* Motive Angle Position */
         Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
         Can_Tx_Data( hResult, TX_pos_upper_follow_, Move_lower_motorID);
 
@@ -125,6 +128,7 @@ private:
         " "<<motor_angle[2]<<
         " "<<motor_angle[3]<<std::endl;
     }
+
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr subscription_;
 
     ECI_RESULT hResult;
