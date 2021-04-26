@@ -6,6 +6,8 @@
 
 using std::placeholders::_1;
 
+#define Joint_State_Topic   "Sensor"
+
 class MinimalSubscriber :
     public rclcpp::Node
 {
