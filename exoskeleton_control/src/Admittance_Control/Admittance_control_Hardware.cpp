@@ -170,6 +170,8 @@ private:
         error_message.data = {
             0.0
         };
+
+        /* Publish */
         Joint_State_Publisher->publish(message);
         Joint_Error_Publisher->publish(error_message);
     }
