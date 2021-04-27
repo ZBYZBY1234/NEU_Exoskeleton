@@ -1,4 +1,4 @@
-#include "sensor_module/Piezoelectric.hpp"
+#include "sensor_module/MPU6050.hpp"
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -12,15 +12,16 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-#define     USB_DEVICE  "/dev/ttyUSB13"
-
+#define     USB_DEVICE  "/dev/ttyUSB2"
+#define     topic       "Human_Right_Thigh"
 using namespace std::chrono_literals;
 /*
  * @Name: MPU6050
  * @Description: Using the MPU6050 Class to let Serial Port be initialized.
 */
-Piezoelectric piezoelectric = Piezoelectric (USB_DEVICE, B115200);
-Eigen::Matrix<float,3,1> data;
+MPU6050 mpu6050 = MPU6050 (USB_DEVICE,B115200,"Right_Thigh");
+
+
 struct Producer : public rclcpp::Node
 {
     Producer(const std::string & name, const std::string & output)
@@ -45,9 +46,11 @@ struct Producer : public rclcpp::Node
             static int32_t count = 0;
             std_msgs::msg::Float64MultiArray::UniquePtr msg(new std_msgs::msg::Float64MultiArray());
 
-            data = piezoelectric.Read();
+            //Eigen::Matrix<float,3,1> Angle;
+            float * Angle;
+            Angle = mpu6050.Read_Data();
 
-            msg->data = {data(0,0),data(1,0),data(2,0)};
+            msg->data = {mpu6050.angle_x,mpu6050.angle_y,mpu6050.angle_z};
             pub_ptr->publish(std::move(msg));
         };
 
@@ -70,9 +73,10 @@ int  main(int argc, char * argv[])
     rclcpp::init(argc, argv);
     rclcpp::executors::SingleThreadedExecutor executor;
 
-    auto producer = std::make_shared<Producer>("producer", "Piezoelectric");
+    auto producer = std::make_shared<Producer>("producer", topic);
     executor.add_node(producer);
     executor.spin();
 
     rclcpp::shutdown();
+
 }

@@ -25,8 +25,6 @@ using namespace std::chrono_literals;
 #define Human_Left_Calf_topic                          "Human_Left_Calf"
 #define Human_Right_Thigh_topic                        "Human_Right_Thigh"
 #define Human_Right_Calf_topic                         "Human_Right_Calf"
-// #define Exoskeleton_Thigh_topic                     "Exoskeleton_Thigh"
-// #define Exoskeleton_Calf_topic                      "Exoskeleton_Calf"
 #define Sensor_topic                                   "Sensor_Human"
 
 float Left_Thigh_Human[3]={0,0,0};
@@ -246,7 +244,8 @@ public:
             double time = convertFromString(message_received_at) - start_time;
 
             auto message = std_msgs::msg::Float64MultiArray();
-            message.data = {Pressor[0], Pressor[1], Pressor[2],
+            message.data = {
+                         // Pressor[0], Pressor[1], Pressor[2],
                             Left_Thigh_Human[0], Left_Calf_Human[0],
                             Right_Thigh_Human[0], Right_Calf_Human[0],
                             time};
@@ -283,11 +282,11 @@ int main(int argc, char * argv[])
     rclcpp::init(argc, argv);
 
     rclcpp::executors::MultiThreadedExecutor executor;
-    auto piezoelectric_sensor = std::make_shared<Force_Node>();
+    // auto piezoelectric_sensor = std::make_shared<Force_Node>();
     auto mpu6050_sensors = std::make_shared<IMU_Node>();
     auto pubnode = std::make_shared<PublisherNode>();
 
-    executor.add_node(piezoelectric_sensor);
+    // executor.add_node(piezoelectric_sensor);
     executor.add_node(mpu6050_sensors);
     executor.add_node(pubnode);
     executor.spin();

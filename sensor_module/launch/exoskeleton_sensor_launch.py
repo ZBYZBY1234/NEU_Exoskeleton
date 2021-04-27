@@ -28,17 +28,17 @@ def generate_launch_description():
         name="Exoskeleton_Left_Calf"
     )
 
-    # Exoskeleton_Left_Thigh_cmd = Node(
-    #     package="sensor_module",
-    #     executable="Exoskeleton_Thigh",
-    #     name="Exoskeleton_Thigh"
-    # )
+    Exoskeleton_Right_Thigh_cmd = Node(
+        package="sensor_module",
+        executable="Exoskeleton_Right_Thigh",
+        name="Exoskeleton_Right_Thigh"
+    )
 
-    # Exoskeleton_Left_Calf_cmd = Node(
-    #     package="sensor_module",
-    #     executable="Exoskeleton_Calf",
-    #     name="Exoskeleton_Calf"
-    # )
+    Exoskeleton_Right_Calf_cmd = Node(
+        package="sensor_module",
+        executable="Exoskeleton_Right_Calf",
+        name="Exoskeleton_Right_Calf"
+    )
 
     Sensor_Exoskeleton_cmd = Node(
         package="sensor_module",
@@ -51,7 +51,7 @@ def generate_launch_description():
 
     ld.add_action(Exoskeleton_Left_Thigh_cmd)
     ld.add_action(Exoskeleton_Left_Calf_cmd)
-    # ld.add_action(Exoskeleton_Left_Thigh_cmd)
-    # ld.add_action(Exoskeleton_Left_Calf_cmd)
+    ld.add_action(Exoskeleton_Right_Thigh_cmd)
+    ld.add_action(Exoskeleton_Right_Calf_cmd)
     ld.add_action(Sensor_Exoskeleton_cmd)
     return ld

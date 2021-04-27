@@ -54,6 +54,12 @@ ament_target_dependencies(Human_Left_Thigh rclcpp std_msgs)
 add_executable(Human_Left_Calf src/IMU/Human_Left_Calf.cpp )
 target_link_libraries(Human_Left_Calf  ${catkin_LIBRARIES})
 ament_target_dependencies(Human_Left_Calf rclcpp std_msgs)
+add_executable(Human_Right_Thigh src/IMU/Human_Right_Thigh.cpp )
+target_link_libraries(Human_Right_Thigh  ${catkin_LIBRARIES})
+ament_target_dependencies(Human_Right_Thigh rclcpp std_msgs)
+add_executable(Human_Right_Calf src/IMU/Human_Right_Calf.cpp )
+target_link_libraries(Human_Right_Calf  ${catkin_LIBRARIES})
+ament_target_dependencies(Human_Right_Calf rclcpp std_msgs)
 
 add_executable(Exoskeleton_Left_Thigh src/IMU/Exoskeleton_Left_Thigh.cpp )
 target_link_libraries(Exoskeleton_Left_Thigh  ${catkin_LIBRARIES})
@@ -61,7 +67,12 @@ ament_target_dependencies(Exoskeleton_Left_Thigh rclcpp std_msgs)
 add_executable(Exoskeleton_Left_Calf src/IMU/Exoskeleton_Left_Calf.cpp )
 target_link_libraries(Exoskeleton_Left_Calf  ${catkin_LIBRARIES})
 ament_target_dependencies(Exoskeleton_Left_Calf rclcpp std_msgs)
-
+add_executable(Exoskeleton_Right_Thigh src/IMU/Exoskeleton_Right_Thigh.cpp )
+target_link_libraries(Exoskeleton_Right_Thigh  ${catkin_LIBRARIES})
+ament_target_dependencies(Exoskeleton_Right_Thigh rclcpp std_msgs)
+add_executable(Exoskeleton_Right_Calf src/IMU/Exoskeleton_Right_Calf.cpp )
+target_link_libraries(Exoskeleton_Right_Calf  ${catkin_LIBRARIES})
+ament_target_dependencies(Exoskeleton_Right_Calf rclcpp std_msgs)
 
 
 add_executable(Sensor_Human src/Sensor_Fusion/Sensor_Human.cpp )
@@ -74,8 +85,14 @@ ament_target_dependencies(Sensor_Exoskeleton rclcpp std_msgs)
 install(TARGETS
 Human_Left_Thigh
 Human_Left_Calf
+Human_Right_Thigh
+Human_Right_Calf
+
 Exoskeleton_Left_Thigh
 Exoskeleton_Left_Calf
+Exoskeleton_Right_Thigh
+Exoskeleton_Right_Calf
+
 Piezoelectric
 Sensor_Human
 Sensor_Exoskeleton

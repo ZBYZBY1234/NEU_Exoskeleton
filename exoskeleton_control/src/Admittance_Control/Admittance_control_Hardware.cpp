@@ -91,8 +91,8 @@ private:
     {
         auto Sensor_Data = msg->data;
 
-        Human_Left_Thigh_Angle = Sensor_Data[3]-90;
-        Human_Left_Calf_Angle  = Sensor_Data[4]-90;
+        Human_Left_Thigh_Angle = Sensor_Data[0]-90;
+        Human_Left_Calf_Angle  = Sensor_Data[1]-90;
 
         /* Force/Torque Data */
         //TODO: Force

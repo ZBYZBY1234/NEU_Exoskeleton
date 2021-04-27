@@ -25,8 +25,6 @@ using namespace std::chrono_literals;
 #define Exoskeleton_Left_Calf_topic                    "Exoskeleton_Left_Calf"
 #define Exoskeleton_Right_Thigh_topic                  "Exoskeleton_Right_Thigh"
 #define Exoskeleton_Right_Calf_topic                   "Exoskeleton_Right_Calf"
-// #define Exoskeleton_Thigh_topic                     "Exoskeleton_Thigh"
-// #define Exoskeleton_Calf_topic                      "Exoskeleton_Calf"
 #define Sensor_topic                                   "Sensor_Exoskeleton"
 
 float Left_Thigh_Exoskeleton[3]={0,0,0};
