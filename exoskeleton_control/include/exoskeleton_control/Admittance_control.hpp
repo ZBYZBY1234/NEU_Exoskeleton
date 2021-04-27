@@ -112,7 +112,7 @@ Admittance_control::Admittance_control()
     m_K_JointSpace  << 100.0,1000.0,1000.0,100.0;
 
     //TODO:Check dt.
-    dt = 0.01;
+    dt = 0.1;
 
     isIdentity = false;
 }

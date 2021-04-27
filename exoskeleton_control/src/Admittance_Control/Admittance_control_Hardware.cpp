@@ -29,7 +29,8 @@ Eigen::Matrix<float,6,1> Force_;
 bool flag_;
 
 #define Joint_Subscription_Topic                "Joint_State_Accept"
-#define Joint_Publisher_Topic                   "Joint_State_Send"
+#define Joint_State_Publisher_Topic             "Joint_State_Send"
+#define Joint_Error_Publisher_Topic             "Joint_Error"
 #define Human_Sensor_Subscription_Topic         "Sensor_Human"
 #define Exoskeleton_Sensor_Subscription_Topic   "Sensor_Exoskeleton"
 
@@ -45,11 +46,6 @@ public:
     : Node("Admittance_Control_Subscription"),Admittance_control()
     {
         /* Subscription Node Initialized */
-        // Sensor_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-        //     Sensor_Subscription_Topic,
-        //     10,
-        //     std::bind(&Admittance_Control_Subscription::Sensor_Callback, this, _1)
-        // );
         /* Callback Group Subscriber Initialization */
         Human_callback_group_subscriber = this->create_callback_group(
             rclcpp::CallbackGroupType::MutuallyExclusive
@@ -83,25 +79,24 @@ public:
             Exoskeleton_sub_opt
         );
         /* Publish Node Initialized */
-        Joint_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_Publisher_Topic, 1);
+        Joint_State_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_State_Publisher_Topic, 1);
+        Joint_Error_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_Error_Publisher_Topic, 1);
+
+        flag = true;
     }
 
 private:
 
-    void Sensor_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
+    void Human_Joint_Angle_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Sensor_Data = msg->data;
+
+        Human_Left_Thigh_Angle = Sensor_Data[3]-90;
+        Human_Left_Calf_Angle  = Sensor_Data[4]-90;
 
         /* Force/Torque Data */
         //TODO: Force
         Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
-
-        /*IMU Data Pretreatment*/
-
-        Human_Left_Thigh_Angle = Sensor_Data[3]-90;
-        Human_Left_Calf_Angle  = Sensor_Data[6]-90;
-        Exoskeleton_Left_Thigh_Angle = Sensor_Data[9]-90;
-        Exoskeleton_Left_Calf_Angle  = Sensor_Data[12]-90;
 
         Feedback_Angle_ << 0.0,
         Exoskeleton_Left_Thigh_Angle/180*PI,
@@ -114,8 +109,8 @@ private:
         {
             Expected_Angle_(0,2) = 0;
         }
-        std::cout<<"Feedback_Angle_: "<<Feedback_Angle_<<std::endl;
-        std::cout<<"Expected_Angle_: "<<Expected_Angle_<<std::endl;
+        // std::cout<<"Feedback_Angle_: "<<Feedback_Angle_(0,1)<<","<<Feedback_Angle_(0,2)<<std::endl;
+        // std::cout<<"Expected_Angle_: "<<Expected_Angle_(0,1)<<","<<Expected_Angle_(0,2)<<std::endl;
 
         /*Calculate the Position for Publish.*/
 
@@ -135,6 +130,7 @@ private:
             );
 
         auto message = std_msgs::msg::Float64MultiArray();
+        auto error_message = std_msgs::msg::Float64MultiArray();
         if (Left_Angle(2,0)<0)
         {
             Left_Angle(2,0) = 0;
@@ -144,50 +140,43 @@ private:
             Right_Angle(2,0)=0;
         }
         message.data = {
-            Left_Angle(1,0),
-            Right_Angle(1,0),
-            Left_Angle(2,0),
-            Right_Angle(2,0)
+            Left_Angle(1,0)/PI*180,
+            Right_Angle(1,0)/PI*180,
+            Left_Angle(2,0)/PI*180,
+            Right_Angle(2,0)/PI*180
         };
-        Joint_Publisher->publish(message);
-
-        // std::cout<<"Left: " << Left_Angle(0,0) <<
-        // " " << Left_Angle(1,0)*180/PI <<
-        // " " << Left_Angle(2,0)*180/PI <<
-        // " " << Left_Angle(3,0)  <<
-        // " ,Published!!!"<<std::endl;
-        // std::cout<<"Right: "<<  Right_Angle(0,0) <<
-        // " " << Right_Angle(1,0)*180/PI <<
-        // " " << Right_Angle(2,0)*180/PI <<
-        // " " << Right_Angle(3,0) <<
-        // " ,Published!!!"<<std::endl;
-    }
-
-    void Human_Joint_Angle_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
-    {
-        auto Sensor_Data = msg->data;
-        Human_Left_Thigh_Angle = Sensor_Data[0];
-        Human_Left_Calf_Angle  = Sensor_Data[1];
+        error_message.data = {
+            (Expected_Angle_(0,1)-Feedback_Angle_(0,1))/PI*180,
+            (Expected_Angle_(0,2)-Feedback_Angle_(0,2))/PI*180
+        };
+        Joint_State_Publisher->publish(message);
+        Joint_Error_Publisher->publish(error_message);
     }
     void Exoskeleton_Joint_Angle_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Sensor_Data = msg->data;
-        Exoskeleton_Left_Thigh_Angle = Sensor_Data[0];
-        Exoskeleton_Left_Calf_Angle = Sensor_Data[1];
+        if(flag)
+        {
+            Exoskeleton_Left_Thigh_Angle_offset = Sensor_Data[0];
+            Exoskeleton_Left_Calf_Angle_offset  = Sensor_Data[1];
+            flag = false;
+        }
+        Exoskeleton_Left_Thigh_Angle = Sensor_Data[0]-Exoskeleton_Left_Thigh_Angle_offset;
+        Exoskeleton_Left_Calf_Angle = Sensor_Data[1]-Exoskeleton_Left_Calf_Angle_offset;
     }
 private:
 
     /* Callback Group: Human & Exoskeleton Sensors*/
     rclcpp::CallbackGroup::SharedPtr                                    Human_callback_group_subscriber;
     rclcpp::CallbackGroup::SharedPtr                                    Exoskeleton_callback_group_subscriber;
-    /* Subscription Node */
-    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Sensor_Subscription;
 
+    /* Subscription Node */
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Human_Joint_Angle_Subscription;
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Exoskeleton_Joint_Angle_Subscription;
 
     /* Publisher Node */
-    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_Publisher;
+    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_State_Publisher;
+    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_Error_Publisher;
 
     /* Data */
     Eigen::Matrix<float,4,1> Left_Angle, Right_Angle;
@@ -197,6 +186,13 @@ private:
     float Human_Left_Calf_Angle;
     float Exoskeleton_Left_Thigh_Angle;
     float Exoskeleton_Left_Calf_Angle;
+
+    float Human_Left_Thigh_Angle_offset;
+    float Human_Left_Calf_Angle_offset;
+    float Exoskeleton_Left_Thigh_Angle_offset;
+    float Exoskeleton_Left_Calf_Angle_offset;
+
+    bool  flag;
 };
 
 int main(int argc, char * argv[])

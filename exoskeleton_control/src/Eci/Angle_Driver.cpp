@@ -103,10 +103,10 @@ private:
     {
         /* Motive Angle Pretreatment */
         auto Angle = msg->data;
-        motor_angle[0] = Angle[0]/PI*180;  //Left  Thigh
-        motor_angle[1] = Angle[1]/PI*180;  //Right Thigh
-        motor_angle[2] = Angle[2]/PI*180;  //Left  Calf
-        motor_angle[3] = Angle[3]/PI*180;  //Right Calf
+        motor_angle[0] = Angle[0];  //Left  Thigh
+        motor_angle[1] = Angle[1];  //Right Thigh
+        motor_angle[2] = Angle[2];  //Left  Calf
+        motor_angle[3] = Angle[3];  //Right Calf
         motor_qc[0] = 1638400/360*motor_angle[0];
         motor_qc[1] = 1638400/360*motor_angle[1];
         motor_qc[2] = 1638400/360*motor_angle[2];
