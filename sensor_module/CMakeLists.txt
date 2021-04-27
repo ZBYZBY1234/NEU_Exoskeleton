@@ -62,7 +62,7 @@ add_executable(Piezoelectric src/Force/Piezoelectric.cpp )
 target_link_libraries(Piezoelectric  ${catkin_LIBRARIES})
 ament_target_dependencies(Piezoelectric rclcpp std_msgs)
 
-add_executable(Sensor_Human src/Sensor_Human.cpp )
+add_executable(Sensor_Human src/Sensor_Fusion/Sensor_Human.cpp )
 target_link_libraries(Sensor_Human  ${catkin_LIBRARIES})
 ament_target_dependencies(Sensor_Human rclcpp std_msgs)
 
