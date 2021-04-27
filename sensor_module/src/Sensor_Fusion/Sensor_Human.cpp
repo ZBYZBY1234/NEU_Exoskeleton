@@ -59,7 +59,7 @@ class Force_Node : public rclcpp::Node
 {
 public:
     Force_Node()
-    : Node("Force_Node")
+    : Node("Human_Force_Node")
     {
         Force_Callback = this->create_callback_group(
             rclcpp::CallbackGroupType::MutuallyExclusive
@@ -100,7 +100,7 @@ class IMU_Node : public rclcpp::Node
 {
 public:
     IMU_Node()
-    : Node("IMU_Node")
+    : Node("Human_IMU_Node")
     {
         callback_group_subscriber1_ = this->create_callback_group(
             rclcpp::CallbackGroupType::MutuallyExclusive
