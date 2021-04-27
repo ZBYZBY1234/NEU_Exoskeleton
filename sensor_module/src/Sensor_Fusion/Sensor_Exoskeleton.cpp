@@ -21,7 +21,7 @@
 using namespace std::chrono_literals;
 
 #define Piezoelectric_topic                            "Piezoelectric"
-#define Exoskeleton_Left_Thigh_topic                   "Exoskeleton_Left_Calf"
+#define Exoskeleton_Left_Thigh_topic                   "Exoskeleton_Left_Thigh"
 #define Exoskeleton_Left_Calf_topic                    "Exoskeleton_Left_Calf"
 #define Exoskeleton_Right_Thigh_topic                  "Exoskeleton_Right_Thigh"
 #define Exoskeleton_Right_Calf_topic                   "Exoskeleton_Right_Calf"
@@ -205,7 +205,7 @@ public:
             double time = convertFromString(message_received_at) - start_time;
 
             auto message = std_msgs::msg::Float64MultiArray();
-            message.data = {Pressor[0], Pressor[1], Pressor[2],
+            message.data = {
                             Left_Thigh_Exoskeleton[0], Left_Calf_Exoskeleton[0],
                             Right_Thigh_Exoskeleton[0], Right_Calf_Exoskeleton[0],
                             time};
