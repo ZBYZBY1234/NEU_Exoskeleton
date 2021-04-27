@@ -20,7 +20,7 @@
 
 using namespace std::chrono_literals;
 
-#define Piezoelectric_topic                              "Piezoelectric"
+#define Piezoelectric_topic                            "Piezoelectric"
 #define Human_Left_Thigh_topic                         "Human_Left_Thigh"
 #define Human_Left_Calf_topic                          "Human_Left_Calf"
 #define Human_Right_Thigh_topic                        "Human_Right_Thigh"
@@ -61,14 +61,14 @@ public:
     Force_Node()
     : Node("Force_Node")
     {
-        callback_group_subscriber1_ = this->create_callback_group(
+        Force_Callback = this->create_callback_group(
             rclcpp::CallbackGroupType::MutuallyExclusive
         );
 
         auto sub1_opt = rclcpp::SubscriptionOptions();
-        sub1_opt.callback_group = callback_group_subscriber1_;
+        sub1_opt.callback_group = Force_Callback;
 
-        subscription1_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
+        Force_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Piezoelectric_topic,
             rclcpp::QoS(10),
             std::bind(
@@ -83,14 +83,13 @@ private:
 
     void subscriber1_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        //Pressor = {msg->data[0], msg->data[1], msg->data[2]};
         Pressor[0] = msg->data[0];
         Pressor[1] = msg->data[1];
         Pressor[2] = msg->data[2];
     }
 
-    rclcpp::CallbackGroup::SharedPtr                                    callback_group_subscriber1_;
-    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   subscription1_;
+    rclcpp::CallbackGroup::SharedPtr                                    Force_Callback;
+    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Force_Subscription;
 };
 
 /*
@@ -237,7 +236,7 @@ class PublisherNode : public rclcpp::Node
 {
 public:
     PublisherNode()
-    : Node ("Human_Sensor_Publisher"), count_(0)
+    : Node("Human_Sensor_Publisher"), count_(0)
     {
         start = true;
         publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(Sensor_topic, 10);

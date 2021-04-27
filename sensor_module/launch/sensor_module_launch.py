@@ -45,11 +45,11 @@ def generate_launch_description():
     #     name="Exoskeleton_Calf"
     # )
 
-    # Sensor_Human_cmd = Node(
-    #     package="sensor_module",
-    #     executable="Sensor_Human",
-    #     name="Sensor_Human"
-    # )
+    Sensor_Human_cmd = Node(
+        package="sensor_module",
+        executable="Sensor_Human",
+        name="Sensor_Human"
+    )
     # Create the launch description and populate
     ld = LaunchDescription()
     # Declare the launch options
@@ -58,5 +58,5 @@ def generate_launch_description():
     ld.add_action(Human_Left_Calf_cmd)
     # ld.add_action(Exoskeleton_Left_Thigh_cmd)
     # ld.add_action(Exoskeleton_Left_Calf_cmd)
-    # ld.add_action(Sensor_Human_cmd)
+    ld.add_action(Sensor_Human_cmd)
     return ld
