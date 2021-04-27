@@ -21,42 +21,42 @@ def generate_launch_description():
         name="Piezoelectric"
     )
 
-    MPU6050_Left_Thigh_cmd = Node(
+    Human_Left_Thigh_cmd = Node(
         package="sensor_module",
-        executable="MPU6050_Thigh",
-        name="MPU6050_Thigh"
+        executable="Human_Left_Thigh",
+        name="Human_Left_Thigh"
     )
 
-    MPU6050_Left_Calf_cmd = Node(
+    Human_Left_Calf_cmd = Node(
         package="sensor_module",
-        executable="MPU6050_Calf",
-        name="MPU6050_Calf"
+        executable="Human_Left_Calf",
+        name="Human_Left_Calf"
     )
 
-    Exoskeleton_Left_Thigh_cmd = Node(
-        package="sensor_module",
-        executable="Exoskeleton_Thigh",
-        name="Exoskeleton_Thigh"
-    )
+    # Exoskeleton_Left_Thigh_cmd = Node(
+    #     package="sensor_module",
+    #     executable="Exoskeleton_Thigh",
+    #     name="Exoskeleton_Thigh"
+    # )
 
-    Exoskeleton_Left_Calf_cmd = Node(
-        package="sensor_module",
-        executable="Exoskeleton_Calf",
-        name="Exoskeleton_Calf"
-    )
+    # Exoskeleton_Left_Calf_cmd = Node(
+    #     package="sensor_module",
+    #     executable="Exoskeleton_Calf",
+    #     name="Exoskeleton_Calf"
+    # )
 
-    Sensor_cmd = Node(
-        package="sensor_module",
-        executable="Sensor",
-        name="Sensor"
-    )
+    # Sensor_Human_cmd = Node(
+    #     package="sensor_module",
+    #     executable="Sensor_Human",
+    #     name="Sensor_Human"
+    # )
     # Create the launch description and populate
     ld = LaunchDescription()
     # Declare the launch options
     ld.add_action(Piezoelectric_cmd)
-    ld.add_action(MPU6050_Left_Thigh_cmd)
-    ld.add_action(MPU6050_Left_Calf_cmd)
-    ld.add_action(Exoskeleton_Left_Thigh_cmd)
-    ld.add_action(Exoskeleton_Left_Calf_cmd)
-    ld.add_action(Sensor_cmd)
+    ld.add_action(Human_Left_Thigh_cmd)
+    ld.add_action(Human_Left_Calf_cmd)
+    # ld.add_action(Exoskeleton_Left_Thigh_cmd)
+    # ld.add_action(Exoskeleton_Left_Calf_cmd)
+    # ld.add_action(Sensor_Human_cmd)
     return ld

@@ -43,34 +43,36 @@ find_package(std_msgs REQUIRED)
 add_executable(MPU6050 src/IMU/MPU6050.cpp )
 target_link_libraries(MPU6050  ${catkin_LIBRARIES})
 ament_target_dependencies(MPU6050 rclcpp std_msgs)
-add_executable(MPU6050_Thigh src/IMU/MPU6050_Thigh.cpp )
-target_link_libraries(MPU6050_Thigh  ${catkin_LIBRARIES})
-ament_target_dependencies(MPU6050_Thigh rclcpp std_msgs)
-add_executable(MPU6050_Calf src/IMU/MPU6050_Calf.cpp )
-target_link_libraries(MPU6050_Calf  ${catkin_LIBRARIES})
-ament_target_dependencies(MPU6050_Calf rclcpp std_msgs)
-add_executable(Exoskeleton_Thigh src/IMU/Exoskeleton_Thigh.cpp )
-target_link_libraries(Exoskeleton_Thigh  ${catkin_LIBRARIES})
-ament_target_dependencies(Exoskeleton_Thigh rclcpp std_msgs)
-add_executable(Exoskeleton_Calf src/IMU/Exoskeleton_Calf.cpp )
-target_link_libraries(Exoskeleton_Calf  ${catkin_LIBRARIES})
-ament_target_dependencies(Exoskeleton_Calf rclcpp std_msgs)
+
+add_executable(Human_Left_Thigh src/IMU/Human_Left_Thigh.cpp )
+target_link_libraries(Human_Left_Thigh  ${catkin_LIBRARIES})
+ament_target_dependencies(Human_Left_Thigh rclcpp std_msgs)
+add_executable(Human_Left_Calf src/IMU/Human_Left_Calf.cpp )
+target_link_libraries(Human_Left_Calf  ${catkin_LIBRARIES})
+ament_target_dependencies(Human_Left_Calf rclcpp std_msgs)
+
+add_executable(Exoskeleton_Left_Thigh src/IMU/Exoskeleton_Left_Thigh.cpp )
+target_link_libraries(Exoskeleton_Left_Thigh  ${catkin_LIBRARIES})
+ament_target_dependencies(Exoskeleton_Left_Thigh rclcpp std_msgs)
+add_executable(Exoskeleton_Left_Calf src/IMU/Exoskeleton_Left_Calf.cpp )
+target_link_libraries(Exoskeleton_Left_Calf  ${catkin_LIBRARIES})
+ament_target_dependencies(Exoskeleton_Left_Calf rclcpp std_msgs)
 
 add_executable(Piezoelectric src/Force/Piezoelectric.cpp )
 target_link_libraries(Piezoelectric  ${catkin_LIBRARIES})
 ament_target_dependencies(Piezoelectric rclcpp std_msgs)
 
-add_executable(Sensor src/Sensor.cpp )
-target_link_libraries(Sensor  ${catkin_LIBRARIES})
-ament_target_dependencies(Sensor rclcpp std_msgs)
+add_executable(Sensor_Human src/Sensor_Human.cpp )
+target_link_libraries(Sensor_Human  ${catkin_LIBRARIES})
+ament_target_dependencies(Sensor_Human rclcpp std_msgs)
 
 install(TARGETS
-MPU6050_Thigh
-MPU6050_Calf
-Exoskeleton_Thigh
-Exoskeleton_Calf
+Human_Left_Thigh
+Human_Left_Calf
+Exoskeleton_Left_Thigh
+Exoskeleton_Left_Calf
 Piezoelectric
-Sensor
+Sensor_Human
 DESTINATION lib/${PROJECT_NAME}
 )
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})

@@ -12,8 +12,8 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-#define     USB_DEVICE  "/dev/ttyUSB1"
-#define     topic       "MPU6050_Thigh"
+#define     USB_DEVICE  "/dev/ttyUSB3"
+#define     topic       "Exoskeleton_Left_Thigh"
 using namespace std::chrono_literals;
 /*
  * @Name: MPU6050

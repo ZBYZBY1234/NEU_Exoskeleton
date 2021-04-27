@@ -20,17 +20,20 @@
 
 using namespace std::chrono_literals;
 
-#define Piezoelectric_topic                         "Piezoelectric"
-#define MPU6050_Thigh_topic                         "MPU6050_Thigh"
-#define MPU6050_Calf_topic                          "MPU6050_Calf"
-#define Exoskeleton_Thigh_topic                     "Exoskeleton_Thigh"
-#define Exoskeleton_Calf_topic                      "Exoskeleton_Calf"
-#define Sensor_topic                                "Sensor"
+#define Piezoelectric_topic                              "Piezoelectric"
+#define Human_Left_Thigh_topic                         "Human_Left_Thigh"
+#define Human_Left_Calf_topic                          "Human_Left_Calf"
+#define Human_Right_Thigh_topic                        "Human_Right_Thigh"
+#define Human_Right_Calf_topic                         "Human_Right_Calf"
+// #define Exoskeleton_Thigh_topic                     "Exoskeleton_Thigh"
+// #define Exoskeleton_Calf_topic                      "Exoskeleton_Calf"
+#define Sensor_topic                                   "Sensor_Human"
 
-float Sensor_Thigh[3]={0,0,0};
-float Sensor_Calf[3]={0,0,0};
-float Exoskeleton_Thigh[3]={0,0,0};
-float Exoskeleton_Calf[3]={0,0,0};
+float Left_Thigh_Human[3]={0,0,0};
+float Left_Calf_Human[3]={0,0,0};
+float Right_Thigh_Human[3]={0,0,0};
+float Right_Calf_Human[3]={0,0,0};
+
 float Pressor[3]={0,0,0};
 
 std::string string_thread_id()
@@ -75,31 +78,11 @@ public:
             ),
             sub1_opt
         );
-        start = true;
     }
 private:
-    std::string timing_string()
-    {
-        if(start)
-        {
-            rclcpp::Time time = this->now();
-            start_time = convertFromString(std::to_string(time.seconds()));
-            start = false;
-            return std::to_string(time.seconds());
-        }
-        else{
-            rclcpp::Time time = this->now();
-            return std::to_string(time.seconds());
-        }
-    }
 
     void subscriber1_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        auto message_received_at = timing_string();
-        RCLCPP_INFO(
-            this->get_logger(),"Piezoelectric: THREAD %s => Heard %f %f %f at %f",
-            string_thread_id().c_str(),msg->data[0],msg->data[1],msg->data[2],convertFromString(message_received_at)-start_time
-        );
         //Pressor = {msg->data[0], msg->data[1], msg->data[2]};
         Pressor[0] = msg->data[0];
         Pressor[1] = msg->data[1];
@@ -108,9 +91,6 @@ private:
 
     rclcpp::CallbackGroup::SharedPtr                                    callback_group_subscriber1_;
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   subscription1_;
-
-    bool                                                                start;
-    double                                                              start_time;
 };
 
 /*
@@ -146,7 +126,7 @@ public:
         sub4_opt.callback_group = callback_group_subscriber4_;
 
         subscription1_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-            MPU6050_Thigh_topic,
+            Human_Left_Thigh_topic,
             rclcpp::QoS(10),
             std::bind(
                 &IMU_Node::subscriber1_cb,
@@ -157,7 +137,7 @@ public:
         );
 
         subscription2_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-            MPU6050_Calf_topic,
+            Human_Left_Calf_topic,
             rclcpp::QoS(10),
             std::bind(
                 &IMU_Node::subscriber2_cb,
@@ -168,7 +148,7 @@ public:
         );
 
         subscription3_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-            Exoskeleton_Thigh_topic,
+            Human_Right_Thigh_topic,
             rclcpp::QoS(10),
             std::bind(
                 &IMU_Node::subscriber3_cb,
@@ -179,7 +159,7 @@ public:
         );
 
         subscription4_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-            Exoskeleton_Calf_topic,
+            Human_Right_Calf_topic,
             rclcpp::QoS(10),
             std::bind(
                 &IMU_Node::subscriber4_cb,
@@ -210,37 +190,33 @@ private:
 
     void subscriber1_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        auto message_received_at = timing_string();
-        Sensor_Thigh[0] = msg->data[0];
-        Sensor_Thigh[1] = msg->data[1];
-        Sensor_Thigh[2] = msg->data[2];
+        Left_Thigh_Human[0] = msg->data[0];
+        Left_Thigh_Human[1] = msg->data[1];
+        Left_Thigh_Human[2] = msg->data[2];
     }
 
     void subscriber2_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        auto message_received_at = timing_string();
 
-        Sensor_Calf[0] = msg->data[0];
-        Sensor_Calf[1] = msg->data[1];
-        Sensor_Calf[2] = msg->data[2];
+        Left_Calf_Human[0] = msg->data[0];
+        Left_Calf_Human[1] = msg->data[1];
+        Left_Calf_Human[2] = msg->data[2];
     }
 
     void subscriber3_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        auto message_received_at = timing_string();
 
-        Exoskeleton_Thigh[0] = msg->data[0];
-        Exoskeleton_Thigh[1] = msg->data[1];
-        Exoskeleton_Thigh[2] = msg->data[2];
+        Right_Thigh_Human[0] = msg->data[0];
+        Right_Thigh_Human[1] = msg->data[1];
+        Right_Thigh_Human[2] = msg->data[2];
     }
 
     void subscriber4_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        auto message_received_at = timing_string();
 
-        Exoskeleton_Calf[0] = msg->data[0];
-        Exoskeleton_Calf[1] = msg->data[1];
-        Exoskeleton_Calf[2] = msg->data[2];
+        Right_Calf_Human[0] = msg->data[0];
+        Right_Calf_Human[1] = msg->data[1];
+        Right_Calf_Human[2] = msg->data[2];
     }
 
     rclcpp::CallbackGroup::SharedPtr                                    callback_group_subscriber1_;
@@ -261,7 +237,7 @@ class PublisherNode : public rclcpp::Node
 {
 public:
     PublisherNode()
-    : Node ("PublisherNode"), count_(0)
+    : Node ("Human_Sensor_Publisher"), count_(0)
     {
         start = true;
         publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(Sensor_topic, 10);
@@ -272,10 +248,8 @@ public:
 
             auto message = std_msgs::msg::Float64MultiArray();
             message.data = {Pressor[0], Pressor[1], Pressor[2],
-                            Sensor_Thigh[0], Sensor_Thigh[1], Sensor_Thigh[2],
-                            Sensor_Calf[0], Sensor_Calf[1], Sensor_Calf[2],
-                            Exoskeleton_Thigh[0], Exoskeleton_Thigh[1], Exoskeleton_Thigh[2],
-                            Exoskeleton_Calf[0], Exoskeleton_Calf[1], Exoskeleton_Calf[2],
+                            Left_Thigh_Human[0], Left_Calf_Human[0],
+                            Right_Thigh_Human[0], Right_Calf_Human[0],
                             time};
             this->publisher_->publish(message);
         };

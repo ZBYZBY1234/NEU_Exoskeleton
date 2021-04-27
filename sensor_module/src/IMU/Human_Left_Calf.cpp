@@ -13,7 +13,7 @@
 #include "std_msgs/msg/int32.hpp"
 
 #define     USB_DEVICE  "/dev/ttyUSB2"
-#define     topic       "MPU6050_Calf"
+#define     topic       "Human_Left_Calf"
 
 using namespace std::chrono_literals;
 /*

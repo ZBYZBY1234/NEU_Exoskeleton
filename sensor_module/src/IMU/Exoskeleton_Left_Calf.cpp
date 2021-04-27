@@ -12,14 +12,14 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-#define     USB_DEVICE  "/dev/ttyUSB3"
-#define     topic       "Exoskeleton_Thigh"
+#define     USB_DEVICE  "/dev/ttyUSB4"
+#define     topic       "Exoskeleton_Left_Calf"
 using namespace std::chrono_literals;
 /*
  * @Name: MPU6050
  * @Description: Using the MPU6050 Class to let Serial Port be initialized.
 */
-MPU6050 mpu6050 = MPU6050 (USB_DEVICE,B115200,"Left_Thigh");
+MPU6050 mpu6050 = MPU6050 (USB_DEVICE,B115200,"Left_Calf");
 
 
 struct Producer : public rclcpp::Node
