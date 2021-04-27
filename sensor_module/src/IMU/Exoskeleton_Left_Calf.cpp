@@ -12,7 +12,7 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-#define     USB_DEVICE  "/dev/ttyUSB3"
+#define     USB_DEVICE  "/dev/ttyUSB5"
 #define     topic       "Exoskeleton_Left_Calf"
 using namespace std::chrono_literals;
 /*
