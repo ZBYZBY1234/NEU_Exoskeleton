@@ -10,7 +10,7 @@ using std::placeholders::_1;
 using namespace std;
 
 #define Joint_Error_Topic   "Joint_Error"
-
+#define CSV_File_Path       "/home/hemingshan/exo_ws/src/security_module/csv_File/1.csv"
 class Joint_Error :
     public rclcpp::Node
 {
@@ -18,6 +18,8 @@ public:
     Joint_Error()
     : Node("Joint_Error")
     {
+        oFile.open(CSV_File_Path, ios::out | ios::trunc);
+        oFile << "姓名" << "," << "年龄" << "," << "班级" << "," << "班主任" << endl;
         //TODO: Change the Topic of Joint States
         Joint_Error_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Joint_Error_Topic, 10, std::bind(&Joint_Error::callback, this, _1)
@@ -25,7 +27,7 @@ public:
     }
     ~Joint_Error()
     {
-
+        oFile.close();
     }
 
 private:
@@ -36,8 +38,6 @@ private:
 
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Joint_Error_Subscription;
     ofstream                                                            oFile;
-
-    
 };
 
 int main(int argc, char * argv[])
