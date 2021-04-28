@@ -50,7 +50,7 @@ struct Producer : public rclcpp::Node
             float * Angle;
             Angle = mpu6050.Read_Data();
 
-            msg->data = {mpu6050.angle_x,mpu6050.angle_y,mpu6050.angle_z};
+            msg->data = {mpu6050.angle_x-24.6,mpu6050.angle_y,mpu6050.angle_z};
             pub_ptr->publish(std::move(msg));
         };
 
