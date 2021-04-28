@@ -36,6 +36,7 @@ private:
 
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Joint_Error_Subscription;
     ofstream                                                            oFile;
+    
 };
 
 int main(int argc, char * argv[])
