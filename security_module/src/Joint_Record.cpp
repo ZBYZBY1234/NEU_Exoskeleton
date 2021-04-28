@@ -11,7 +11,7 @@ using namespace std;
 
 #define Joint_Sensor_Topic  "Sensor_Exoskeleton"
 #define Joint_Angle_Topic   "Joint_State_Send"
-#define CSV_File_Path       "/home/hemingshan/exo_ws/src/security_module/csv_File/1.csv"
+#define CSV_File_Path       "/home/hemingshan/exo_ws/src/security_module/csv_File/2.csv"
 class Joint_Record :
     public rclcpp::Node
 {

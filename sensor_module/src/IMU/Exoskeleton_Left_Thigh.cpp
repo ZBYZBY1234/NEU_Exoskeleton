@@ -14,6 +14,7 @@
 
 #define     USB_DEVICE  "/dev/ttyUSB0"
 #define     topic       "Exoskeleton_Left_Thigh"
+#define     offset      0
 using namespace std::chrono_literals;
 /*
  * @Name: MPU6050
@@ -43,7 +44,7 @@ private:
         auto message = std_msgs::msg::Float64MultiArray();
         float * Angle;
         Angle = mpu6050.Read_Data();
-        message.data = {mpu6050.angle_x-0.6,mpu6050.angle_y,mpu6050.angle_z};
+        message.data = {mpu6050.angle_x+offset,mpu6050.angle_y,mpu6050.angle_z};
         publisher_->publish(message);
     }
     rclcpp::TimerBase::SharedPtr timer_;
@@ -56,6 +57,4 @@ int  main(int argc, char * argv[])
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<Exoskeleton_Left_Thigh>());
     rclcpp::shutdown();
-
-
 }

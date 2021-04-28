@@ -44,7 +44,7 @@ private:
             Exoskeleton_Left_Calf_Angle,
             Exoskeleton_Right_Calf_Angle};
 
-        if(Exoskeleton_Left_Thigh_Angle < -50 || Exoskeleton_Left_Thigh_Angle > 20)
+        if(Exoskeleton_Left_Thigh_Angle < -35 || Exoskeleton_Left_Thigh_Angle > 20)
         {
             i = i * -1;
         }
