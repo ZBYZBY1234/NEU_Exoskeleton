@@ -6,7 +6,7 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 
 #define Joint_Input_Topic   "Joint_State_Send"
-#define Timer_Config        100ms
+// #define Timer_Config        100ms
 
 using namespace std::chrono_literals;
 
@@ -14,39 +14,42 @@ class Joint_Input : public rclcpp::Node
 {
 public:
     Joint_Input()
-    : Node("Joint Inpput")
+    : Node("Joint_Input")
     {
-        publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>
-        (
-            Joint_Input_Topic, 10
-        );
-        timer_     = this->create_wall_timer(
-            Timer_Config,
-            std::bind(
-                &Joint_Input::timer_callback, this
-            )
-        );
         Exoskeleton_Left_Thigh_Angle    = 0;
         Exoskeleton_Right_Thigh_Angle   = 0;
         Exoskeleton_Left_Calf_Angle     = 0;
         Exoskeleton_Right_Calf_Angle    = 0;
+
+        publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>
+        (
+            Joint_Input_Topic, 10
+        );
+
+        timer_     = this->create_wall_timer(
+            100ms,
+            std::bind(
+                &Joint_Input::timer_callback,
+                this)
+        );
+        i = 1;
     }
 private:
     void timer_callback()
     {
         auto Joint_State = std_msgs::msg::Float64MultiArray();
-        Joint_State.data[0] = Exoskeleton_Left_Thigh_Angle;
-        Joint_State.data[1] = Exoskeleton_Right_Thigh_Angle;
-        Joint_State.data[2] = Exoskeleton_Left_Calf_Angle;
-        Joint_State.data[3] = Exoskeleton_Right_Calf_Angle;
-        if(Exoskeleton_Left_Thigh_Angle> -30)
+        Joint_State.data = {
+            Exoskeleton_Left_Thigh_Angle,
+            Exoskeleton_Right_Thigh_Angle,
+            Exoskeleton_Left_Calf_Angle,
+            Exoskeleton_Right_Calf_Angle};
+
+        if(Exoskeleton_Left_Thigh_Angle < -50 || Exoskeleton_Left_Thigh_Angle > 20)
         {
-            Exoskeleton_Left_Thigh_Angle += 1;
+            i = i * -1;
         }
-        if(Exoskeleton_Right_Thigh_Angle> -30)
-        {
-            Exoskeleton_Right_Thigh_Angle += 1;
-        }
+        Exoskeleton_Left_Thigh_Angle += i;
+        Exoskeleton_Right_Thigh_Angle += i;
 
         publisher_->publish(Joint_State);
     }
@@ -57,6 +60,8 @@ private:
     float               Exoskeleton_Right_Thigh_Angle;
     float               Exoskeleton_Left_Calf_Angle;
     float               Exoskeleton_Right_Calf_Angle;
+
+    int                 i;
 };
 
 int main(int argc, char * argv[])
@@ -64,5 +69,4 @@ int main(int argc, char * argv[])
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<Joint_Input>());
     rclcpp::shutdown();
-    return 0;
 }

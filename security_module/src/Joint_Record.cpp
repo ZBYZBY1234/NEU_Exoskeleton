@@ -66,10 +66,11 @@ private:
     void callback1(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Angle      = msg->data;
-        Sensor_Angle[0] = Angle[0];
-        Sensor_Angle[1] = Angle[1];
-        Sensor_Angle[2] = Angle[2];
-        Sensor_Angle[3] = Angle[3];
+        Sensor_Angle[0] = Angle[0]-90;
+        Sensor_Angle[1] = Angle[1]-90;
+        Sensor_Angle[2] = Angle[2]-90;
+        Sensor_Angle[3] = Angle[3]-90;
+        // std::cout<<"Sensor_Angle: "<<Sensor_Angle[0]<<","<<Sensor_Angle[2]<<std::endl;
     }
     /* Angle Publish Data*/
     void callback2(const std_msgs::msg::Float64MultiArray::SharedPtr msg)

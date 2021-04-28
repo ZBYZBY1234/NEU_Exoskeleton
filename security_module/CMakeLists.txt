@@ -39,7 +39,7 @@ add_executable(Joint_Record src/Joint_Record.cpp)
 ament_target_dependencies(Joint_Record rclcpp std_msgs sensor_msgs)
 
 add_executable(Joint_Input src/Joint_Input.cpp)
-ament_target_dependencies(Joint_Input rclcpp std_msgs sensor_msgs)
+ament_target_dependencies(Joint_Input rclcpp std_msgs)
 install(
     TARGETS
     Joint_Record
