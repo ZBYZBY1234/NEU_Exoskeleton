@@ -34,3 +34,7 @@ This package is mainly about the Sensor to get the data of the Control Algorithm
 ## joint_state_publisher
 
 This package is developed by official and can be used to control the joint by position mode.
+
+## security_module
+
+This package is mainly for programming the security module for this exoskeleton. And there are some tips for record data as csv file to do some treatment.
