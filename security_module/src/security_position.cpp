@@ -1,47 +1,47 @@
 #include <memory>
-
+#include <fstream>
+#include <string>
+#include <iostream>
+#include <streambuf>
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
-#include "sensor_msgs/msg/joint_state.hpp"
+#include "std_msgs/msg/float64_multi_array.hpp"
 
 using std::placeholders::_1;
+using namespace std;
 
-#define Joint_State_Topic   "Sensor"
+#define Joint_Error_Topic   "Joint_Error"
 
-class MinimalSubscriber :
+class Joint_Error :
     public rclcpp::Node
 {
 public:
-    MinimalSubscriber()
-    : Node("minimal_subscriber")
+    Joint_Error()
+    : Node("Joint_Error")
     {
-        subscription_ = this->create_subscription<std_msgs::msg::String>(
-            "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1)
-        );
-
         //TODO: Change the Topic of Joint States
-        Joint_Subscription = this->create_subscription<sensor_msgs::msg::JointState>(
-            "joint_states", 10, std::bind(&MinimalSubscriber::callback1, this, _1)
+        Joint_Error_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
+            Joint_Error_Topic, 10, std::bind(&Joint_Error::callback, this, _1)
         );
+    }
+    ~Joint_Error()
+    {
+
     }
 
 private:
-    void topic_callback(const std_msgs::msg::String::SharedPtr msg) const
+    void callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+        auto position = msg->data;
     }
-    void callback1(const sensor_msgs::msg::JointState::SharedPtr msg)
-    {
-        auto position = msg->position;
-    }
-    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
-    rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr Joint_Subscription;
+
+    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Joint_Error_Subscription;
+    ofstream                                                            oFile;
 };
 
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<MinimalSubscriber>());
+    rclcpp::spin(std::make_shared<Joint_Error>());
     rclcpp::shutdown();
     return 0;
 }
