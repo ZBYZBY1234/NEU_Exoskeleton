@@ -70,7 +70,7 @@ Eigen::Matrix<float,3,1> MPU6050::Read()
                     Eigen::Matrix<float,3,1> angle;
                     angle<<angle_x,angle_y,angle_z;
                     // std::cout<<"Heard"<<std::endl;
-                    std::cout<<"Angle: "<<angle(0,0)<<","<<angle(1,0)<<","<<angle(2,0)<<std::endl;
+                    // std::cout<<"Angle: "<<angle(0,0)<<","<<angle(1,0)<<","<<angle(2,0)<<std::endl;
                     return angle;
                 }
             }
