@@ -35,11 +35,15 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
-add_executable(Security_Position src/security_position.cpp)
-ament_target_dependencies(Security_Position rclcpp std_msgs sensor_msgs)
+add_executable(Joint_Record src/Joint_Record.cpp)
+ament_target_dependencies(Joint_Record rclcpp std_msgs sensor_msgs)
+
+add_executable(Joint_Input src/Joint_Input.cpp)
+ament_target_dependencies(Joint_Input rclcpp std_msgs sensor_msgs)
 install(
     TARGETS
-    Security_Position
+    Joint_Record
+    Joint_Input
     DESTINATION lib/${PROJECT_NAME}
 )
 ament_package()
