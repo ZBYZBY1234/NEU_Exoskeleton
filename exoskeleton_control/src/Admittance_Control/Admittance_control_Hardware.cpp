@@ -21,19 +21,6 @@
 using std::placeholders::_1;
 using namespace std::chrono_literals;
 
-Eigen::Matrix<float,1,4> Feedback_Angle_Left;
-Eigen::Matrix<float,1,4> Expected_Angle_Left;
-Eigen::Matrix<float,1,4> Expected_Velocity_Left;
-Eigen::Matrix<float,1,4> Expected_Acceleration_Left;
-
-Eigen::Matrix<float,1,4> Feedback_Angle_Right;
-Eigen::Matrix<float,1,4> Expected_Angle_Right;
-Eigen::Matrix<float,1,4> Expected_Velocity_Right;
-Eigen::Matrix<float,1,4> Expected_Acceleration_Right;
-
-Eigen::Matrix<float,6,1> Force_;
-bool flag_;
-
 #define Joint_Subscription_Topic                "Joint_State_Accept"
 #define Joint_State_Publisher_Topic             "Joint_State_Send"
 #define Joint_Error_Publisher_Topic             "Joint_Error"
@@ -89,53 +76,85 @@ public:
         Joint_Error_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_Error_Publisher_Topic, 1);
 
         flag = true;
+
+        /* Data Preinitialized */
+        Expected_Angle_Left << 0.0,0.0,0.0,0.0;
+        Expected_Velocity_Left << 0.0,0.0,0.0,0.0;
+        Expected_Acceleration_Left << 0.0,0.0,0.0,0.0;
+
+        Expected_Angle_Right << 0.0,0.0,0.0,0.0;
+        Expected_Velocity_Right << 0.0,0.0,0.0,0.0;
+        Expected_Acceleration_Right << 0.0,0.0,0.0,0.0;
     }
 
 private:
+    /* Human Joint Angle Callback*/
 
     void Human_Joint_Angle_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Sensor_Data = msg->data;
-
-        Human_Left_Thigh_Angle  = Sensor_Data[0]-90;
-        Human_Left_Calf_Angle   = Sensor_Data[1]-90;
-        Human_Right_Thigh_Angle = Sensor_Data[2]-90;
-        Human_Right_Calf_Angle  = Sensor_Data[3]-90;
+        /* Sensor Data Initialization*/
+        // Angle Data
+        float Human_Left_Thigh_Angle            = Sensor_Data[0]-90;
+        float Human_Left_Calf_Angle             = Sensor_Data[1]-90;
+        float Human_Right_Thigh_Angle           = Sensor_Data[2]-90;
+        float Human_Right_Calf_Angle            = Sensor_Data[3]-90;
+        // Velocity Data
+        float Human_Left_Thigh_Velocity         = Sensor_Data[4];
+        float Human_Left_Calf_Velocity          = Sensor_Data[5];
+        float Human_Right_Thigh_Velocity        = Sensor_Data[6];
+        float Human_Right_Calf_Velocity         = Sensor_Data[7];
+        // Acceleration Data
+        float Human_Left_Thigh_Acceleration     = Sensor_Data[8];
+        float Human_Left_Calf_Acceleration      = Sensor_Data[9];
+        float Human_Right_Thigh_Acceleration    = Sensor_Data[10];
+        float Human_Right_Calf_Acceleration     = Sensor_Data[11];
 
         /* Force/Torque Data */
         //TODO: Force
         Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
-        /* Angle Data*/
 
-        // Feedback Exoskeleton Angle Data
-        Feedback_Angle_Left << 0.0,
-        Exoskeleton_Left_Thigh_Angle/180*PI,
-        (Exoskeleton_Left_Calf_Angle - Exoskeleton_Left_Thigh_Angle)/180*PI,
-        0.0;
-
-        Feedback_Angle_Right << 0.0,
-        Exoskeleton_Right_Thigh_Angle/180*PI,
-        (Exoskeleton_Right_Calf_Angle - Exoskeleton_Right_Thigh_Angle)/180*PI,
-        0.0;
-
-        // Expected Exoskeleton Angle Data
+        /* Sensor Data Pre-Treatment*/
+        // Angle Data
         Expected_Angle_Left(0,1) = Human_Left_Thigh_Angle/180*PI;
         Expected_Angle_Left(0,2) = (Human_Left_Calf_Angle - Human_Left_Thigh_Angle)/180*PI;
         if(Expected_Angle_Left(0,2) < 0)
         {
             Expected_Angle_Left(0,2) = 0;
         }
-
         Expected_Angle_Right(0,1) = Human_Right_Thigh_Angle/180*PI;
         Expected_Angle_Right(0,2) = (Human_Right_Calf_Angle - Human_Right_Thigh_Angle)/180*PI;
         if(Expected_Angle_Right(0,2) < 0)
         {
             Expected_Angle_Right(0,2) = 0;
         }
+        // Velocity Data
+        Expected_Velocity_Left << 0.0,
+        Human_Left_Thigh_Velocity,
+        Human_Left_Calf_Velocity,
+        0.0;
+        Expected_Velocity_Right << 0.0,
+        Human_Right_Thigh_Velocity,
+        Human_Right_Calf_Velocity,
+        0.0;
+        // Acceleration Data
+        Expected_Acceleration_Left << 0.0,
+        Human_Left_Thigh_Acceleration,
+        Human_Left_Calf_Acceleration,
+        0.0;
+        Expected_Acceleration_Right << 0.0,
+        Human_Right_Thigh_Acceleration,
+        Human_Right_Calf_Acceleration,
+        0.0;
 
         /*Calculate the Position for Publish.*/
-
+        /*
+         *@Name: main Function
+         *@Input: Feedback_Angle, Feedback_Velocity, Feedback_Acceleration
+         *        Expected_Angle, Expected_Velocity, Expected_Acceleration
+         *        Force
+         */
         Left_Angle = main(
             Feedback_Angle_Left,
             Expected_Angle_Left,
@@ -175,9 +194,33 @@ private:
         Joint_State_Publisher->publish(message);
         Joint_Error_Publisher->publish(error_message);
     }
+
     void Exoskeleton_Joint_Angle_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Sensor_Data = msg->data;
+
+        float Exoskeleton_Left_Thigh_Angle;
+        float Exoskeleton_Left_Calf_Angle;
+        float Exoskeleton_Right_Thigh_Angle;
+        float Exoskeleton_Right_Calf_Angle;
+
+        float Exoskeleton_Left_Thigh_Velocity;
+        float Exoskeleton_Left_Calf_Velocity;
+        float Exoskeleton_Right_Thigh_Velocity;
+        float Exoskeleton_Right_Calf_Velocity;
+
+        float Exoskeleton_Left_Thigh_Acceleration;
+        float Exoskeleton_Left_Calf_Acceleration;
+        float Exoskeleton_Right_Thigh_Acceleration;
+        float Exoskeleton_Right_Calf_Acceleration;
+
+        float Exoskeleton_Left_Thigh_Angle_offset;
+        float Exoskeleton_Left_Calf_Angle_offset;
+        float Exoskeleton_Right_Thigh_Angle_offset;
+        float Exoskeleton_Right_Calf_Angle_offset;
+
+        /* Sensor Data Initialization*/
+        // Angle Data
         if(flag)
         {
             Exoskeleton_Left_Thigh_Angle_offset  = Sensor_Data[0];
@@ -190,6 +233,49 @@ private:
         Exoskeleton_Left_Calf_Angle = Sensor_Data[1]-Exoskeleton_Left_Calf_Angle_offset;
         Exoskeleton_Right_Thigh_Angle = Sensor_Data[0]-Exoskeleton_Right_Thigh_Angle_offset;
         Exoskeleton_Right_Calf_Angle = Sensor_Data[1]-Exoskeleton_Right_Calf_Angle_offset;
+
+        // Velocity Data
+        Exoskeleton_Left_Thigh_Velocity     = Sensor_Data[4];
+        Exoskeleton_Left_Calf_Velocity      = Sensor_Data[5];
+        Exoskeleton_Right_Thigh_Velocity    = Sensor_Data[6];
+        Exoskeleton_Right_Calf_Velocity     = Sensor_Data[7];
+
+        // Acceleration Data
+        Exoskeleton_Left_Thigh_Acceleration   = Sensor_Data[8];
+        Exoskeleton_Left_Calf_Acceleration    = Sensor_Data[9];
+        Exoskeleton_Right_Thigh_Acceleration  = Sensor_Data[10];
+        Exoskeleton_Right_Calf_Acceleration   = Sensor_Data[11];
+
+        /* Sensor Data Pre-Treatment*/
+        // Angle Data
+        Feedback_Angle_Left << 0.0,
+        Exoskeleton_Left_Thigh_Angle/180*PI,
+        (Exoskeleton_Left_Calf_Angle - Exoskeleton_Left_Thigh_Angle)/180*PI,
+        0.0;
+        Feedback_Angle_Right << 0.0,
+        Exoskeleton_Right_Thigh_Angle/180*PI,
+        (Exoskeleton_Right_Calf_Angle - Exoskeleton_Right_Thigh_Angle)/180*PI,
+        0.0;
+
+        // Velocity Data
+        Feedback_Velocity_Left << 0.0,
+        Exoskeleton_Left_Thigh_Velocity,
+        Exoskeleton_Left_Calf_Velocity,
+        0.0;
+        Feedback_Velocity_Right << 0.0,
+        Exoskeleton_Right_Thigh_Velocity,
+        Exoskeleton_Right_Calf_Velocity,
+        0.0;
+
+        // Acceleration Data
+        Feedback_Acceleration_Left << 0.0,
+        Exoskeleton_Left_Thigh_Acceleration,
+        Exoskeleton_Left_Calf_Acceleration,
+        0.0;
+        Feedback_Acceleration_Right << 0.0,
+        Exoskeleton_Right_Thigh_Acceleration,
+        Exoskeleton_Right_Calf_Acceleration,
+        0.0;
     }
 private:
 
@@ -209,39 +295,28 @@ private:
     Eigen::Matrix<float,4,1> Left_Angle, Right_Angle;
     float Force;
 
-    float Human_Left_Thigh_Angle;
-    float Human_Left_Calf_Angle;
-    float Human_Right_Thigh_Angle;
-    float Human_Right_Calf_Angle;
-
-    float Exoskeleton_Left_Thigh_Angle;
-    float Exoskeleton_Left_Calf_Angle;
-    float Exoskeleton_Right_Thigh_Angle;
-    float Exoskeleton_Right_Calf_Angle;
-
-    float Human_Left_Thigh_Angle_offset;
-    float Human_Left_Calf_Angle_offset;
-    float Human_Right_Thigh_Angle_offset;
-    float Human_Right_Calf_Angle_offset;
-
-    float Exoskeleton_Left_Thigh_Angle_offset;
-    float Exoskeleton_Left_Calf_Angle_offset;
-    float Exoskeleton_Right_Thigh_Angle_offset;
-    float Exoskeleton_Right_Calf_Angle_offset;
-
     bool  flag;
+
+    Eigen::Matrix<float,1,4> Feedback_Angle_Left;
+    Eigen::Matrix<float,1,4> Feedback_Angle_Right;
+    Eigen::Matrix<float,1,4> Feedback_Velocity_Left;
+    Eigen::Matrix<float,1,4> Feedback_Velocity_Right;
+    Eigen::Matrix<float,1,4> Feedback_Acceleration_Left;
+    Eigen::Matrix<float,1,4> Feedback_Acceleration_Right;
+
+    Eigen::Matrix<float,1,4> Expected_Angle_Left;
+    Eigen::Matrix<float,1,4> Expected_Angle_Right;
+    Eigen::Matrix<float,1,4> Expected_Velocity_Left;
+    Eigen::Matrix<float,1,4> Expected_Velocity_Right;
+    Eigen::Matrix<float,1,4> Expected_Acceleration_Left;
+    Eigen::Matrix<float,1,4> Expected_Acceleration_Right;
+
+    Eigen::Matrix<float,6,1> Force_;
+
 };
 
 int main(int argc, char * argv[])
 {
-    /* Data Preinitialized */
-    Expected_Angle_Left << 0.0,0.0,0.0,0.0;
-    Expected_Velocity_Left << 0.0,0.0,0.0,0.0;
-    Expected_Acceleration_Left << 0.0,0.0,0.0,0.0;
-
-    Expected_Angle_Right << 0.0,0.0,0.0,0.0;
-    Expected_Velocity_Right << 0.0,0.0,0.0,0.0;
-    Expected_Acceleration_Right << 0.0,0.0,0.0,0.0;
     /* ROS Node */
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<Admittance_Control_Subscription>());

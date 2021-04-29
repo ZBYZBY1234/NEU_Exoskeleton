@@ -74,6 +74,8 @@ public:
     */
     Eigen::Matrix<float,4,1> main(
         const Eigen::Matrix<float,1,4> Feedback_Angle_,
+        const Eigen::Matrix<float,1,4> Feedback_Velocity_,
+        const Eigen::Matrix<float,1,4> Feedback_Acceleration_,
         const Eigen::Matrix<float,1,4> Expected_Angle_,
         const Eigen::Matrix<float,1,4> Expected_Velocity_,
         const Eigen::Matrix<float,1,4> Expected_Acceleration_,
@@ -125,6 +127,8 @@ Admittance_control::Admittance_control()
 */
 Eigen::Matrix<float,4,1> Admittance_control::main(
     const Eigen::Matrix<float,1,4> Feedback_Angle_,
+    const Eigen::Matrix<float,1,4> Feedback_Velocity_,
+    const Eigen::Matrix<float,1,4> Feedback_Acceleration_,
     const Eigen::Matrix<float,1,4> Expected_Angle_,
     const Eigen::Matrix<float,1,4> Expected_Velocity_,
     const Eigen::Matrix<float,1,4> Expected_Acceleration_,
