@@ -44,7 +44,7 @@ private:
         auto message = std_msgs::msg::Float64MultiArray();
         float * Angle;
         Angle = mpu6050.Read_Data();
-        message.data = {mpu6050.angle_x+offset,mpu6050.angle_y,mpu6050.angle_z};
+        message.data = {mpu6050.Ang[0]+offset,mpu6050.Vel[0],mpu6050.Acc[0]};
         publisher_->publish(message);
     }
     rclcpp::TimerBase::SharedPtr timer_;

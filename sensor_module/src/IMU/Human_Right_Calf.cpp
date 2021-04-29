@@ -22,62 +22,41 @@ using namespace std::chrono_literals;
 */
 MPU6050 mpu6050 = MPU6050 (USB_DEVICE,B115200,"Right_Calf");
 
-
-struct Producer : public rclcpp::Node
+class Human_Right_Calf : public rclcpp::Node
 {
-    Producer(const std::string & name, const std::string & output)
-    : Node(name, rclcpp::NodeOptions().use_intra_process_comms(true))
+public:
+    Human_Right_Calf()
+    : Node("Human_Right_Calf")
     {
-        // Create a publisher on the output topic.
-        /*
-         * @Name: create_publisher
-         * @Description: Create a Publisher based on the std_msgs::Msg::Float64MultiArray message and the topic is output.
-        */
-        pub_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(output, 10);
-        std::weak_ptr<std::remove_pointer<decltype(pub_.get())>::type> captured_pub = pub_;
-        /*
-         * @Name: callback
-         * @Descripton: Call back function for Reading data.
-        */
-        auto callback = [captured_pub]() -> void {
-            auto pub_ptr = captured_pub.lock();
-            if (!pub_ptr) {
-            return;
-            }
-            static int32_t count = 0;
-            std_msgs::msg::Float64MultiArray::UniquePtr msg(new std_msgs::msg::Float64MultiArray());
-
-            //Eigen::Matrix<float,3,1> Angle;
-            float * Angle;
-            Angle = mpu6050.Read_Data();
-
-            msg->data = {mpu6050.angle_x,mpu6050.angle_y,mpu6050.angle_z};
-            pub_ptr->publish(std::move(msg));
-        };
-
-        /*
-         * @Name: crate_wall_timer
-         * @Description: Create a timer, the input need initialize the time and call back function.
-         *              The time need to match with the MPU6050 sensor.
-         * @Input: time, callback
-        */
-        timer_ = this->create_wall_timer(0.000000868s, callback);
+        publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(topic, 10);
+        timer_ = this->create_wall_timer(
+            0.000000868s,
+            std::bind(
+                &Human_Right_Calf::timer_callback,
+                this)
+        );
     }
 
-    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr pub_;
+private:
+    void timer_callback()
+    {
+        auto message = std_msgs::msg::Float64MultiArray();
+        float * Angle;
+        Angle = mpu6050.Read_Data();
+        // std::cout << mpu6050.Ang[0] << ","
+        // << mpu6050.Vel[0] << ","
+        // << mpu6050.Acc[0] << std::endl;
+        message.data = {mpu6050.Ang[0],mpu6050.Vel[0],mpu6050.Acc[0]};
+        publisher_->publish(message);
+    }
     rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr publisher_;
+    size_t count_;
 };
 
 int  main(int argc, char * argv[])
 {
-    setvbuf(stdout, NULL, _IONBF, BUFSIZ);
     rclcpp::init(argc, argv);
-    rclcpp::executors::SingleThreadedExecutor executor;
-
-    auto producer = std::make_shared<Producer>("producer", topic);
-    executor.add_node(producer);
-    executor.spin();
-
+    rclcpp::spin(std::make_shared<Human_Right_Calf>());
     rclcpp::shutdown();
-
 }
