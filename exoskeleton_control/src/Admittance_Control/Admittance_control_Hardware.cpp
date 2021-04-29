@@ -6,7 +6,7 @@
 */
 
 #include <iostream>
-#include "exoskeleton_control/Admittance_control.hpp"
+#include "exoskeleton_control/Admittance_control_Hardware.hpp"
 #include <unistd.h>
 #include <math.h>
 #include <memory>
@@ -157,6 +157,8 @@ private:
          */
         Left_Angle = main(
             Feedback_Angle_Left,
+            Feedback_Velocity_Left,
+            Feedback_Acceleration_Left,
             Expected_Angle_Left,
             Expected_Velocity_Left,
             Expected_Acceleration_Left,
@@ -164,6 +166,8 @@ private:
             );
         Right_Angle = main(
             Feedback_Angle_Right,
+            Feedback_Velocity_Left,
+            Feedback_Acceleration_Left,
             Expected_Angle_Right,
             Expected_Velocity_Right,
             Expected_Acceleration_Right,

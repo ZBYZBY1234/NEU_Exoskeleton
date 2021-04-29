@@ -6,6 +6,8 @@
    * @input: Expected_Angle, Expected_Velocity_DecareSpace, Force
    * @output: Position_Angle
 */
+#ifndef ADMITTANCE_CONTROL_HARDWARE_H
+#define ADMITTANCE_CONTROL_HARDWARE_H
 
 #include "exoskeleton_kinematics/exoskeleton_kinematics.hpp"
 #include "exoskeleton_dynamics/exoskeleton_dynamics.hpp"
@@ -32,7 +34,6 @@ private:
 
     // Feedback Data
     Eigen::Matrix<float,1,4> Feedback_Angle;
-    Eigen::Matrix<float,1,4> Past_Feedback_Angle;
     Eigen::Matrix<float,1,4> Feedback_Velocity;
     Eigen::Matrix<float,1,4> Feedback_Acceleration;
 
@@ -50,13 +51,10 @@ private:
     Eigen::Matrix<float,4,1> m_D_JointSpace;
     Eigen::Matrix<float,4,1> m_K_JointSpace;
 
-    // 数值计算时间，用于计算微分积分
-    float dt;
     // flag标志。
     // true: Dicare Space;
     // false: Joint Space;
     bool flag;
-    bool isIdentity;
     // 导纳系数矩阵
     Eigen::Matrix<float,4,4> M,D,K;
 public:
@@ -91,16 +89,7 @@ public:
      * @Input: --Eigen::Matrix<float,4,1> T_ext_,Feedback_Angle_,Expected_Angle_,Feedback_Angle_,
      *                                    Expected_Acceleration_,Expected_Velocity_JointSpace
     */
-    Eigen::Matrix<float,4,1> Admittance_Control_Algorithm_JointSpace (
-            Eigen::Matrix<float,4,1> T_ext_,
-            Eigen::Matrix<float,1,4> Feedback_Angle_,
-            Eigen::Matrix<float,1,4> Expected_Angle_,
-            Eigen::Matrix<float,1,4> Feedback_Velocity_,
-            Eigen::Matrix<float,1,4> Expected_Acceleration_,
-            Eigen::Matrix<float,1,4> Expected_Velocity_JointSpace
-        );
-
-    Eigen::Matrix<float,1,4> Feedback_Velocity_Fun();
+    Eigen::Matrix<float,4,1> Admittance_Control_Algorithm_JointSpace ();
 
 };
 
@@ -109,14 +98,20 @@ Admittance_control::Admittance_control()
 {
     //系数设定
 
-    m_M_JointSpace  << 10.0,1.0,1.0,10.0;
-    m_D_JointSpace  << 100.0,100.0,100.0,100.0;
-    m_K_JointSpace  << 100.0,1000.0,1000.0,100.0;
+    m_M_JointSpace  <<  1.00,
+                        1.00,
+                        1.00,
+                        1.00;
 
-    //TODO:Check dt.
-    dt = 0.1;
+    m_D_JointSpace  <<  1.00,
+                        0.01,
+                        0.01,
+                        1.00;
 
-    isIdentity = false;
+    m_K_JointSpace  <<  1.00,
+                        1.00,
+                        1.00,
+                        1.00;
 }
 
 
@@ -137,11 +132,13 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
 {
     //--------------------------关节空间(Joint Space)--------------------------//
     // Get the Feedback Angle of each Joint
-    Feedback_Angle = Feedback_Angle_;
-    Expected_Angle = Expected_Angle_;
-    Expected_Velocity = Expected_Velocity_;
-    Expected_Acceleration = Expected_Acceleration_;
-    Force_ext = Force_;
+    Feedback_Angle          = Feedback_Angle_;
+    Feedback_Velocity       = Feedback_Velocity_;
+    Feedback_Acceleration   = Feedback_Acceleration_;
+    Expected_Angle          = Expected_Angle_;
+    Expected_Velocity       = Expected_Velocity_;
+    Expected_Acceleration   = Expected_Acceleration_;
+    Force_ext               = Force_;
 
     Expected_T_end = Exoskeleton_kinetic::forward_kinematics(Expected_Angle(0,0),Expected_Angle(0,1),Expected_Angle(0,2),Expected_Angle(0,3));
     Feedback_T_end = Exoskeleton_kinetic::forward_kinematics(Feedback_Angle(0,0),Feedback_Angle(0,1),Feedback_Angle(0,2),Feedback_Angle(0,3));
@@ -180,25 +177,13 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
     T_ext(2,0) = 0.0000;  // Calf Joint
     T_ext(3,0) = 0.0;  // Ankle Joint
 
-    Feedback_Velocity = Feedback_Velocity_Fun();
 
     Eigen::Matrix<float,4,1> Angle;
 
-    Angle = Admittance_Control_Algorithm_JointSpace (
-        T_ext,
-        Feedback_Angle,
-        Expected_Angle,
-        Feedback_Velocity,
-        Expected_Acceleration,
-        Expected_Velocity);
+    Angle = Admittance_Control_Algorithm_JointSpace ();
     // std::cout<<"dAngle: "<<Angle.transpose()<<std::endl;
     // std::cout<<"Feedback_Angle: "<<Feedback_Angle<<std::endl;
     Angle = Angle + Feedback_Angle.transpose();
-
-    Past_Feedback_Angle(0,0) = Feedback_Angle(0,0);
-    Past_Feedback_Angle(0,1) = Feedback_Angle(0,1);
-    Past_Feedback_Angle(0,2) = Feedback_Angle(0,2);
-    Past_Feedback_Angle(0,3) = Feedback_Angle(0,3);
 
     // std::cout<<"Angle: "<<std::endl;
     // std::cout<<Angle<<std::endl;
@@ -215,15 +200,7 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
  * @Output: Angle
 */
 
-Eigen::Matrix<float,4,1> Admittance_control::Admittance_Control_Algorithm_JointSpace (
-    Eigen::Matrix<float,4,1> T_ext_,
-    Eigen::Matrix<float,1,4> Feedback_Angle_,
-    Eigen::Matrix<float,1,4> Expected_Angle_,
-    Eigen::Matrix<float,1,4> Feedback_Velocity_,
-    Eigen::Matrix<float,1,4> Expected_Acceleration_,
-    Eigen::Matrix<float,1,4> Expected_Velocity_JointSpace_
-    )
-
+Eigen::Matrix<float,4,1> Admittance_control::Admittance_Control_Algorithm_JointSpace ()
 {
 
     M  <<   m_M_JointSpace(0,0),0.0,0.0,0.0,
@@ -246,43 +223,25 @@ Eigen::Matrix<float,4,1> Admittance_control::Admittance_Control_Algorithm_JointS
     /*  @Description: 为了求出导纳控制算法的输出
         @Input: T_ext, Expected_Angle, Expected_Velocity, Expected_Acceleration, Feedback_Angle,Feedback_Velocity
     */
-    tmp = T_ext_ -
-    K*(Feedback_Angle_-Expected_Angle_).transpose() +
-    M*(Feedback_Velocity_/dt + Expected_Acceleration_).transpose() +
-    D*Expected_Velocity_JointSpace_.transpose();
+    // tmp = T_ext_ -
+    // K*(Feedback_Angle_-Expected_Angle_).transpose() +
+    // M*(Feedback_Velocity_/dt + Expected_Acceleration_).transpose() +
+    // D*Expected_Velocity_JointSpace_.transpose();
+    tmp = T_ext -
+    D*(Feedback_Velocity - Expected_Velocity).transpose() -
+    K*(Feedback_Acceleration - Expected_Acceleration).transpose();
 
     Eigen::Matrix<float,4,1> dx;
 
     if (tmp.norm()>1e-10)
     {
-        dx = (M/dt+D).inverse()*tmp;
+        dx = M.inverse()*tmp;
     }
     else
     {
         dx << 0.0,0.0,0.0,0.0;
     }
-
-    dx = dx*dt;
     return dx;
 }
 
-Eigen::Matrix<float,1,4> Admittance_control::Feedback_Velocity_Fun()
-{
-    Eigen::Matrix<float,1,4> Feedback_V;
-
-    if (Past_Feedback_Angle.isIdentity() || isIdentity)
-    {
-        Feedback_V(0,0) = (Feedback_Angle(0,0) - Past_Feedback_Angle(0,0))/dt;
-        Feedback_V(0,1) = (Feedback_Angle(0,1) - Past_Feedback_Angle(0,1))/dt;
-        Feedback_V(0,2) = (Feedback_Angle(0,2) - Past_Feedback_Angle(0,2))/dt;
-        Feedback_V(0,3) = (Feedback_Angle(0,3) - Past_Feedback_Angle(0,3))/dt;
-    }
-    else
-    {
-        //No value in Past_Feedback_Angle
-        std::cout<<"There is no value in Past_Feedback_Angle"<<std::endl;
-        Feedback_V << 0.0,0.0,0.0,0.0;
-        isIdentity = true;
-    }
-    return Feedback_V;
-}
+#endif
