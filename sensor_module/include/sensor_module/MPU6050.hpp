@@ -9,6 +9,12 @@ public:
     float angle_x;
     float angle_y;
     float angle_z;
+
+    float           Ang[3];
+    float           Vel[3];
+    float           Acc[3];
+
+    int             num;
 private:
     int Serial_nFd;
 
@@ -17,7 +23,7 @@ private:
     int Serial_len;
 
     unsigned char leftknee_recdata[1];
-    unsigned char leftknee_data[11];
+    unsigned char Re_buf[11];
 
     char * Name;
 public:
@@ -45,9 +51,9 @@ Eigen::Matrix<float,3,1> MPU6050::Read()
 {
     Serial_len = read(Serial_nFd, leftknee_recdata, 1);
 
-    leftknee_data[Serial_k] = leftknee_recdata[0];
+    Re_buf[Serial_k] = leftknee_recdata[0];
 
-    if(Serial_k == 0 && leftknee_data[0] !=0x55)
+    if(Serial_k == 0 && Re_buf[0] !=0x55)
     {
         Serial_rxflag = 0;
         Serial_k = 0;
@@ -58,14 +64,14 @@ Eigen::Matrix<float,3,1> MPU6050::Read()
         if(Serial_k == 11)
         {
             Serial_k = 0;
-            if(leftknee_data[0] == 0x55)
+            if(Re_buf[0] == 0x55)
             {
-                if(leftknee_data[1]==0x53)
+                if(Re_buf[1]==0x53)
                 {
 
-                    angle_x=((short)(leftknee_data[3]<<8|leftknee_data[2]))/32768.0*180;
-                    angle_y=((short)(leftknee_data[5]<<8|leftknee_data[4]))/32768.0*180;
-                    angle_z=((short)(leftknee_data[7]<<8|leftknee_data[6]))/32768.0*180;
+                    angle_x=((short)(Re_buf[3]<<8|Re_buf[2]))/32768.0*180;
+                    angle_y=((short)(Re_buf[5]<<8|Re_buf[4]))/32768.0*180;
+                    angle_z=((short)(Re_buf[7]<<8|Re_buf[6]))/32768.0*180;
                     // std::cout<<"anglex: "<<angle_x<<std::endl;
                     Eigen::Matrix<float,3,1> angle;
                     angle<<angle_x,angle_y,angle_z;
@@ -79,12 +85,10 @@ Eigen::Matrix<float,3,1> MPU6050::Read()
 }
 float * MPU6050::Read_Data()
 {
-
     Serial_len = read(Serial_nFd, leftknee_recdata, 1);
+    Re_buf[Serial_k] = leftknee_recdata[0];
 
-    leftknee_data[Serial_k] = leftknee_recdata[0];
-
-    if(Serial_k == 0 && leftknee_data[0] !=0x55)
+    if(Serial_k == 0 && Re_buf[0] !=0x55)
     {
         Serial_rxflag = 0;
         Serial_k = 0;
@@ -95,20 +99,34 @@ float * MPU6050::Read_Data()
         if(Serial_k == 11)
         {
             Serial_k = 0;
-            if(leftknee_data[0] == 0x55)
+            if(Re_buf[0] == 0x55)
             {
-                if(leftknee_data[1]==0x53)
+                num = 0;
+                switch (Re_buf[1])
                 {
-
-                    angle_x=((short)(leftknee_data[3]<<8|leftknee_data[2]))/32768.0*180;
-                    angle_y=((short)(leftknee_data[5]<<8|leftknee_data[4]))/32768.0*180;
-                    angle_z=((short)(leftknee_data[7]<<8|leftknee_data[6]))/32768.0*180;
-
-                    float angle[3] = {angle_x,angle_y,angle_z};
-                    std::cout<<"Angle: "<<angle_x<<","<<angle_y<<","<<angle_z<<std::endl;
-                    return angle;
+                case 0x51:
+                    Acc[0] = ((short)(Re_buf[3]<<8|Re_buf[2]))/32768.0*16;
+                    Acc[1] = ((short)(Re_buf[5]<<8|Re_buf[4]))/32768.0*16;
+                    Acc[2] = ((short)(Re_buf[7]<<8|Re_buf[6]))/32768.0*16;
+                    break;
+                case 0x52:
+                    Vel[0] = ((short)(Re_buf[3]<<8|Re_buf[2]))/32768.0*2000;
+                    Vel[1] = ((short)(Re_buf[5]<<8|Re_buf[4]))/32768.0*2000;
+                    Vel[2] = ((short)(Re_buf[7]<<8|Re_buf[6]))/32768.0*2000;
+                    break;
+                case 0x53:
+                    Ang[0] = ((short)(Re_buf[3]<<8|Re_buf[2]))/32768.0*180;
+                    Ang[1] = ((short)(Re_buf[5]<<8|Re_buf[4]))/32768.0*180;
+                    Ang[2] = ((short)(Re_buf[7]<<8|Re_buf[6]))/32768.0*180;
+                    break;
                 }
             }
+            float Ang_Vel_Acc[3];
+            Ang_Vel_Acc[0] = Ang[0];
+            Ang_Vel_Acc[1] = Vel[0];
+            Ang_Vel_Acc[2] = Acc[0];
+            // std::cout<<Ang[0]<<","<<Vel[0]<<","<<Acc[0]<<std::endl;
+            return Ang_Vel_Acc;
         }
     }
 }

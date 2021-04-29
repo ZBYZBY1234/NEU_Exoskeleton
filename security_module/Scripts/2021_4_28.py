@@ -19,7 +19,7 @@ for item in reader:
     R_T_A_Expect.append(round(float(item[1]),2))
     L_T_A_Feedbk.append(round(float(item[2]),2))
     R_T_A_Feedbk.append(round(float(item[3]),2))
-    i = i+1
+    i = i+0.1
 plt.plot(x,L_T_A_Expect,label="Left_Thigh_Angle_Expect")
 plt.plot(x,R_T_A_Expect,label="Right_Thigh_Angle_Expect")
 plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedback")
