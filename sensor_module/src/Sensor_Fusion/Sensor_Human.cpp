@@ -245,9 +245,25 @@ public:
 
             auto message = std_msgs::msg::Float64MultiArray();
             message.data = {
-                         // Pressor[0], Pressor[1], Pressor[2],
-                            Left_Thigh_Human[0], Left_Calf_Human[0],
-                            Right_Thigh_Human[0], Right_Calf_Human[0],
+                            /* Angle */
+                            Left_Thigh_Human[0],
+                            Left_Calf_Human[0],
+                            Right_Thigh_Human[0],
+                            Right_Calf_Human[0],
+
+                            /* Velocity */
+                            Left_Thigh_Human[1],
+                            Left_Calf_Human[1],
+                            Right_Thigh_Human[1],
+                            Right_Calf_Human[1],
+
+                            /* Acceleration */
+                            Left_Thigh_Human[2],
+                            Left_Calf_Human[2],
+                            Right_Thigh_Human[2],
+                            Right_Calf_Human[2],
+
+                            /* Time */
                             time};
             this->publisher_->publish(message);
         };

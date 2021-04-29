@@ -204,8 +204,25 @@ public:
 
             auto message = std_msgs::msg::Float64MultiArray();
             message.data = {
-                            Left_Thigh_Exoskeleton[0], Left_Calf_Exoskeleton[0],
-                            Right_Thigh_Exoskeleton[0], Right_Calf_Exoskeleton[0],
+                            /* Angle */
+                            Left_Thigh_Exoskeleton[0],
+                            Left_Calf_Exoskeleton[0],
+                            Right_Thigh_Exoskeleton[0],
+                            Right_Calf_Exoskeleton[0],
+
+                            /* Velocity */
+                            Left_Thigh_Exoskeleton[1],
+                            Left_Calf_Exoskeleton[1],
+                            Right_Thigh_Exoskeleton[1],
+                            Right_Calf_Exoskeleton[1],
+
+                            /* Acceleration */
+                            Left_Thigh_Exoskeleton[2],
+                            Left_Calf_Exoskeleton[2],
+                            Right_Thigh_Exoskeleton[2],
+                            Right_Calf_Exoskeleton[2],
+
+                            /* Time */
                             time};
             this->publisher_->publish(message);
         };
