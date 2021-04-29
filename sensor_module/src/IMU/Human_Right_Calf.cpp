@@ -12,7 +12,7 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-#define     USB_DEVICE  "/dev/ttyUSB3"
+#define     USB_DEVICE  "/dev/ttyUSB7"
 #define     topic       "Human_Right_Calf"
 
 using namespace std::chrono_literals;
@@ -46,7 +46,7 @@ private:
         // std::cout << mpu6050.Ang[0] << ","
         // << mpu6050.Vel[0] << ","
         // << mpu6050.Acc[0] << std::endl;
-        message.data = {mpu6050.Ang[0],mpu6050.Vel[0],mpu6050.Acc[0]};
+        message.data = {mpu6050.Ang[0]-10,mpu6050.Vel[0],mpu6050.Acc[0]};
         publisher_->publish(message);
     }
     rclcpp::TimerBase::SharedPtr timer_;

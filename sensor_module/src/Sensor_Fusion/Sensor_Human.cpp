@@ -267,7 +267,7 @@ public:
                             time};
             this->publisher_->publish(message);
         };
-        timer_ = this->create_wall_timer(10ms, timer_callback);
+        timer_ = this->create_wall_timer(1ms, timer_callback);
     }
 
 private:
@@ -285,9 +285,9 @@ private:
             return std::to_string(time.seconds());
         }
     }
-    rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr publisher_;
-    size_t count_;
+    rclcpp::TimerBase::SharedPtr                                        timer_;
+    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr      publisher_;
+    size_t                                                              count_;
 
     bool                                                                start;
     double                                                              start_time;

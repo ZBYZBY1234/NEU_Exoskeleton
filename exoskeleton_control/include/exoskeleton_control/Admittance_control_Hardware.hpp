@@ -104,13 +104,13 @@ Admittance_control::Admittance_control()
                         1.00;
 
     m_D_JointSpace  <<  1.00,
-                        0.01,
-                        0.01,
+                        0.00,
+                        0.00,
                         1.00;
 
     m_K_JointSpace  <<  1.00,
-                        1.00,
-                        1.00,
+                        0.00,
+                        0.00,
                         1.00;
 }
 
@@ -183,7 +183,7 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
     Angle = Admittance_Control_Algorithm_JointSpace ();
     // std::cout<<"dAngle: "<<Angle.transpose()<<std::endl;
     // std::cout<<"Feedback_Angle: "<<Feedback_Angle<<std::endl;
-    Angle = Angle + Feedback_Angle.transpose();
+    Angle = Angle + Expected_Angle.transpose();
 
     // std::cout<<"Angle: "<<std::endl;
     // std::cout<<Angle<<std::endl;
