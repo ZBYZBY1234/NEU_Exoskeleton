@@ -46,7 +46,7 @@ private:
         // std::cout << mpu6050.Ang[0] << ","
         // << mpu6050.Vel[0] << ","
         // << mpu6050.Acc[0] << std::endl;
-        message.data = {mpu6050.Ang[0]+offset,mpu6050.Vel[0],mpu6050.Acc[0]};
+        message.data = {mpu6050.Ang[0],mpu6050.Vel[0],mpu6050.Acc[0]};
         publisher_->publish(message);
     }
     rclcpp::TimerBase::SharedPtr timer_;
