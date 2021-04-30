@@ -12,7 +12,8 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-#define     USB_DEVICE  "/dev/ttyUSB13"
+#define     USB_DEVICE  "/dev/ttyUSB0"
+#define     topic       "Piezoelectric"
 
 using namespace std::chrono_literals;
 /*
@@ -21,58 +22,40 @@ using namespace std::chrono_literals;
 */
 Piezoelectric piezoelectric = Piezoelectric (USB_DEVICE, B115200);
 Eigen::Matrix<float,3,1> data;
-struct Producer : public rclcpp::Node
+
+class Force : public rclcpp::Node
 {
-    Producer(const std::string & name, const std::string & output)
-    : Node(name, rclcpp::NodeOptions().use_intra_process_comms(true))
+public:
+    Force()
+    : Node("Force")
     {
-        // Create a publisher on the output topic.
-        /*
-         * @Name: create_publisher
-         * @Description: Create a Publisher based on the std_msgs::Msg::Float64MultiArray message and the topic is output.
-        */
-        pub_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(output, 10);
-        std::weak_ptr<std::remove_pointer<decltype(pub_.get())>::type> captured_pub = pub_;
-        /*
-         * @Name: callback
-         * @Descripton: Call back function for Reading data.
-        */
-        auto callback = [captured_pub]() -> void {
-            auto pub_ptr = captured_pub.lock();
-            if (!pub_ptr) {
-            return;
-            }
-            static int32_t count = 0;
-            std_msgs::msg::Float64MultiArray::UniquePtr msg(new std_msgs::msg::Float64MultiArray());
-
-            data = piezoelectric.Read();
-
-            msg->data = {data(0,0),data(1,0),data(2,0)};
-            pub_ptr->publish(std::move(msg));
-        };
-
-        /*
-         * @Name: crate_wall_timer
-         * @Description: Create a timer, the input need initialize the time and call back function.
-         *              The time need to match with the MPU6050 sensor.
-         * @Input: time, callback
-        */
-        timer_ = this->create_wall_timer(0.000000868s, callback);
+        publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(topic, 10);
+        timer_ = this->create_wall_timer(
+            0.000000868s,
+            std::bind(
+                &Force::timer_callback,
+                this)
+        );
     }
 
-    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr pub_;
+private:
+    void timer_callback()
+    {
+        auto message = std_msgs::msg::Float64MultiArray();
+        Eigen::Matrix<float,4,1> data;
+        data = piezoelectric.Read();
+
+        message.data = {data(0,0),data(1,0),data(2,0)};
+        publisher_->publish(message);
+    }
     rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr publisher_;
+    size_t count_;
 };
 
 int  main(int argc, char * argv[])
 {
-    setvbuf(stdout, NULL, _IONBF, BUFSIZ);
     rclcpp::init(argc, argv);
-    rclcpp::executors::SingleThreadedExecutor executor;
-
-    auto producer = std::make_shared<Producer>("producer", "Piezoelectric");
-    executor.add_node(producer);
-    executor.spin();
-
+    rclcpp::spin(std::make_shared<Force>());
     rclcpp::shutdown();
 }

@@ -25,7 +25,7 @@ private:
 
     int i;
 
-    int forcedata[3];
+    int forcedata[4];
     int flag1;
     int flagout;
     int flagagain;
@@ -52,11 +52,11 @@ public:
     };
     ~Piezoelectric(){};
 public:
-    Eigen::Matrix<float,3,1> Read();
+    Eigen::Matrix<float,4,1> Read();
     int * Read_Data();
 };
 
-Eigen::Matrix<float,3,1> Piezoelectric::Read()
+Eigen::Matrix<float,4,1> Piezoelectric::Read()
 {
     Serial_len = read(Serial_nFd, hexdata, 1);
 
@@ -73,7 +73,7 @@ Eigen::Matrix<float,3,1> Piezoelectric::Read()
         if (datamid==255)
         {
             decdata[count] = datamid;
-            for (i = 2; i < 5; i++)
+            for (i = 2; i < 6; i++)
             {
                 count++;
                 Serial_len = read(Serial_nFd, hexdata, 1);
@@ -83,8 +83,9 @@ Eigen::Matrix<float,3,1> Piezoelectric::Read()
                 forcedata[0] = decdata[2];
                 forcedata[1] = decdata[3];
                 forcedata[2] = decdata[4];
+                forcedata[3] = decdata[5];
 
-                for (i = 0; i < 3; i++)
+                for (i = 0; i < 4; i++)
                 {
                     printf("数据=%d\t", forcedata[i]);
                 }
@@ -146,8 +147,8 @@ Eigen::Matrix<float,3,1> Piezoelectric::Read()
     //     countk = 0;
     // if (contrustk==avcount)
     //     contrustk = 0;
-    Eigen::Matrix<float,3,1> data;
-    data << forcedata[0], forcedata[1], forcedata[2];
+    Eigen::Matrix<float,4,1> data;
+    data << forcedata[0], forcedata[1], forcedata[2], forcedata[3];
     return data;
 
 }
