@@ -13,7 +13,7 @@
 #include "std_msgs/msg/int32.hpp"
 
 #define     USB_DEVICE  "/dev/ttyUSB0"
-#define     topic       "Piezoelectric"
+#define     topic       "Interaction_Force"
 
 using namespace std::chrono_literals;
 /*

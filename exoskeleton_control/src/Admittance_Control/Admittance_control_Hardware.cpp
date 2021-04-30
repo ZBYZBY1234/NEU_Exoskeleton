@@ -26,6 +26,7 @@ using namespace std::chrono_literals;
 #define Joint_Error_Publisher_Topic             "Joint_Error"
 #define Human_Sensor_Subscription_Topic         "Sensor_Human"
 #define Exoskeleton_Sensor_Subscription_Topic   "Sensor_Exoskeleton"
+#define Interaction_Force_Subscription_Topic    "Interaction_Force"
 
 #define Joint_Thigh_Offset          -0.7046042369967704
 #define JOint_Calf_Offset           -0.7046042369967704+0.4744191163880517
@@ -50,26 +51,38 @@ public:
         Human_sub_opt.callback_group = Human_callback_group_subscriber;
         auto Exoskeleton_sub_opt = rclcpp::SubscriptionOptions();
         Exoskeleton_sub_opt.callback_group = Exoskeleton_callback_group_subscriber;
+        auto Interaction_sub_opt = rclcpp::SubscriptionOptions();
+        Interaction_sub_opt.callback_group = Exoskeleton_callback_group_subscriber;
 
-        Human_Joint_Angle_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
+        Human_Joint_State_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Human_Sensor_Subscription_Topic,
             rclcpp::QoS(10),
             std::bind(
-                &Admittance_Control_Subscription::Human_Joint_Angle_Callback,
+                &Admittance_Control_Subscription::Human_Joint_State_Callback,
                 this,
                 std::placeholders::_1
             ),
             Human_sub_opt
         );
-        Exoskeleton_Joint_Angle_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
+        Exoskeleton_Joint_State_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Exoskeleton_Sensor_Subscription_Topic,
             rclcpp::QoS(10),
             std::bind(
-                &Admittance_Control_Subscription::Exoskeleton_Joint_Angle_Callback,
+                &Admittance_Control_Subscription::Exoskeleton_Joint_State_Callback,
                 this,
                 std::placeholders::_1
             ),
             Exoskeleton_sub_opt
+        );
+        Interaction_Force_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
+            Interaction_Force_Subscription_Topic,
+            rclcpp::QoS(10),
+            std::bind(
+                &Admittance_Control_Subscription::Interaction_Force_Callback,
+                this,
+                std::placeholders::_1
+            ),
+            Interaction_sub_opt
         );
         /* Publish Node Initialized */
         Joint_State_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_State_Publisher_Topic, 1);
@@ -85,12 +98,14 @@ public:
         Expected_Angle_Right << 0.0,0.0,0.0,0.0;
         Expected_Velocity_Right << 0.0,0.0,0.0,0.0;
         Expected_Acceleration_Right << 0.0,0.0,0.0,0.0;
+
+        Force_ << 0.0, 0.0, 0.0, 0.0;
     }
 
 private:
     /* Human Joint Angle Callback*/
 
-    void Human_Joint_Angle_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
+    void Human_Joint_State_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Sensor_Data = msg->data;
         /* Sensor Data Initialization*/
@@ -112,7 +127,7 @@ private:
 
         /* Force/Torque Data */
         //TODO: Force
-        Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
+        // Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
 
         /* Sensor Data Pre-Treatment*/
@@ -199,7 +214,7 @@ private:
         Joint_Error_Publisher->publish(error_message);
     }
 
-    void Exoskeleton_Joint_Angle_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
+    void Exoskeleton_Joint_State_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Sensor_Data = msg->data;
 
@@ -281,15 +296,27 @@ private:
         Exoskeleton_Right_Calf_Acceleration,
         0.0;
     }
+
+    /* Interaction Force Initialization */
+    void Interaction_Force_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
+    {
+        auto Interaction_Force = msg->data;
+        Force_[0] = 0.0;
+        Force_[1] = Interaction_Force[0]-Interaction_Force[1];
+        Force_[2] = Interaction_Force[2]-Interaction_Force[3];
+        Force_[3] = 0.0;
+    }
 private:
 
     /* Callback Group: Human & Exoskeleton Sensors*/
     rclcpp::CallbackGroup::SharedPtr                                    Human_callback_group_subscriber;
     rclcpp::CallbackGroup::SharedPtr                                    Exoskeleton_callback_group_subscriber;
+    rclcpp::CallbackGroup::SharedPtr                                    Interaction_force_callback_group_subscriber;
 
     /* Subscription Node */
-    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Human_Joint_Angle_Subscription;
-    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Exoskeleton_Joint_Angle_Subscription;
+    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Human_Joint_State_Subscription;
+    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Exoskeleton_Joint_State_Subscription;
+    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Interaction_Force_Subscription;
 
     /* Publisher Node */
     rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_State_Publisher;
@@ -297,7 +324,6 @@ private:
 
     /* Data */
     Eigen::Matrix<float,4,1> Left_Angle, Right_Angle;
-    float Force;
 
     bool  flag;
 
@@ -315,7 +341,7 @@ private:
     Eigen::Matrix<float,1,4> Expected_Acceleration_Left;
     Eigen::Matrix<float,1,4> Expected_Acceleration_Right;
 
-    Eigen::Matrix<float,6,1> Force_;
+    Eigen::Matrix<float,4,1> Force_;
 
 };
 
