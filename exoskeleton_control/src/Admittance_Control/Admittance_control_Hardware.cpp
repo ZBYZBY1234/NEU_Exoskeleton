@@ -170,6 +170,23 @@ private:
          *        Expected_Angle, Expected_Velocity, Expected_Acceleration
          *        Force
          */
+        // Force Test
+        Expected_Angle_Left << 0.0,0.0,0.0,0.0;
+        Expected_Velocity_Left << 0.0,0.0,0.0,0.0;
+        Expected_Acceleration_Left << 0.0,0.0,0.0,0.0;
+
+        Feedback_Angle_Left << 0.0,0.0,0.0,0.0;
+        Feedback_Velocity_Left << 0.0,0.0,0.0,0.0;
+        Feedback_Acceleration_Left << 0.0,0.0,0.0,0.0;
+
+        Expected_Angle_Right << 0.0,0.0,0.0,0.0;
+        Expected_Velocity_Right << 0.0,0.0,0.0,0.0;
+        Expected_Acceleration_Right << 0.0,0.0,0.0,0.0;
+
+        Feedback_Angle_Right << 0.0,0.0,0.0,0.0;
+        Feedback_Velocity_Right << 0.0,0.0,0.0,0.0;
+        Feedback_Acceleration_Right << 0.0,0.0,0.0,0.0;
+
         Left_Angle = main(
             Feedback_Angle_Left,
             Feedback_Velocity_Left,
@@ -302,8 +319,8 @@ private:
     {
         auto Interaction_Force = msg->data;
         Force_[0] = 0.0;
-        Force_[1] = Interaction_Force[0]-Interaction_Force[1];
-        Force_[2] = Interaction_Force[2]-Interaction_Force[3];
+        Force_[1] = (Interaction_Force[0]-Interaction_Force[1])/180*PI*0.1;
+        Force_[2] = (Interaction_Force[2]-Interaction_Force[3])/180*PI*0.1;
         Force_[3] = 0.0;
     }
 private:

@@ -12,7 +12,7 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-#define     USB_DEVICE  "/dev/ttyUSB0"
+#define     USB_DEVICE  "/dev/ttyUSB8"
 #define     topic       "Interaction_Force"
 
 using namespace std::chrono_literals;
@@ -45,7 +45,7 @@ private:
         Eigen::Matrix<float,4,1> data;
         data = piezoelectric.Read();
 
-        message.data = {data(0,0),data(1,0),data(2,0)};
+        message.data = {data(0,0),data(1,0),data(2,0),data(3,0)};
         publisher_->publish(message);
     }
     rclcpp::TimerBase::SharedPtr timer_;

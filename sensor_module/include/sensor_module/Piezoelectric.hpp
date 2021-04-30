@@ -85,7 +85,7 @@ Eigen::Matrix<float,4,1> Piezoelectric::Read()
                 forcedata[2] = decdata[4];
                 forcedata[3] = decdata[5];
 
-                for (i = 0; i < 5; i++)
+                for (i = 0; i < 4; i++)
                 {
                     printf("数据=%d\t", forcedata[i]);
                 }

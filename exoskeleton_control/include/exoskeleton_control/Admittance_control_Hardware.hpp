@@ -171,7 +171,10 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
     //TODO:转换末端力至关节力
     // T_ext = Jn_Tool.transpose()*Force_ext;
     T_ext = Force_ext;
-
+    // std::cout<<"T_ext: "<<T_ext[0]<<","
+    //     <<T_ext[1]<<","
+    //     <<T_ext[2]<<","
+    //     <<T_ext[3]<<std::endl;
     //TODO:髋关节及膝关节外部力矩识别
     // T_ext(0,0) = 0.0;  // Hip Joint
     // T_ext(1,0) = 0.0000;  // Thigh Joint
@@ -182,12 +185,11 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
     Eigen::Matrix<float,4,1> Angle;
 
     Angle = Admittance_Control_Algorithm_JointSpace ();
-    // std::cout<<"dAngle: "<<Angle.transpose()<<std::endl;
+    // std::cout<<"Angle: "<<Angle.transpose()<<std::endl;
     // std::cout<<"Feedback_Angle: "<<Feedback_Angle<<std::endl;
     Angle = Angle + Expected_Angle.transpose();
 
-    // std::cout<<"Angle: "<<std::endl;
-    // std::cout<<Angle<<std::endl;
+    // std::cout<<"Angle: "<<Angle<<std::endl;
     return Angle;
 
 }
@@ -231,7 +233,6 @@ Eigen::Matrix<float,4,1> Admittance_control::Admittance_Control_Algorithm_JointS
     tmp = T_ext -
     D*(Feedback_Velocity - Expected_Velocity).transpose() -
     K*(Feedback_Acceleration - Expected_Acceleration).transpose();
-
     Eigen::Matrix<float,4,1> dx;
 
     if (tmp.norm()>1e-10)
