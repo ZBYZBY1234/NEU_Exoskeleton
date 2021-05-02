@@ -100,6 +100,11 @@ public:
         Expected_Acceleration_Right << 0.0,0.0,0.0,0.0;
 
         Force_ << 0.0, 0.0, 0.0, 0.0;
+
+        Thigh_Front = 1.0;
+        Thigh_Back  = 1.0;
+        Calf_Front  = 1.0;
+        Calf_Back   = 1.0;
     }
 
 private:
@@ -319,8 +324,12 @@ private:
     {
         auto Interaction_Force = msg->data;
         Force_[0] = 0.0;
-        Force_[1] = (Interaction_Force[0]-Interaction_Force[1])/180*PI*0.1;
-        Force_[2] = (Interaction_Force[2]-Interaction_Force[3])/180*PI*0.1;
+        Force_[1] = (   Interaction_Force[0]*Thigh_Front -
+                        Interaction_Force[1]*Thigh_Back
+                    )/180*PI*0.1;
+        Force_[2] = (   Interaction_Force[2]*Calf_Front -
+                        Interaction_Force[3]*Calf_Back
+                    )/180*PI*0.1;
         Force_[3] = 0.0;
     }
 private:
@@ -359,6 +368,11 @@ private:
     Eigen::Matrix<float,1,4> Expected_Acceleration_Right;
 
     Eigen::Matrix<float,4,1> Force_;
+
+    float                    Thigh_Front;
+    float                    Thigh_Back;
+    float                    Calf_Front;
+    float                    Calf_Back;
 
 };
 
