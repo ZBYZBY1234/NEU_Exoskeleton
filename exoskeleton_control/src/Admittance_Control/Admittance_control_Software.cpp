@@ -26,11 +26,12 @@ Eigen::Matrix<float,1,4> Feedback_Angle_;
 Eigen::Matrix<float,1,4> Expected_Angle_;
 Eigen::Matrix<float,1,4> Expected_Velocity_;
 Eigen::Matrix<float,1,4> Expected_Acceleration_;
-Eigen::Matrix<float,6,1> Force_;
+
 bool flag_;
 
-#define Joint_Subscription_Topic    "joint_states"
-#define Sensor_Subscription_Topic   "Sensor"
+#define Joint_Subscription_Topic                "joint_states"
+#define Sensor_Subscription_Topic               "Sensor"
+#define Interaction_Force_Subscription_Topic    "Interaction_Force"
 
 #define Joint_Thigh_Offset          -0.7046042369967704
 #define JOint_Calf_Offset           -0.7046042369967704+0.4744191163880517
@@ -56,6 +57,11 @@ public:
             std::bind(&Admittance_Control_Subscription::Sensor_Callback, this, _1)
         );
 
+        Interaction_Force_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
+            Interaction_Force_Subscription_Topic,
+            10,
+            std::bind(&Admittance_Control_Subscription::Interaction_Force_Callback, this, _1)
+        );
         Joint_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>("topic", 1);
     }
 
@@ -71,10 +77,10 @@ private:
         -position[4],-position[5],-position[6],-position[7]);
 
         Feedback_Angle_ << -position[0], -position[1], -position[2], -position[3];
-        Expected_Angle_(0,1) = ((Angle_Thigh)/180)*PI-Joint_Thigh_Offset;
-        Expected_Angle_(0,2) = ((Angle_Calf - Angle_Thigh )/180)*PI-JOint_Calf_Offset;
+        // Expected_Angle_(0,1) = ((Angle_Thigh)/180)*PI-Joint_Thigh_Offset;
+        // Expected_Angle_(0,2) = ((Angle_Calf - Angle_Thigh )/180)*PI-JOint_Calf_Offset;
 
-        Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
+        // Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
         Left_Angle = main(
             Feedback_Angle_,
@@ -117,17 +123,27 @@ private:
         Angle_Thigh = Sensor_Data[3];
         Angle_Calf  = Sensor_Data[6];
     }
+
+    void Interaction_Force_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
+    {
+        auto Force_Data = msg->data;
+        Force_(0,0)     = 0.0;
+        Force_(1,0)     = 100*(Force_Data[0]-Force_Data[1])/180*PI;
+        Force_(2,0)     = 100*(Force_Data[2]-Force_Data[3])/180*PI;
+        Force_(3,0)     = 0.0;
+    }
 private:
     /*Subscription Node*/
-    rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr Joint_Subscription;
-    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr Sensor_Subscription;
+    rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr       Joint_Subscription;
+    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Sensor_Subscription;
+    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Interaction_Force_Subscription;
 
     /*Publisher Node*/
-    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_Publisher;
+    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr      Joint_Publisher;
 
     /*Data*/
     Eigen::Matrix<float,4,1> Left_Angle, Right_Angle;
-    float Force;
+    Eigen::Matrix<float,4,1> Force_;
 
     float Angle_Thigh;
     float Angle_Calf;

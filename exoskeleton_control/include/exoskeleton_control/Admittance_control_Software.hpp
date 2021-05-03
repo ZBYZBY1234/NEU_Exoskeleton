@@ -79,7 +79,7 @@ public:
         const Eigen::Matrix<float,1,4> Expected_Angle_,
         const Eigen::Matrix<float,1,4> Expected_Velocity_,
         const Eigen::Matrix<float,1,4> Expected_Acceleration_,
-        const Eigen::Matrix<float,6,1> Force_);
+        const Eigen::Matrix<float,4,1> Force_);
 
     //-----------------Control-Algorithm-Method-----------------//
     //-------------------------Function-------------------------//
@@ -114,7 +114,7 @@ Admittance_control::Admittance_control()
     m_K_JointSpace  << 100.0,1000.0,1000.0,100.0;
 
     //TODO:Check dt.
-    dt = 0.1;
+    dt = 0.01;
 
     isIdentity = false;
 }
@@ -130,7 +130,7 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
     const Eigen::Matrix<float,1,4> Expected_Angle_,
     const Eigen::Matrix<float,1,4> Expected_Velocity_,
     const Eigen::Matrix<float,1,4> Expected_Acceleration_,
-    const Eigen::Matrix<float,6,1> Force_
+    const Eigen::Matrix<float,4,1> Force_
     )
 {
     //--------------------------关节空间(Joint Space)--------------------------//
@@ -139,7 +139,7 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
     Expected_Angle = Expected_Angle_;
     Expected_Velocity = Expected_Velocity_;
     Expected_Acceleration = Expected_Acceleration_;
-    Force_ext = Force_;
+    T_ext = Force_;
 
     Expected_T_end = Exoskeleton_kinetic::forward_kinematics(Expected_Angle(0,0),Expected_Angle(0,1),Expected_Angle(0,2),Expected_Angle(0,3));
     Feedback_T_end = Exoskeleton_kinetic::forward_kinematics(Feedback_Angle(0,0),Feedback_Angle(0,1),Feedback_Angle(0,2),Feedback_Angle(0,3));
@@ -170,13 +170,13 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
         false);
 
     //TODO:转换末端力至关节力
-    T_ext = Jn_Tool.transpose()*Force_ext;
+    // T_ext = Jn_Tool.transpose()*Force_ext;
 
     //TODO:髋关节及膝关节外部力矩识别
-    T_ext(0,0) = 0.0;  // Hip Joint
-    T_ext(1,0) = 0.0000;  // Thigh Joint
-    T_ext(2,0) = 0.0000;  // Calf Joint
-    T_ext(3,0) = 0.0;  // Ankle Joint
+    // T_ext(0,0) = 0.0;  // Hip Joint
+    // T_ext(1,0) = 0.0000;  // Thigh Joint
+    // T_ext(2,0) = 0.0000;  // Calf Joint
+    // T_ext(3,0) = 0.0;  // Ankle Joint
 
     Feedback_Velocity = Feedback_Velocity_Fun();
 

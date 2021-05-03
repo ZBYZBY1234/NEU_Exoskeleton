@@ -21,7 +21,6 @@ using namespace std::chrono_literals;
  * @Description: Using the MPU6050 Class to let Serial Port be initialized.
 */
 Piezoelectric piezoelectric = Piezoelectric (USB_DEVICE, B115200);
-Eigen::Matrix<float,3,1> data;
 
 class Force : public rclcpp::Node
 {
@@ -42,10 +41,12 @@ private:
     void timer_callback()
     {
         auto message = std_msgs::msg::Float64MultiArray();
-        Eigen::Matrix<float,4,1> data;
+        Eigen::Matrix<float,8,1> data;
         data = piezoelectric.Read();
 
-        message.data = {data(0,0),data(1,0),data(2,0),data(3,0)};
+        message.data = {    data(0,0),data(1,0),data(2,0),data(3,0),
+                            data(4,0),data(5,0),data(6,0),data(7,0}
+                        };
         publisher_->publish(message);
     }
     rclcpp::TimerBase::SharedPtr timer_;

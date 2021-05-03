@@ -199,7 +199,7 @@ private:
             Expected_Angle_Left,
             Expected_Velocity_Left,
             Expected_Acceleration_Left,
-            Force_
+            Force_Left
             );
         Right_Angle = main(
             Feedback_Angle_Right,
@@ -208,7 +208,7 @@ private:
             Expected_Angle_Right,
             Expected_Velocity_Right,
             Expected_Acceleration_Right,
-            Force_
+            Force_Right
             );
 
         auto message = std_msgs::msg::Float64MultiArray();
@@ -323,14 +323,23 @@ private:
     void Interaction_Force_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Interaction_Force = msg->data;
-        Force_[0] = 0.0;
-        Force_[1] = (   Interaction_Force[0]*Thigh_Front -
+        Force_Left[0] = 0.0;
+        Force_Left[1] = (   Interaction_Force[0]*Thigh_Front -
                         Interaction_Force[1]*Thigh_Back
                     )/180*PI*0.1;
-        Force_[2] = (   Interaction_Force[2]*Calf_Front -
+        Force_Left[2] = (   Interaction_Force[2]*Calf_Front -
                         Interaction_Force[3]*Calf_Back
                     )/180*PI*0.1;
-        Force_[3] = 0.0;
+        Force_Left[3] = 0.0;
+
+        Force_Right[4] = 0.0;
+        Force_Right[5] = (  Interaction_Force[4]*Thigh_Front -
+                            Interaction_Force[5]*Thigh_Back
+                        )/180*PI*0.1;
+        Force_Right[6] = (  Interaction_Force[6]*Calf_Front -
+                            Interaction_Force[7]*Calf_Back
+                        )/180*PI*0.1;
+        Force_Right[7] = 0.0;
     }
 private:
 
@@ -367,7 +376,8 @@ private:
     Eigen::Matrix<float,1,4> Expected_Acceleration_Left;
     Eigen::Matrix<float,1,4> Expected_Acceleration_Right;
 
-    Eigen::Matrix<float,4,1> Force_;
+    Eigen::Matrix<float,4,1> Force_Left;
+    Eigen::Matrix<float,4,1> Force_Right;
 
     float                    Thigh_Front;
     float                    Thigh_Back;
