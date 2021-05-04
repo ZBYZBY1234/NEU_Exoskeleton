@@ -21,6 +21,7 @@
 using std::placeholders::_1;
 using namespace std::chrono_literals;
 
+/* Topic Name Definition */
 #define Joint_Subscription_Topic                "Joint_State_Accept"
 #define Joint_State_Publisher_Topic             "Joint_State_Send"
 #define Joint_Error_Publisher_Topic             "Joint_Error"
@@ -270,10 +271,10 @@ private:
             Exoskeleton_Right_Calf_Angle_offset  = Sensor_Data[3];
             flag = false;
         }
-        Exoskeleton_Left_Thigh_Angle = Sensor_Data[0]-Exoskeleton_Left_Thigh_Angle_offset;
-        Exoskeleton_Left_Calf_Angle = Sensor_Data[1]-Exoskeleton_Left_Calf_Angle_offset;
-        Exoskeleton_Right_Thigh_Angle = Sensor_Data[0]-Exoskeleton_Right_Thigh_Angle_offset;
-        Exoskeleton_Right_Calf_Angle = Sensor_Data[1]-Exoskeleton_Right_Calf_Angle_offset;
+        Exoskeleton_Left_Thigh_Angle    = Sensor_Data[0]-Exoskeleton_Left_Thigh_Angle_offset;
+        Exoskeleton_Left_Calf_Angle     = Sensor_Data[1]-Exoskeleton_Left_Calf_Angle_offset;
+        Exoskeleton_Right_Thigh_Angle   = Sensor_Data[0]-Exoskeleton_Right_Thigh_Angle_offset;
+        Exoskeleton_Right_Calf_Angle    = Sensor_Data[1]-Exoskeleton_Right_Calf_Angle_offset;
 
         // Velocity Data
         Exoskeleton_Left_Thigh_Velocity     = Sensor_Data[4];
@@ -325,21 +326,21 @@ private:
         auto Interaction_Force = msg->data;
         Force_Left[0] = 0.0;
         Force_Left[1] = (   Interaction_Force[0]*Thigh_Front -
-                        Interaction_Force[1]*Thigh_Back
-                    )/180*PI*0.1;
+                            Interaction_Force[1]*Thigh_Back
+                        )/180*PI*0.1;
         Force_Left[2] = (   Interaction_Force[2]*Calf_Front -
-                        Interaction_Force[3]*Calf_Back
-                    )/180*PI*0.1;
+                            Interaction_Force[3]*Calf_Back
+                        )/180*PI*0.1;
         Force_Left[3] = 0.0;
 
-        Force_Right[4] = 0.0;
-        Force_Right[5] = (  Interaction_Force[4]*Thigh_Front -
+        Force_Right[0] = 0.0;
+        Force_Right[1] = (  Interaction_Force[4]*Thigh_Front -
                             Interaction_Force[5]*Thigh_Back
                         )/180*PI*0.1;
-        Force_Right[6] = (  Interaction_Force[6]*Calf_Front -
+        Force_Right[2] = (  Interaction_Force[6]*Calf_Front -
                             Interaction_Force[7]*Calf_Back
                         )/180*PI*0.1;
-        Force_Right[7] = 0.0;
+        Force_Right[3] = 0.0;
     }
 private:
 
@@ -354,8 +355,8 @@ private:
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Interaction_Force_Subscription;
 
     /* Publisher Node */
-    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_State_Publisher;
-    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr Joint_Error_Publisher;
+    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr      Joint_State_Publisher;
+    rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr      Joint_Error_Publisher;
 
     /* Data */
     Eigen::Matrix<float,4,1> Left_Angle, Right_Angle;
