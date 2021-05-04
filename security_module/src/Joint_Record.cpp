@@ -13,7 +13,7 @@ using namespace std;
 #define Joint_Angle_Topic           "Joint_State_Send"
 #define Interaction_Force_Topic     "Interaction_Force"
 
-#define CSV_File_Path       "/home/hemingshan/exo_ws/src/security_module/csv_File/2.csv"
+#define CSV_File_Path       "/home/hemingshan/exo_ws/src/security_module/csv_File/4.csv"
 class Joint_Record :
     public rclcpp::Node
 {
@@ -105,10 +105,12 @@ private:
     void callback3(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Angle = msg->data;
+        // oFile   << Angle[0] << "," << Angle[1] << ","
+        //         << Sensor_Angle[0] << "," << Sensor_Angle[2] <<","
+        //         << Force_Left[0]<<","<<Force_Left[1]<<","
+        //         << Force_Right[0]<<","<<Force_Right[1]<<endl;
         oFile   << Angle[0] << "," << Angle[1] << ","
-                << Sensor_Angle[0] << "," << Sensor_Angle[2] <<","
-                << Force_Left[0]<<","<<Force_Left[1]<<","
-                << Force_Right[0]<<","<<Force_Right[1]<<endl;
+                << Sensor_Angle[0] << "," << Sensor_Angle[2] <<endl;
     }
     rclcpp::CallbackGroup::SharedPtr                                    Joint_Sensor_Callback_Group;
     rclcpp::CallbackGroup::SharedPtr                                    Joint_Angle_Callback_Group;

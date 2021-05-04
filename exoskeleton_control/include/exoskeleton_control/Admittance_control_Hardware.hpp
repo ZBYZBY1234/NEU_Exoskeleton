@@ -104,13 +104,13 @@ Admittance_control::Admittance_control()
                         1.00;
 
     m_D_JointSpace  <<  1.00,
-                        0.00,
-                        0.00,
+                        0.005,
+                        0.005,
                         1.00;
 
     m_K_JointSpace  <<  1.00,
-                        0.00,
-                        0.00,
+                        1.00,
+                        1.00,
                         1.00;
 }
 

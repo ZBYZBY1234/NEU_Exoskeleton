@@ -180,22 +180,28 @@ private:
          *        Expected_Angle, Expected_Velocity, Expected_Acceleration
          *        Force
          */
+
+        /* Please choose one of Mode or none*/
         // Force Test
-        Expected_Angle_Left << 0.0,0.0,0.0,0.0;
-        Expected_Velocity_Left << 0.0,0.0,0.0,0.0;
-        Expected_Acceleration_Left << 0.0,0.0,0.0,0.0;
+        // Expected_Angle_Left << 0.0,0.0,0.0,0.0;
+        // Expected_Velocity_Left << 0.0,0.0,0.0,0.0;
+        // Expected_Acceleration_Left << 0.0,0.0,0.0,0.0;
 
-        Feedback_Angle_Left << 0.0,0.0,0.0,0.0;
-        Feedback_Velocity_Left << 0.0,0.0,0.0,0.0;
-        Feedback_Acceleration_Left << 0.0,0.0,0.0,0.0;
+        // Feedback_Angle_Left << 0.0,0.0,0.0,0.0;
+        // Feedback_Velocity_Left << 0.0,0.0,0.0,0.0;
+        // Feedback_Acceleration_Left << 0.0,0.0,0.0,0.0;
 
-        Expected_Angle_Right << 0.0,0.0,0.0,0.0;
-        Expected_Velocity_Right << 0.0,0.0,0.0,0.0;
-        Expected_Acceleration_Right << 0.0,0.0,0.0,0.0;
+        // Expected_Angle_Right << 0.0,0.0,0.0,0.0;
+        // Expected_Velocity_Right << 0.0,0.0,0.0,0.0;
+        // Expected_Acceleration_Right << 0.0,0.0,0.0,0.0;
 
-        Feedback_Angle_Right << 0.0,0.0,0.0,0.0;
-        Feedback_Velocity_Right << 0.0,0.0,0.0,0.0;
-        Feedback_Acceleration_Right << 0.0,0.0,0.0,0.0;
+        // Feedback_Angle_Right << 0.0,0.0,0.0,0.0;
+        // Feedback_Velocity_Right << 0.0,0.0,0.0,0.0;
+        // Feedback_Acceleration_Right << 0.0,0.0,0.0,0.0;
+
+        //Angle Test
+        Force_Left  << 0.0, 0.0, 0.0, 0.0;
+        Force_Right << 0.0, 0.0, 0.0, 0.0;
 
         Left_Angle = main(
             Feedback_Angle_Left,
