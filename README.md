@@ -66,3 +66,9 @@ Lastly, the control algorithm is used Admittance Control and I have programmed i
 $ ros2 run exoskeleton_control Admittance_control_Hardware
 ```
 
+For Data Visualization, the command can record the data which you needed.
+
+```bash
+$ ros2 run security_module Joint_Record
+```
+
