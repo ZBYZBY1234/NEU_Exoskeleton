@@ -48,12 +48,15 @@ public:
         Exoskeleton_callback_group_subscriber = this->create_callback_group(
             rclcpp::CallbackGroupType::MutuallyExclusive
         );
+        Interaction_force_callback_group_subscriber = this->create_callback_group(
+            rclcpp::CallbackGroupType::MutuallyExclusive
+        );
         auto Human_sub_opt = rclcpp::SubscriptionOptions();
         Human_sub_opt.callback_group = Human_callback_group_subscriber;
         auto Exoskeleton_sub_opt = rclcpp::SubscriptionOptions();
         Exoskeleton_sub_opt.callback_group = Exoskeleton_callback_group_subscriber;
         auto Interaction_sub_opt = rclcpp::SubscriptionOptions();
-        Interaction_sub_opt.callback_group = Exoskeleton_callback_group_subscriber;
+        Interaction_sub_opt.callback_group = Interaction_force_callback_group_subscriber;
 
         Human_Joint_State_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Human_Sensor_Subscription_Topic,
@@ -100,7 +103,8 @@ public:
         Expected_Velocity_Right << 0.0,0.0,0.0,0.0;
         Expected_Acceleration_Right << 0.0,0.0,0.0,0.0;
 
-        Force_ << 0.0, 0.0, 0.0, 0.0;
+        Force_Left << 0.0, 0.0, 0.0, 0.0;
+        Force_Right << 0.0, 0.0, 0.0, 0.0;
 
         Thigh_Front = 1.0;
         Thigh_Back  = 1.0;
