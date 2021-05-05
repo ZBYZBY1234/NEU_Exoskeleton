@@ -94,7 +94,7 @@ public:
         printf("Motived!!!\n");
 
         subscription_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
-            Angle_Driver_Topic, 10, std::bind(&Angle_Driver::topic_callback, this, std::placeholders::_1)
+            Angle_Driver_Topic, 1, std::bind(&Angle_Driver::topic_callback, this, std::placeholders::_1)
         );
     }
 
