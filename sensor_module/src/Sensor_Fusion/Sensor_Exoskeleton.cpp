@@ -86,7 +86,7 @@ public:
             rclcpp::QoS(2),
             std::bind(
                 &IMU_Node::subscriber1_cb,
-                this,s
+                this,
                 std::placeholders::_1
             ),
             sub1_opt
