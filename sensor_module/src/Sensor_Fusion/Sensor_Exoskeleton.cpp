@@ -126,6 +126,11 @@ public:
         );
 
         start = true;
+        /* It means that there is the first time to get the data. */
+        flag1 = true;
+        flag2 = true;
+        flag3 = true;
+        flag4 = true;
     }
 
 private:
@@ -146,7 +151,12 @@ private:
 
     void subscriber1_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        Left_Thigh_Exoskeleton[0] = msg->data[0];
+        if(flag1)
+        {
+            offset1 = msg->data[0];
+            flag1 = false;
+        }
+        Left_Thigh_Exoskeleton[0] = msg->data[0] - offset1;
         Left_Thigh_Exoskeleton[1] = msg->data[1];
         Left_Thigh_Exoskeleton[2] = msg->data[2];
     }
@@ -187,6 +197,9 @@ private:
 
     bool                                                                start;
     double                                                              start_time;
+
+    bool                                                                flag1,flag2,flag3,flag4;
+    float                                                               offset1,offset2,offset3,offset4;
 };
 
 class PublisherNode : public rclcpp::Node

@@ -92,8 +92,6 @@ public:
         Joint_State_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_State_Publisher_Topic, 1);
         Joint_Error_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_Error_Publisher_Topic, 1);
 
-        flag = true;
-
         /* Data Preinitialized */
         Expected_Angle_Left << 0.0,0.0,0.0,0.0;
         Expected_Velocity_Left << 0.0,0.0,0.0,0.0;
@@ -266,25 +264,13 @@ private:
         float Exoskeleton_Right_Thigh_Acceleration;
         float Exoskeleton_Right_Calf_Acceleration;
 
-        float Exoskeleton_Left_Thigh_Angle_offset;
-        float Exoskeleton_Left_Calf_Angle_offset;
-        float Exoskeleton_Right_Thigh_Angle_offset;
-        float Exoskeleton_Right_Calf_Angle_offset;
-
         /* Sensor Data Initialization*/
         // Angle Data
-        if(flag)
-        {
-            Exoskeleton_Left_Thigh_Angle_offset  = Sensor_Data[0];
-            Exoskeleton_Left_Calf_Angle_offset   = Sensor_Data[1];
-            Exoskeleton_Right_Thigh_Angle_offset = Sensor_Data[2];
-            Exoskeleton_Right_Calf_Angle_offset  = Sensor_Data[3];
-            flag = false;
-        }
-        Exoskeleton_Left_Thigh_Angle    = Sensor_Data[0]-Exoskeleton_Left_Thigh_Angle_offset;
-        Exoskeleton_Left_Calf_Angle     = Sensor_Data[1]-Exoskeleton_Left_Calf_Angle_offset;
-        Exoskeleton_Right_Thigh_Angle   = Sensor_Data[0]-Exoskeleton_Right_Thigh_Angle_offset;
-        Exoskeleton_Right_Calf_Angle    = Sensor_Data[1]-Exoskeleton_Right_Calf_Angle_offset;
+
+        Exoskeleton_Left_Thigh_Angle    = Sensor_Data[0];
+        Exoskeleton_Left_Calf_Angle     = Sensor_Data[1];
+        Exoskeleton_Right_Thigh_Angle   = Sensor_Data[0];
+        Exoskeleton_Right_Calf_Angle    = Sensor_Data[1];
 
         // Velocity Data
         Exoskeleton_Left_Thigh_Velocity     = Sensor_Data[4];
@@ -370,8 +356,6 @@ private:
 
     /* Data */
     Eigen::Matrix<float,4,1> Left_Angle, Right_Angle;
-
-    bool  flag;
 
     Eigen::Matrix<float,1,4> Feedback_Angle_Left;
     Eigen::Matrix<float,1,4> Feedback_Angle_Right;
