@@ -61,7 +61,7 @@ public:
             Human_Sensor_Topic,
             rclcpp::QoS(10),
             std::bind(
-                &Joint_Record::Sensor_Exoskeleton_Cb,
+                &Joint_Record::Sensor_Human_Cb,
                 this,
                 _1),
             Sensor_Human_Sub_opt
