@@ -30,9 +30,9 @@ for item in reader:
     R_T_A_Feedbk.append(round(float(item[6]),2))
     R_C_A_Feedbk.append(round(float(item[9])-float(item[6]),2))
 
-    L_T_A_Expect.append(round(float(item[12]),2))
+    L_T_A_Expect.append(round(float(item[12])-90,2))
     L_C_A_Expect.append(round(float(item[15])-float(item[12]),2))
-    R_T_A_Expect.append(round(float(item[18]),2))
+    R_T_A_Expect.append(round(float(item[18])-90,2))
     R_C_A_Expect.append(round(float(item[21])-float(item[18]),2))
 
     L_T_A_Driver.append(round(float(item[24]),2))
@@ -41,21 +41,21 @@ for item in reader:
     R_C_A_Driver.append(round(float(item[27])-float(item[26]),2))
 
     i = i+0.1
-# plt.plot(x,L_T_A_Expect,label="Left_Thigh_Angle_Expect")
-# plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedbk")
-# plt.plot(x,L_T_A_Driver,label="Left_Thigh_Angle_Driver")
+plt.plot(x,L_T_A_Expect,label="Left_Thigh_Angle_Expect")
+plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedbk")
+plt.plot(x,L_T_A_Driver,label="Left_Thigh_Angle_Driver")
 
-plt.plot(x,L_C_A_Expect,label="Left_Calf_Angle_Expect")
-plt.plot(x,L_C_A_Feedbk,label="Left_Calf_Angle_Feedbk")
-plt.plot(x,L_C_A_Driver,label="Left_Calf_Angle_Driver")
-
-# plt.plot(x,L_T_A_Expect,label="Left_Thigh_Angle_Expect")
-# plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedbk")
-# plt.plot(x,L_T_A_Driver,label="Left_Thigh_Angle_Driver")
+# plt.plot(x,L_C_A_Expect,label="Left_Calf_Angle_Expect")
+# plt.plot(x,L_C_A_Feedbk,label="Left_Calf_Angle_Feedbk")
+# plt.plot(x,L_C_A_Driver,label="Left_Calf_Angle_Driver")
 
 # plt.plot(x,L_T_A_Expect,label="Left_Thigh_Angle_Expect")
 # plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedbk")
 # plt.plot(x,L_T_A_Driver,label="Left_Thigh_Angle_Driver")
+
+# plt.plot(x,R_C_A_Expect,label="Right_Calf_Angle_Expect")
+# plt.plot(x,R_C_A_Feedbk,label="Right_Calf_Angle_Feedbk")
+# plt.plot(x,R_C_A_Driver,label="Right_Calf_Angle_Driver")
 
 plt.legend()
 plt.show()
