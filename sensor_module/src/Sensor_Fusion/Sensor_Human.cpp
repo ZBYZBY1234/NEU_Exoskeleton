@@ -68,7 +68,7 @@ public:
 
         Force_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Piezoelectric_topic,
-            rclcpp::QoS(10),
+            rclcpp::QoS(1),
             std::bind(
                 &Force_Node::subscriber1_cb,
                 this,
@@ -124,7 +124,7 @@ public:
 
         subscription1_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Human_Left_Thigh_topic,
-            rclcpp::QoS(10),
+            rclcpp::QoS(1),
             std::bind(
                 &IMU_Node::subscriber1_cb,
                 this,
@@ -135,7 +135,7 @@ public:
 
         subscription2_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Human_Left_Calf_topic,
-            rclcpp::QoS(10),
+            rclcpp::QoS(1),
             std::bind(
                 &IMU_Node::subscriber2_cb,
                 this,
@@ -146,7 +146,7 @@ public:
 
         subscription3_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Human_Right_Thigh_topic,
-            rclcpp::QoS(10),
+            rclcpp::QoS(1),
             std::bind(
                 &IMU_Node::subscriber3_cb,
                 this,
@@ -157,7 +157,7 @@ public:
 
         subscription4_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Human_Right_Calf_topic,
-            rclcpp::QoS(10),
+            rclcpp::QoS(1),
             std::bind(
                 &IMU_Node::subscriber4_cb,
                 this,
