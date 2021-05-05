@@ -33,7 +33,7 @@ public:
                 << "Human_Right_Thigh (Ang)" << "," << "Human_Right_Thigh (Vel)"<< "," <<"Human_Right_Thigh (Acc)"<< ","
                 << "Human_Right_Calf (Ang)" << "," << "Human_Right_Calf (Vel)"<< "," <<"Human_Right_Calf (Acc)"<< ","
 
-                << "Angle_Driver (Output)"<< endl;
+                << "Angle_Driver_LT (Output)"<< "," << "Angle_Driver_LC (Output)"<< "," << "Angle_Driver_RT (Output)"<<","<<"Angle_Driver_RC (Output)"<< endl;
 
         /* Define Callback Groups*/
         // Sensor_Exoskeleton
