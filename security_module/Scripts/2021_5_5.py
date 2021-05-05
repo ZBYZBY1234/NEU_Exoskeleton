@@ -1,7 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 
-csvFile = open('security_module/csv_File/4.csv','r')
+csvFile = open('/home/hemingshan/exo_ws/src/security_module/csv_File/4.csv','r')
 reader  = csv.reader(csvFile)
 
 i = 0
@@ -30,10 +30,10 @@ for item in reader:
     R_T_A_Feedbk.append(round(float(item[6]),2))
     R_C_A_Feedbk.append(round(float(item[9]),2))
 
-    L_T_A_Expect.append(round(float(item[12]),2))
-    L_C_A_Expect.append(round(float(item[15]),2))
-    R_T_A_Expect.append(round(float(item[18]),2))
-    R_C_A_Expect.append(round(float(item[21]),2))
+    L_T_A_Expect.append(round(float(item[12])-90,2))
+    L_C_A_Expect.append(round(float(item[15])-90,2))
+    R_T_A_Expect.append(round(float(item[18])-90,2))
+    R_C_A_Expect.append(round(float(item[21])-90,2))
 
     L_T_A_Driver.append(round(float(item[24]),2))
     L_C_A_Driver.append(round(float(item[25]),2))
@@ -42,9 +42,10 @@ for item in reader:
 
     i = i+0.1
 plt.plot(x,L_T_A_Expect,label="Left_Thigh_Angle_Expect")
-plt.plot(x,R_T_A_Expect,label="Right_Thigh_Angle_Expect")
-plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedback")
-plt.plot(x,R_T_A_Feedbk,label="Right_Thigh_Angle_Feedback")
+plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedbk")
+plt.plot(x,L_T_A_Driver,label="Left_Thigh_Angle_Driver")
+# plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedback")
+# plt.plot(x,R_T_A_Feedbk,label="Right_Thigh_Angle_Feedback")
 
 plt.legend()
 plt.show()

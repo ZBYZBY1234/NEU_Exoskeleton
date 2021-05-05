@@ -99,8 +99,8 @@ Admittance_control::Admittance_control()
     //系数设定
 
     m_M_JointSpace  <<  1.00,
-                        1.00,
-                        1.00,
+                        0.90,
+                        0.90,
                         1.00;
 
     m_D_JointSpace  <<  1.00,
