@@ -9,7 +9,7 @@
 using std::placeholders::_1;
 using namespace std;
 
-#define Exoskeleton_Sensor_Topic          "Sensor_Exoskeleton"
+#define Exoskeleton_Sensor_Topic    "Sensor_Exoskeleton"
 #define Human_Sensor_Topic          "Sensor_Human"
 #define Joint_Angle_Topic           "Joint_State_Send"
 #define Interaction_Force_Topic     "Interaction_Force"
@@ -161,17 +161,22 @@ private:
         //         << Sensor_Angle[0] << "," << Sensor_Angle[2] <<","
         //         << Force_Left[0]<<","<<Force_Left[1]<<","
         //         << Force_Right[0]<<","<<Force_Right[1]<<endl;
-        oFile   << Sensor_Exoskeleton[0] << "," << Sensor_Exoskeleton[4] << Sensor_Exoskeleton[8] << ","
-                << Sensor_Exoskeleton[1] << "," << Sensor_Exoskeleton[5] << Sensor_Exoskeleton[9] << ","
-                << Sensor_Exoskeleton[2] << "," << Sensor_Exoskeleton[6] << Sensor_Exoskeleton[10] << ","
-                << Sensor_Exoskeleton[3] << "," << Sensor_Exoskeleton[7] << Sensor_Exoskeleton[11] << ","
+        oFile   << Sensor_Exoskeleton[0] << "," << Sensor_Exoskeleton[4] << "," << Sensor_Exoskeleton[8] << ","
+                << Sensor_Exoskeleton[1] << "," << Sensor_Exoskeleton[5] << "," << Sensor_Exoskeleton[9] << ","
+                << Sensor_Exoskeleton[2] << "," << Sensor_Exoskeleton[6] << "," << Sensor_Exoskeleton[10] << ","
+                << Sensor_Exoskeleton[3] << "," << Sensor_Exoskeleton[7] << "," << Sensor_Exoskeleton[11] << ","
 
-                << Sensor_Human[0] << "," << Sensor_Human[4] << Sensor_Human[8] << ","
-                << Sensor_Human[1] << "," << Sensor_Human[5] << Sensor_Human[9] << ","
-                << Sensor_Human[2] << "," << Sensor_Human[6] << Sensor_Human[10] << ","
-                << Sensor_Human[3] << "," << Sensor_Human[7] << Sensor_Human[11] << ","
+                << Sensor_Human[0] << "," << Sensor_Human[4] << "," << Sensor_Human[8] << ","
+                << Sensor_Human[1] << "," << Sensor_Human[5] << "," << Sensor_Human[9] << ","
+                << Sensor_Human[2] << "," << Sensor_Human[6] << "," << Sensor_Human[10] << ","
+                << Sensor_Human[3] << "," << Sensor_Human[7] << "," << Sensor_Human[11] << ","
 
                 << Angle[0]<<","<<Angle[1]<<","<<Angle[2]<<","<<Angle[3]<<endl;
+        // oFile   <<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","
+        //         <<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","
+        //         <<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","
+        //         <<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","
+        //         <<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<endl;
     }
     rclcpp::CallbackGroup::SharedPtr                                    Sensor_Exoskeleton_Callback_Group;
     rclcpp::CallbackGroup::SharedPtr                                    Sensor_Human_Callback_Group;
