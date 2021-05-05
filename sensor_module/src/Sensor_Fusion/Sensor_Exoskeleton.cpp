@@ -83,10 +83,10 @@ public:
 
         subscription1_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Exoskeleton_Left_Thigh_topic,
-            rclcpp::QoS(1),
+            rclcpp::QoS(2),
             std::bind(
                 &IMU_Node::subscriber1_cb,
-                this,
+                this,s
                 std::placeholders::_1
             ),
             sub1_opt
@@ -94,7 +94,7 @@ public:
 
         subscription2_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Exoskeleton_Left_Calf_topic,
-            rclcpp::QoS(1),
+            rclcpp::QoS(2),
             std::bind(
                 &IMU_Node::subscriber2_cb,
                 this,
@@ -105,7 +105,7 @@ public:
 
         subscription3_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Exoskeleton_Right_Thigh_topic,
-            rclcpp::QoS(1),
+            rclcpp::QoS(2),
             std::bind(
                 &IMU_Node::subscriber3_cb,
                 this,
@@ -116,7 +116,7 @@ public:
 
         subscription4_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Exoskeleton_Right_Calf_topic,
-            rclcpp::QoS(1),
+            rclcpp::QoS(2),
             std::bind(
                 &IMU_Node::subscriber4_cb,
                 this,
@@ -251,7 +251,7 @@ public:
                             time};
             this->publisher_->publish(message);
         };
-        timer_ = this->create_wall_timer(1ms, timer_callback);
+        timer_ = this->create_wall_timer(2ms, timer_callback);
     }
 
 private:
