@@ -60,7 +60,7 @@ public:
 
         Human_Joint_State_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Human_Sensor_Subscription_Topic,
-            rclcpp::QoS(10),
+            rclcpp::QoS(1),
             std::bind(
                 &Admittance_Control_Subscription::Human_Joint_State_Callback,
                 this,
@@ -70,7 +70,7 @@ public:
         );
         Exoskeleton_Joint_State_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Exoskeleton_Sensor_Subscription_Topic,
-            rclcpp::QoS(10),
+            rclcpp::QoS(1),
             std::bind(
                 &Admittance_Control_Subscription::Exoskeleton_Joint_State_Callback,
                 this,
@@ -80,7 +80,7 @@ public:
         );
         Interaction_Force_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Interaction_Force_Subscription_Topic,
-            rclcpp::QoS(10),
+            rclcpp::QoS(1),
             std::bind(
                 &Admittance_Control_Subscription::Interaction_Force_Callback,
                 this,
