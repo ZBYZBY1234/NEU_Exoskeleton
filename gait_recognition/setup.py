@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'pattern_recognition'
+package_name = 'gait_recognition'
 
 setup(
     name=package_name,
@@ -20,8 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            # 'talker = pattern_recognition.train_data_create:main',
-            # 'LSTM   = src.LSTM:main',
+            'LSTM   = gait_recognition.LSTM:main',
         ],
     },
 )
