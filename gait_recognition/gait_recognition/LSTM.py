@@ -71,6 +71,7 @@ class LSTM_Layer(object):
         self.times += 1
 
         # 遗忘门
+        # 公式(1)
         forget_gate = self.calc_gate(
             x, self.Wfx, self.Wfh,
             self.bf, self.gate_activator
