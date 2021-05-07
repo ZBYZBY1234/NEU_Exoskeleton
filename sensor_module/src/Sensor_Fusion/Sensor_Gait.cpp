@@ -69,7 +69,7 @@ public:
 
         Force_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Piezoelectric_topic,
-            rclcpp::QoS(2),
+            rclcpp::QoS(10),
             std::bind(
                 &Plantar_Pressure::subscriber1_cb,
                 this,
@@ -312,11 +312,11 @@ int main(int argc, char * argv[])
     rclcpp::init(argc, argv);
 
     rclcpp::executors::MultiThreadedExecutor executor;
-    // auto piezoelectric_sensor = std::make_shared<Plantar_Pressure>();
+    auto piezoelectric_sensor = std::make_shared<Plantar_Pressure>();
     auto mpu6050_sensors = std::make_shared<IMU_Node>();
     auto pubnode = std::make_shared<PublisherNode>();
 
-    // executor.add_node(piezoelectric_sensor);
+    executor.add_node(piezoelectric_sensor);
     executor.add_node(mpu6050_sensors);
     executor.add_node(pubnode);
     executor.spin();

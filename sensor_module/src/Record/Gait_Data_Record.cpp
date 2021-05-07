@@ -107,15 +107,7 @@ private:
         Right_Plantar_Pressure[0]   = Force[3];
         Right_Plantar_Pressure[1]   = Force[4];
         Right_Plantar_Pressure[2]   = Force[5];
-    }
-    /* Angle Publish Data*/
-    void callback3(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
-    {
-        auto Angle = msg->data;
-        // oFile   << Angle[0] << "," << Angle[1] << ","
-        //         << Sensor_Angle[0] << "," << Sensor_Angle[2] <<","
-        //         << Force_Left[0]<<","<<Force_Left[1]<<","
-        //         << Force_Right[0]<<","<<Force_Right[1]<<endl;
+
         oFile   << Sensor_Human[0] << "," << Sensor_Human[4] << "," << Sensor_Human[8] << ","
                 << Sensor_Human[1] << "," << Sensor_Human[5] << "," << Sensor_Human[9] << ","
                 << Sensor_Human[2] << "," << Sensor_Human[6] << "," << Sensor_Human[10] << ","
