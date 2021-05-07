@@ -16,7 +16,7 @@ class Identity_Activator(object):
     def backward(self, output):
         return 1
 
-class Sigmoid_Activator(object):
+class Sigmoid(object):
 
     def forward(self, weighted_input):
         return 1.0 / (1.0 + np.exp(-weighted_input))
@@ -24,7 +24,7 @@ class Sigmoid_Activator(object):
     def backward(self, output):
         return output * (1-output)
 
-class Tanh_Activator(object):
+class Tanh(object):
 
     def forward(self, weighted_input):
         return 2.0 / (1.0 + np.exp(-2 * weighted_input)) - 1.0
