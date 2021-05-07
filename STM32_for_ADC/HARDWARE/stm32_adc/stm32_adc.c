@@ -10,7 +10,7 @@
 __IO u16 ADC_ConvertedValue;  
 
 #define  N   20              //每通道采50次
-#define  M   4               //为4个通道
+#define  M   6               //为4个通道
 
 u16  AD_Value[N][M];     //用来存放ADC转换结果，也是DMA的目标地址
 u16  After_filter[M];    //用来存放求平均值之后的结果
@@ -19,8 +19,9 @@ u16  After_filter[M];    //用来存放求平均值之后的结果
  void ADC1_GPIO_Config(void)
 { GPIO_InitTypeDef GPIO_InitStructure;    
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);	  
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3;//4路
-	//GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_6|GPIO_Pin_7;//6路
+  //GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3;//4路
+	//GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;//8路
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5;//6路
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		    //GPIO设置为模拟输入
   GPIO_Init(GPIOA, &GPIO_InitStructure);   
 }
@@ -60,7 +61,7 @@ u16  After_filter[M];    //用来存放求平均值之后的结果
   ADC_InitStructure.ADC_ContinuousConvMode = ENABLE; //无需外接触发器
   ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None; //使用数据右对齐
   ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
-  ADC_InitStructure.ADC_NbrOfChannel = 4;  // 只有1个转换通道
+  ADC_InitStructure.ADC_NbrOfChannel = 6;  // 只有1个转换通道
   ADC_Init(ADC1, &ADC_InitStructure);
 
   /* ADC1 regular channel11 configuration */ 
@@ -68,6 +69,10 @@ u16  After_filter[M];    //用来存放求平均值之后的结果
   ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 2, ADC_SampleTime_55Cycles5); //通道1采样周期55.5个时钟周期
   ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 3, ADC_SampleTime_55Cycles5); //通道1采样周期55.5个时钟周期
   ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 4, ADC_SampleTime_55Cycles5); //通道1采样周期55.5个时钟周期
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 5, ADC_SampleTime_55Cycles5); //通道1采样周期55.5个时钟周期
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_5, 6, ADC_SampleTime_55Cycles5); //通道1采样周期55.5个时钟周期
+  //ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 7, ADC_SampleTime_55Cycles5); //通道1采样周期55.5个时钟周期
+  //ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 8, ADC_SampleTime_55Cycles5); //通道1采样周期55.5个时钟周期
 //	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 5, ADC_SampleTime_55Cycles5); //通道1采样周期55.5个时钟周期
 //	ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 6, ADC_SampleTime_55Cycles5); //通道1采样周期55.5个时钟周期
 

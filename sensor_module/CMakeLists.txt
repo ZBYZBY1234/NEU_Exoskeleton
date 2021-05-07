@@ -40,9 +40,9 @@ include_directories(
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-add_executable(Piezoelectric src/Force/Piezoelectric.cpp )
-target_link_libraries(Piezoelectric  ${catkin_LIBRARIES})
-ament_target_dependencies(Piezoelectric rclcpp std_msgs)
+add_executable(Piezoelectric_8 src/Force/Piezoelectric_8.cpp )
+target_link_libraries(Piezoelectric_8  ${catkin_LIBRARIES})
+ament_target_dependencies(Piezoelectric_8 rclcpp std_msgs)
 add_executable(Piezoelectric_6 src/Force/Piezoelectric_6.cpp )
 target_link_libraries(Piezoelectric_6  ${catkin_LIBRARIES})
 ament_target_dependencies(Piezoelectric_6 rclcpp std_msgs)
@@ -96,7 +96,7 @@ Exoskeleton_Left_Calf
 Exoskeleton_Right_Thigh
 Exoskeleton_Right_Calf
 
-Piezoelectric
+Piezoelectric_8
 Piezoelectric_6
 Sensor_Human
 Sensor_Exoskeleton

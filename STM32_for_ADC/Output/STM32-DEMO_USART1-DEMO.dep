@@ -1,6 +1,6 @@
 Dependencies for Project 'STM32-DEMO', Target 'USART1-DEMO': (DO NOT MODIFY !)
 F (..\CMSIS\startup\startup_stm32f10x_hd.s)(0x49D96948)(--cpu Cortex-M3 -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_USART1-DEMO-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 525" --pd "STM32F10X_MD SETA 1"--list ..\listing\startup_stm32f10x_hd.lst --xref -o ..\output\startup_stm32f10x_hd.o --depend ..\output\startup_stm32f10x_hd.d)
-F (.\main.c)(0x6073AF46)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\CMSIS -I ..\FWlib\inc -I ..\USER -I ..\HARDWARE\stm32_adc -I ..\HARDWARE\stm32_dac -I ..\HARDWARE\stm32_tim2 -I ..\HARDWARE\stm32_led-I.\RTE\_USART1-DEMO-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o ..\output\main.o --omf_browse ..\output\main.crf --depend ..\output\main.d)
+F (.\main.c)(0x6094CFAA)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\CMSIS -I ..\FWlib\inc -I ..\USER -I ..\HARDWARE\stm32_adc -I ..\HARDWARE\stm32_dac -I ..\HARDWARE\stm32_tim2 -I ..\HARDWARE\stm32_led-I.\RTE\_USART1-DEMO-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o ..\output\main.o --omf_browse ..\output\main.crf --depend ..\output\main.d)
 I (..\CMSIS\stm32f10x.h)(0x4DECC1EC)
 I (..\CMSIS\core_cm3.h)(0x49D96948)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x569DEA3A)
@@ -27,7 +27,7 @@ I (..\USER\stm32f10x_conf.h)(0x4E329872)
 I (..\FWlib\inc\stm32f10x_gpio.h)(0x4DEC4B42)
 I (..\FWlib\inc\stm32f10x_rcc.h)(0x49D9694A)
 I (..\FWlib\inc\stm32f10x_usart.h)(0x49D9694A)
-F (.\usart1.c)(0x6059A75C)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\CMSIS -I ..\FWlib\inc -I ..\USER -I ..\HARDWARE\stm32_adc -I ..\HARDWARE\stm32_dac -I ..\HARDWARE\stm32_tim2 -I ..\HARDWARE\stm32_led-I.\RTE\_USART1-DEMO-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o ..\output\usart1.o --omf_browse ..\output\usart1.crf --depend ..\output\usart1.d)
+F (.\usart1.c)(0x5D5935B4)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\CMSIS -I ..\FWlib\inc -I ..\USER -I ..\HARDWARE\stm32_adc -I ..\HARDWARE\stm32_dac -I ..\HARDWARE\stm32_tim2 -I ..\HARDWARE\stm32_led-I.\RTE\_USART1-DEMO-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o ..\output\usart1.o --omf_browse ..\output\usart1.crf --depend ..\output\usart1.d)
 I (usart1.h)(0x5C983D78)
 I (..\CMSIS\stm32f10x.h)(0x4DECC1EC)
 I (..\CMSIS\core_cm3.h)(0x49D96948)
@@ -136,7 +136,7 @@ I (..\USER\stm32f10x_conf.h)(0x4E329872)
 I (..\FWlib\inc\stm32f10x_gpio.h)(0x4DEC4B42)
 I (..\FWlib\inc\stm32f10x_rcc.h)(0x49D9694A)
 I (..\FWlib\inc\stm32f10x_usart.h)(0x49D9694A)
-F (..\HARDWARE\stm32_adc\stm32_adc.c)(0x5D5947D2)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\CMSIS -I ..\FWlib\inc -I ..\USER -I ..\HARDWARE\stm32_adc -I ..\HARDWARE\stm32_dac -I ..\HARDWARE\stm32_tim2 -I ..\HARDWARE\stm32_led-I.\RTE\_USART1-DEMO-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o ..\output\stm32_adc.o --omf_browse ..\output\stm32_adc.crf --depend ..\output\stm32_adc.d)
+F (..\HARDWARE\stm32_adc\stm32_adc.c)(0x60953472)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\CMSIS -I ..\FWlib\inc -I ..\USER -I ..\HARDWARE\stm32_adc -I ..\HARDWARE\stm32_dac -I ..\HARDWARE\stm32_tim2 -I ..\HARDWARE\stm32_led-I.\RTE\_USART1-DEMO-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="525" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o ..\output\stm32_adc.o --omf_browse ..\output\stm32_adc.crf --depend ..\output\stm32_adc.d)
 I (..\HARDWARE\stm32_adc\stm32_adc.h)(0x5D59450E)
 I (..\CMSIS\stm32f10x.h)(0x4DECC1EC)
 I (..\CMSIS\core_cm3.h)(0x49D96948)

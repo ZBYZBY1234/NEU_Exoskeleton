@@ -24,7 +24,7 @@ void USART1_Config(void)
 	USART_InitStructure.USART_StopBits = USART_StopBits_1; 	//停止位设置：1位
 	USART_InitStructure.USART_Parity = USART_Parity_No ;  //是否奇偶校验：无
 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;	//硬件流控制模式设置：没有使能
-	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;//接收与发送都使能侵权、
+	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;//接收与发送都使能
 	USART_Init(USART1, &USART_InitStructure);  //初始化USART1
 	USART_Cmd(USART1, ENABLE);// USART1使能
 }
