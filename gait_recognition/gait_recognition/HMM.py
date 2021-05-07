@@ -1,7 +1,7 @@
 # Hidden Markov Model
 # mode: (*)Stay,(*)Walk,(*)Stand Up,(*)Squat down,(*)Run
-class HMM
-# Main Function
+# class HMM
+# # Main Function
 if __name__ == "__main__":
     # nn = Network(3,3,3)
     # cases  = [np.array([1,0,0]),np.array([0,1,0]),np.array([0,0,1])]
