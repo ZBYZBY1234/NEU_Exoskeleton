@@ -43,6 +43,9 @@ find_package(std_msgs REQUIRED)
 add_executable(Piezoelectric src/Force/Piezoelectric.cpp )
 target_link_libraries(Piezoelectric  ${catkin_LIBRARIES})
 ament_target_dependencies(Piezoelectric rclcpp std_msgs)
+add_executable(Piezoelectric_8 src/Force/Piezoelectric_8.cpp )
+target_link_libraries(Piezoelectric_8  ${catkin_LIBRARIES})
+ament_target_dependencies(Piezoelectric_8 rclcpp std_msgs)
 
 add_executable(MPU6050 src/IMU/MPU6050.cpp )
 target_link_libraries(MPU6050  ${catkin_LIBRARIES})
@@ -94,6 +97,7 @@ Exoskeleton_Right_Thigh
 Exoskeleton_Right_Calf
 
 Piezoelectric
+Piezoelectric_8
 Sensor_Human
 Sensor_Exoskeleton
 DESTINATION lib/${PROJECT_NAME}
