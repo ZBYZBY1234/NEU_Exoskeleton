@@ -17,8 +17,8 @@ def generate_launch_description():
 
     Piezoelectric_cmd = Node(
         package="sensor_module",
-        executable="Piezoelectric",
-        name="Piezoelectric"
+        executable="Piezoelectric_8",
+        name="Piezoelectric_8"
     )
 
     Human_Left_Thigh_cmd = Node(
