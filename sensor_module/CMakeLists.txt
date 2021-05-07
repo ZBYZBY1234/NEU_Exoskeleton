@@ -88,6 +88,10 @@ add_executable(Sensor_Gait src/Sensor_Fusion/Sensor_Gait.cpp )
 target_link_libraries(Sensor_Gait  ${catkin_LIBRARIES})
 ament_target_dependencies(Sensor_Gait rclcpp std_msgs)
 
+add_executable(Gait_Data_Record src/Record/Gait_Data_Record.cpp )
+target_link_libraries(Gait_Data_Record  ${catkin_LIBRARIES})
+ament_target_dependencies(Gait_Data_Record rclcpp std_msgs)
+
 install(TARGETS
 Human_Left_Thigh
 Human_Left_Calf
@@ -104,6 +108,8 @@ Piezoelectric_6
 Sensor_Human
 Sensor_Exoskeleton
 Sensor_Gait
+
+Gait_Data_Record
 DESTINATION lib/${PROJECT_NAME}
 )
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})

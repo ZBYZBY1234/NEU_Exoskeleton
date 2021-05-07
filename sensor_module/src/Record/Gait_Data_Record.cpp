@@ -9,8 +9,7 @@
 using std::placeholders::_1;
 using namespace std;
 
-#define Human_Sensor_Topic          "Sensor_Human"
-#define Interaction_Force_Topic     "Plantar_Pressure"
+#define Human_Sensor_Topic          "Sensor_Gait"
 
 #define CSV_File_Path       "/home/hemingshan/exo_ws/src/sensor_module/csv_File/1.csv"
 class Joint_Record :
@@ -49,26 +48,6 @@ public:
             Sensor_Human_Sub_opt
         );
 
-        // Interaction_Force
-        Interaction_Force_Callback_Group = this->create_callback_group
-        (
-            rclcpp::CallbackGroupType::MutuallyExclusive
-        );
-
-        auto Interaction_Force_Sub_opt  = rclcpp::SubscriptionOptions();
-        Interaction_Force_Sub_opt.callback_group = Interaction_Force_Callback_Group;
-        Interaction_Force_Subscription  = this->create_subscription<std_msgs::msg::Float64MultiArray>
-        (
-            Interaction_Force_Topic,
-            rclcpp::QoS(10),
-            std::bind(
-                &Joint_Record::callback2,
-                this,
-                _1
-            ),
-            Interaction_Force_Sub_opt
-        );
-
     }
     ~Joint_Record()
     {
@@ -95,18 +74,14 @@ private:
         Sensor_Human[9] = Sensor_Data[9];
         Sensor_Human[10] = Sensor_Data[10];
         Sensor_Human[11] = Sensor_Data[11];
-    }
-    /* Force Data Accept */
-    void callback2(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
-    {
-        auto Force = msg->data;
-        Left_Plantar_Pressure[0]   = Force[0];
-        Left_Plantar_Pressure[1]   = Force[1];
-        Left_Plantar_Pressure[2]   = Force[2];
 
-        Right_Plantar_Pressure[0]   = Force[3];
-        Right_Plantar_Pressure[1]   = Force[4];
-        Right_Plantar_Pressure[2]   = Force[5];
+        Left_Plantar_Pressure[0]   = Sensor_Data[12];
+        Left_Plantar_Pressure[1]   = Sensor_Data[13];
+        Left_Plantar_Pressure[2]   = Sensor_Data[14];
+
+        Right_Plantar_Pressure[0]   = Sensor_Data[15];
+        Right_Plantar_Pressure[1]   = Sensor_Data[16];
+        Right_Plantar_Pressure[2]   = Sensor_Data[17];
 
         oFile   << Sensor_Human[0] << "," << Sensor_Human[4] << "," << Sensor_Human[8] << ","
                 << Sensor_Human[1] << "," << Sensor_Human[5] << "," << Sensor_Human[9] << ","
@@ -122,10 +97,8 @@ private:
         //         <<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<endl;
     }
     rclcpp::CallbackGroup::SharedPtr                                    Sensor_Human_Callback_Group;
-    rclcpp::CallbackGroup::SharedPtr                                    Interaction_Force_Callback_Group;
 
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Sensor_Human_Subscription;
-    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Interaction_Force_Subscription;
 
     float                                                               Exoskeleton_Left_Thigh_Angle;
     float                                                               Exoskeleton_Right_Thigh_Angle;
