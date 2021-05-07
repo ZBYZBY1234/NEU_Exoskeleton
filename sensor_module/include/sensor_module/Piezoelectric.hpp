@@ -52,11 +52,12 @@ public:
     };
     ~Piezoelectric(){};
 public:
-    Eigen::Matrix<float,8,1> Read();
+    Eigen::Matrix<float,8,1> Read_8_ADC();
+    Eigen::Matrix<float,6,1> Read_6_ADC();
     int * Read_Data();
 };
 
-Eigen::Matrix<float,8,1> Piezoelectric::Read()
+Eigen::Matrix<float,8,1> Piezoelectric::Read_8_ADC()
 {
     Serial_len = read(Serial_nFd, hexdata, 1);
 
@@ -98,63 +99,51 @@ Eigen::Matrix<float,8,1> Piezoelectric::Read()
                 flag1 = 0;
         }
     }
-
-    // sumcondatal = 0;
-    // sumcondataf = 0;
-    // condatal[countk] = forcedata[2];
-    // condataf[countk]=forcedata[0] + forcedata[1];
-    // countk++;
-
-    // for ( i = 0; i < avcount; i++)
-    // {
-    //     sumcondatal += condatal[i];
-    //     sumcondataf += condataf[i];
-    // }
-
-    // sumcondatalb[countk] = sumcondatal;
-    // sumcondatafb[countk] = sumcondataf;
-
-    // contrustk=countk-3;
-
-    // if (contrustk==-1)
-    // {
-    //     contrustk = 4;
-    // }
-    // if (contrustk==-2)
-    // {
-    //     contrustk = 3;
-    // }
-    // if (contrustk==-3)
-    // {
-    //     contrustk = 2;
-    // }
-
-
-    // if (( (sumcondatal/avcount) < footlimitl) &&(sumcondatalb[contrustk]>sumcondatalb[countk] ) &&(sumcondatafb[contrustk]<sumcondatafb[countk]) )
-    // {
-    //     flagout = 1;
-    // }
-    // if ((sumcondatal/avcount) > 1.5*footlimitl)
-    // {
-    //     flagagain = 1;
-    //     flagout = 0;
-    // }
-
-    // if (flagout&&flagagain)
-    // {
-    //     printf("start>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-    //     flagout = 0;
-    //     flagagain = 0;
-    // }
-
-
-    // if (countk==avcount)
-    //     countk = 0;
-    // if (contrustk==avcount)
-    //     contrustk = 0;
     Eigen::Matrix<float,8,1> data;
     data << forcedata[0], forcedata[1], forcedata[2], forcedata[3],
             forcedata[4], forcedata[5], forcedata[6], forcedata[7];
+    return data;
+
+}
+
+Eigen::Matrix<float,6,1> Piezoelectric::Read_6_ADC()
+{
+    Serial_len = read(Serial_nFd, hexdata, 1);
+
+    datamid = (int)hexdata[0];
+    if(datamid==254)
+    {
+        count = 0;
+        decdata[count] = datamid;
+        count++;
+
+        Serial_len = read(Serial_nFd, hexdata, 1);
+        datamid = (int)hexdata[0];
+
+        if (datamid==255)
+        {
+            decdata[count] = datamid;
+            for (i = 2; i < 8; i++)
+            {
+                count++;
+                Serial_len = read(Serial_nFd, hexdata, 1);
+                datamid = (int)hexdata[0];
+                decdata[count] = datamid;
+            }
+                forcedata[0] = decdata[2];
+                forcedata[1] = decdata[3];
+                forcedata[2] = decdata[4];
+
+                forcedata[3] = decdata[5];
+                forcedata[4] = decdata[6];
+                forcedata[5] = decdata[7];
+
+                flag1 = 0;
+        }
+    }
+    Eigen::Matrix<float,6,1> data;
+    data << forcedata[0], forcedata[1], forcedata[2],
+            forcedata[3], forcedata[4], forcedata[5];
     return data;
 
 }

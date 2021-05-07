@@ -42,7 +42,7 @@ private:
     {
         auto message = std_msgs::msg::Float64MultiArray();
         Eigen::Matrix<float,8,1> data;
-        data = piezoelectric.Read();
+        data = piezoelectric.Read_8_ADC();
 
         message.data = {    data(0,0),data(1,0),data(2,0),data(3,0),
                             data(4,0),data(5,0),data(6,0),data(7,0)
