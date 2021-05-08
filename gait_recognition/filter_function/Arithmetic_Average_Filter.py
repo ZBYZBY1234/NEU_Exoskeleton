@@ -27,11 +27,11 @@ for item in reader:
 
     x.append(i)
     i = i+1
-    if i == 500:
+    if i == 3000:
         break
-L_F_P_Filter=fm.Arithmetic_Average_Filter(L_F_P,30)
-L_M_P_Filter=fm.Arithmetic_Average_Filter(L_M_P,30)
-L_B_P_Filter=fm.Arithmetic_Average_Filter(L_B_P,30)
+L_F_P_Filter=fm.Arithmetic_Average_Filter(L_F_P,20)
+L_M_P_Filter=fm.Arithmetic_Average_Filter(L_M_P,20)
+L_B_P_Filter=fm.Arithmetic_Average_Filter(L_B_P,20)
 
 plt.plot(x,L_F_P,label="Left_Front_Pressure")
 # plt.plot(x,L_M_P,label="Left_Middle_Pressure")

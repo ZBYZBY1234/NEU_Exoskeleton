@@ -29,25 +29,16 @@ for item in reader:
     i = i+1
     if i == 10000:
         break
+L_F_P_Filter=fm.First_order_Lag_Filter(L_F_P,0.0)
+L_M_P_Filter=fm.First_order_Lag_Filter(L_M_P,0.0)
+L_B_P_Filter=fm.First_order_Lag_Filter(L_B_P,0.0)
 
-L_F_P_Filter=fm.Recursive_Average_Filter(L_F_P,200)
-L_M_P_Filter=fm.Recursive_Average_Filter(L_M_P,200)
-L_B_P_Filter=fm.Recursive_Average_Filter(L_B_P,200)
-
-# 创建图像布局对象fig
-fig = plt.figure(figsize = (12, 6))
-
-plot1 = fig.add_subplot(121)
-plot1.plot(x,L_B_P,label="Left_Back_Pressure")
-
-# plt.plot(x,L_F_P,label="Left_Front_Pressure")
+plt.plot(x,L_F_P,label="Left_Front_Pressure")
 # plt.plot(x,L_M_P,label="Left_Middle_Pressure")
 # plt.plot(x,L_B_P,label="Left_Back_Pressure")
 
-# plt.plot(x,L_F_P_Filter,label="Left_Front_Pressure_Filter")
+plt.plot(x,L_F_P_Filter,label="Left_Front_Pressure_Filter")
 # plt.plot(x,L_M_P_Filter,label="Left_Middle_Pressure_Filter")
-plot2 = fig.add_subplot(122)
-plot2.plot(x,L_B_P_Filter,label="Left_Back_Pressure_Filter")
 # plt.plot(x,L_B_P_Filter,label="Left_Back_Pressure_Filter")
 
 
