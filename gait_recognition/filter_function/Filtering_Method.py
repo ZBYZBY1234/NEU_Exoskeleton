@@ -44,3 +44,51 @@ def Median_Filter(Value_List, Sample_Times):
             Filtered_Value.append(Median_Slide)
 
     return Filtered_Value
+
+#* 算术平均滤波算法 *#
+#* Arithmetic Average Filter *#
+#* Input: 待滤波的数据 Value_List, 采样次数 Sample_Times
+#* Output: 滤波结果量
+#* 优点: 适用于对一般具有随即干扰的信号进行滤波
+#* 缺点: 对于测量速度较慢或要求数据计算速度较快的实时控制不适用
+
+def Arithmetic_Average_Filter(Value_List, Sample_Times):
+
+    Filtered_Value = []
+
+    for i in range(int(len(Value_List)/Sample_Times)):
+        Select_Slide = Value_List[i*Sample_Times : (i+1)*Sample_Times]
+        Mean_Slide = np.mean(Select_Slide)
+        for j in range(Sample_Times):
+            Filtered_Value.append(Mean_Slide)
+
+    # 当采样次数无法整除数据量长度时需要考虑剩下的部分
+    if(len(Value_List)%Sample_Times != 0):
+        Select_Slide = Value_List[(i+1)*Sample_Times:]
+        Mean_Slide = np.mean(Select_Slide)
+        for j in range(len(Value_List)%Sample_Times):
+            Filtered_Value.append(Mean_Slide)
+
+    return Filtered_Value
+
+
+def Recursive_Average_Filter(Value_List, Sample_Times):
+
+    Mean_List = []
+    Select_Slide = Value_List[0:0+Sample_Times]
+    mean = np.mean(Select_Slide)
+    Select_Slide.insert(len(Select_Slide), Select_Slide[0]) #左移动一位
+    Select_Slide.remove(Select_Slide[0])
+    for i in range(Sample_Times):
+        Mean_List.append(mean)
+
+    for i in range(len(Value_List) - Sample_Times):
+        Select_Slide.append(Value_List[i+Sample_Times])
+        Select_Slide.insert(len(Select_Slide), Select_Slide[0])
+        Select_Slide.remove(Select_Slide[0])
+        Select_Slide.remove(Select_Slide[-1])
+        mean = np.mean(Select_Slide)
+
+        Mean_List.append(mean)
+
+    return Mean_List
