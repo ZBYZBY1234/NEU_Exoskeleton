@@ -41,6 +41,10 @@ This package is developed by official and can be used to control the joint by po
 
 This package is mainly for programming the security module for this exoskeleton. And there are some tips for record data as csv file to do some treatment.
 
+### gait_recognition
+
+This package is mainly for recognize the gait by real-time. So It's mainly for the data filter and Neural Network which is used to make some recognition.
+
 ## Run
 
 ### Hard Ware Mode
