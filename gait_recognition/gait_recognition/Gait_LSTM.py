@@ -221,17 +221,21 @@ class Unit:
         """
         self.f_wh -= self.learning_rate * self.f_wh_grad
         self.f_wx -= self.learning_rate * self.f_wx_grad
-        self.f_b -= self.learning_rate * self.f_b_grad
+        f_b_update = -(self.learning_rate * self.f_b_grad - self.f_b)
         self.i_wh -= self.learning_rate * self.i_wh_grad
         self.i_wx -= self.learning_rate * self.i_wx_grad
-        self.i_b -= self.learning_rate * self.i_b_grad
+        i_b_update = -(self.learning_rate * self.i_b_grad - self.i_b)
         self.o_wh -= self.learning_rate * self.o_wh_grad
         self.o_wx -= self.learning_rate * self.o_wx_grad
-        self.o_b -= self.learning_rate * self.o_b_grad
+        o_b_update = -(self.learning_rate * self.o_b_grad - self.o_b)
         self.ct_wh -= self.learning_rate * self.ct_wh_grad
         self.ct_wx -= self.learning_rate * self.ct_wx_grad
-        self.ct_b -= self.learning_rate * self.ct_b_grad
-
+        ct_b_update = -(self.learning_rate * self.ct_b_grad - self.ct_b)
+        for i in range(self.state_size):
+            self.f_b[i] = f_b_update[0][i]
+            self.i_b[i] = i_b_update[0][i]
+            self.o_b[i] = o_b_update[0][i]
+            self.ct_b[i] = ct_b_update[0][i]
     '''----------梯度检验的方法----------'''
     # 首先将权重和偏执项都设置成 1 方便观察
     def check_initial_list(self):
@@ -266,48 +270,29 @@ class WeightCheck:
 
     def weight_check(self):
         x = [[1,2,3],[2,3,4]]
-        y = [1,2]
-        for i in range(100):
+        y = [0,0.8]
 
-            u = Unit(3,2,0.1)
+        u = Unit(3,1,0.01)
+        for i in range(50):
+            print('_____________________迭代次数—————————————————————————')
             u.forward(x[0])
+            print(u.h_list[-1])
             u.forward(x[1])
+            print(u.h_list[-1])
 
-            E = SquareError().normal(u.h_list[-1], y)
+            # E = SquareError().normal([u.h_list[-2],u.h_list[-1]], y)
             print('_____________________前向计算结果_____________________')
-            print(E)
-
-            delta_h = SquareError().delta(u.h_list[-1], y)
+            # print(E)
+            delta_h = SquareError().delta(u.h_list[-1], y[-1])
             print(delta_h)
-            u.backward(x[1], delta_h[1])
-
+            u.backward(x[1], delta_h)
             u.update()
-            u.backward(x[0], delta_h[0])
+            delta_h = SquareError().delta(u.h_list[-2], y[-2])
+            print(delta_h)
+            u.backward(x[0], delta_h)
             u.update()
 
-            list_grad = [u.f_wh_grad]
-            print('_____________________反向计算结果_____________________')
-            print(list_grad)
-            print(np.linalg.det(list_grad))
 
-        sita = 0.0001
-        # print(u.f_wh)
-        u.check_Ew_sita_list(sita, 'f', 0, 0)
-        # print(u.f_wh)
-        u.forward(x[0])  # 向前走两步
-        u.forward(x[1])  # 向前走两步
-        h = u.h_list[-1]
-        E1 = SquareError().normal(h, y)  # 计算行列式的值
-
-        u.check_Ew_sita_list(-sita*2, 'f', 0, 0) # 因为前面加了一个sita，所以这里要减去2个sita
-        u.forward(x[0])  # 向前走两步
-        u.forward(x[1])  # 向前走两步
-        h = u.h_list[-1]
-        E2 = SquareError().normal(h, y)
-        list_appro = (E1 - E2)/(2 * sita)
-        print('_____________________检查结果_____________________')
-        print(list_appro)
-        print(np.sqrt(np.dot(list_appro, list_appro)))#计算向量的模
 
 def main(args=None):
     # l = LSTM_Layer(3,2,1e-3)

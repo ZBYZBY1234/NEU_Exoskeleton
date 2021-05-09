@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'LSTM    = gait_recognition.LSTM:main',
+            'Gait_LSTM    = gait_recognition.Gait_LSTM:main',
             'Network = gait_recognition.Network:main'
         ],
     },
