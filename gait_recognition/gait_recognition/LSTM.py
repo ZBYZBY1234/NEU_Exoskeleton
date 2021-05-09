@@ -267,28 +267,21 @@ class WeightCheck:
     def weight_check(self):
         x = [[1,2,3],[2,3,4]]
         y = [1,2]
-        for i in range(100):
 
-            u = Unit(3,2,0.1)
-            u.forward(x[0])
-            u.forward(x[1])
+        u = Unit(3,2,0.1)
+        u.forward(x[0])
+        u.forward(x[1])
 
-            E = SquareError().normal(u.h_list[-1], y)
-            print('_____________________前向计算结果_____________________')
-            print(E)
-
-            delta_h = SquareError().delta(u.h_list[-1], y)
-            print(delta_h)
-            u.backward(x[1], delta_h[1])
-
-            u.update()
-            u.backward(x[0], delta_h[0])
-            u.update()
-
-            list_grad = [u.f_wh_grad]
-            print('_____________________反向计算结果_____________________')
-            print(list_grad)
-            print(np.linalg.det(list_grad))
+        E = SquareError().normal(u.h_list[-1], y)
+        print('_____________________前向计算结果_____________________')
+        print(E)
+        delta_h = SquareError().delta(u.h_list[-1], y)
+        print(delta_h)
+        u.backward(x[1], delta_h[1], Identity_Activator())
+        list_grad = [u.Wfh_grad]
+        print('_____________________反向计算结果_____________________')
+        print(list_grad)
+        print(np.linalg.det(list_grad))
 
         sita = 0.0001
         # print(u.f_wh)
@@ -308,6 +301,13 @@ class WeightCheck:
         print('_____________________检查结果_____________________')
         print(list_appro)
         print(np.sqrt(np.dot(list_appro, list_appro)))#计算向量的模
+
+def data_set():
+    x = [   np.array([[1], [2], [3]]),
+            np.array([[2], [3], [4]])
+        ]
+    d = np.array([[1], [2]])
+    return x, d
 
 def main(args=None):
     # l = LSTM_Layer(3,2,1e-3)
