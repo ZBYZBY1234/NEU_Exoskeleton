@@ -72,7 +72,7 @@ for item in reader:
     R_B_P.append(round(float(item[17]),2))
 
     i = i+1
-    if i == 1000:
+    if i == 10000:
         break
 
 # plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedbk")

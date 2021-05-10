@@ -1,7 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 
-csvFile = open('/home/hemingshan/exo_ws/src/sensor_module/csv_File/2_km.csv','r')
+csvFile = open('/home/hemingshan/exo_ws/src/sensor_module/csv_File/3_5_km.csv','r')
 reader  = csv.reader(csvFile)
 
 i = 0
@@ -40,18 +40,18 @@ for item in reader:
 
     x.append(i)
     i = i+1
-    if i == 2000:
+    if i == 5000:
         break
 
-# plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedbk")
-# plt.plot(x,L_C_A_Feedbk,label="Left_Calf_Angle_Feedbk")
-# plt.plot(x,R_T_A_Feedbk,label="Right_Thigh_Angle_Feedbk")
-# plt.plot(x,R_C_A_Feedbk,label="Right_Calf_Angle_Feedbk")
+plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedbk")
+plt.plot(x,L_C_A_Feedbk,label="Left_Calf_Angle_Feedbk")
+plt.plot(x,R_T_A_Feedbk,label="Right_Thigh_Angle_Feedbk")
+plt.plot(x,R_C_A_Feedbk,label="Right_Calf_Angle_Feedbk")
 
 
-plt.plot(x,L_F_P,label="L_F_P")
-plt.plot(x,L_M_P,label="L_M_P")
-plt.plot(x,L_B_P,label="L_B_P")
+# plt.plot(x,L_F_P,label="L_F_P")
+# plt.plot(x,L_M_P,label="L_M_P")
+# plt.plot(x,L_B_P,label="L_B_P")
 # plt.plot(x,R_F_P,label="R_F_P")
 # plt.plot(x,R_M_P,label="R_M_P")
 # plt.plot(x,R_B_P,label="R_B_P")

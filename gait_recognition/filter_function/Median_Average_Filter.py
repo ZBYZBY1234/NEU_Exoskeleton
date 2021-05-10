@@ -2,7 +2,7 @@ import Filtering_Method as fm
 import csv
 import matplotlib.pyplot as plt
 
-csvFile = open('/home/hemingshan/exo_ws/src/sensor_module/csv_File/3.csv','r')
+csvFile = open('/home/hemingshan/exo_ws/src/sensor_module/csv_File/2_km.csv','r')
 reader  = csv.reader(csvFile)
 
 i = 0
