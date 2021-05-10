@@ -11,7 +11,7 @@ using namespace std;
 
 #define Human_Sensor_Topic          "Sensor_Gait"
 
-#define CSV_File_Path       "/home/hemingshan/exo_ws/src/sensor_module/csv_File/6.csv"
+#define CSV_File_Path       "/home/hemingshan/exo_ws/src/sensor_module/csv_File/5_km.csv"
 class Joint_Record :
     public rclcpp::Node
 {

@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 from gait_recognition import Limmiting_Filtering_Method
 
-csvFile = open('/home/hemingshan/exo_ws/src/sensor_module/csv_File/3.csv','r')
+csvFile = open('/home/hemingshan/exo_ws/src/sensor_module/csv_File/6.csv','r')
 reader  = csv.reader(csvFile)
 
 i = 0

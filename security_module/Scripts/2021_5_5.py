@@ -1,61 +1,60 @@
 import csv
 import matplotlib.pyplot as plt
 
-csvFile = open('/home/hemingshan/exo_ws/src/security_module/csv_File/4.csv','r')
+csvFile = open('/home/hemingshan/exo_ws/src/sensor_module/csv_File/2_km.csv','r')
 reader  = csv.reader(csvFile)
 
 i = 0
 x = []
-L_T_A_Expect = []
-L_C_A_Expect = []
-R_T_A_Expect = []
-R_C_A_Expect = []
-
-L_T_A_Driver = []
-L_C_A_Driver = []
-R_T_A_Driver = []
-R_C_A_Driver = []
-
 L_T_A_Feedbk = []
 L_C_A_Feedbk = []
 R_T_A_Feedbk = []
 R_C_A_Feedbk = []
 
+L_F_P = []
+L_M_P = []
+L_B_P = []
+
+R_F_P = []
+R_M_P = []
+R_B_P = []
+
 for item in reader:
     if reader.line_num == 1:
         continue
-    x.append(i)
+
+
+
     L_T_A_Feedbk.append(round(float(item[0]),2))
     L_C_A_Feedbk.append(round(float(item[3])-float(item[0]),2))
     R_T_A_Feedbk.append(round(float(item[6]),2))
     R_C_A_Feedbk.append(round(float(item[9])-float(item[6]),2))
 
-    L_T_A_Expect.append(round(float(item[12])-90,2))
-    L_C_A_Expect.append(round(float(item[15])-float(item[12]),2))
-    R_T_A_Expect.append(round(float(item[18])-90,2))
-    R_C_A_Expect.append(round(float(item[21])-float(item[18]),2))
+    L_F_P.append(round(float(item[12]),2))
+    L_M_P.append(round(float(item[13]),2))
+    L_B_P.append(round(float(item[14]),2))
 
-    L_T_A_Driver.append(round(float(item[24]),2))
-    L_C_A_Driver.append(round(float(item[25])-float(item[24]),2))
-    R_T_A_Driver.append(round(float(item[26]),2))
-    R_C_A_Driver.append(round(float(item[27])-float(item[26]),2))
+    R_F_P.append(round(float(item[15]),2))
+    R_M_P.append(round(float(item[16]),2))
+    R_B_P.append(round(float(item[17]),2))
 
-    i = i+0.1
-# plt.plot(x,L_T_A_Expect,label="Left_Thigh_Angle_Expect")
+    x.append(i)
+    i = i+1
+    if i == 2000:
+        break
+
 # plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedbk")
-# plt.plot(x,L_T_A_Driver,label="Left_Thigh_Angle_Driver")
-
-# plt.plot(x,L_C_A_Expect,label="Left_Calf_Angle_Expect")
 # plt.plot(x,L_C_A_Feedbk,label="Left_Calf_Angle_Feedbk")
-# plt.plot(x,L_C_A_Driver,label="Left_Calf_Angle_Driver")
-
-plt.plot(x,R_T_A_Expect,label="Right_Thigh_Angle_Expect")
-plt.plot(x,R_T_A_Feedbk,label="Right_Thigh_Angle_Feedbk")
-plt.plot(x,R_T_A_Driver,label="Right_Thigh_Angle_Driver")
-
-# plt.plot(x,R_C_A_Expect,label="Right_Calf_Angle_Expect")
+# plt.plot(x,R_T_A_Feedbk,label="Right_Thigh_Angle_Feedbk")
 # plt.plot(x,R_C_A_Feedbk,label="Right_Calf_Angle_Feedbk")
-# plt.plot(x,R_C_A_Driver,label="Right_Calf_Angle_Driver")
+
+
+plt.plot(x,L_F_P,label="L_F_P")
+plt.plot(x,L_M_P,label="L_M_P")
+plt.plot(x,L_B_P,label="L_B_P")
+# plt.plot(x,R_F_P,label="R_F_P")
+# plt.plot(x,R_M_P,label="R_M_P")
+# plt.plot(x,R_B_P,label="R_B_P")
 
 plt.legend()
 plt.show()
