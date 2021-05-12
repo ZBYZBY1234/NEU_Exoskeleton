@@ -201,26 +201,34 @@ private:
     {
         if(flag2)
         {
-            offset1 = msg->data[0];
-            flag1 = false;
+            offset2 = msg->data[0];
+            flag2 = false;
         }
-        Left_Calf_Human[0] = msg->data[0];
+        Left_Calf_Human[0] = msg->data[0]-offset2;
         Left_Calf_Human[1] = msg->data[1];
         Left_Calf_Human[2] = msg->data[2];
     }
 
     void subscriber3_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-
-        Right_Thigh_Human[0] = msg->data[0];
+        if(flag3)
+        {
+            offset3 = msg->data[0];
+            flag3 = false;
+        }
+        Right_Thigh_Human[0] = msg->data[0]-offset3;
         Right_Thigh_Human[1] = msg->data[1];
         Right_Thigh_Human[2] = msg->data[2];
     }
 
     void subscriber4_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-
-        Right_Calf_Human[0] = msg->data[0];
+        if(flag4)
+        {
+            offset4 = msg->data[0];
+            flag4 = false;
+        }
+        Right_Calf_Human[0] = msg->data[0]-offset4;
         Right_Calf_Human[1] = msg->data[1];
         Right_Calf_Human[2] = msg->data[2];
     }
