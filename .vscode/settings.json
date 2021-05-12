@@ -70,5 +70,8 @@
         "shared_mutex": "cpp",
         "core": "cpp",
         "regex": "cpp"
-    }
+    },
+    "python.analysis.extraPaths": [
+        "/opt/ros/foxy/lib/python3.8/site-packages"
+    ]
 }

@@ -187,14 +187,23 @@ private:
 
     void subscriber1_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        Left_Thigh_Human[0] = msg->data[0];
+        if(flag1)
+        {
+            offset1 = msg->data[0];
+            flag1 = false;
+        }
+        Left_Thigh_Human[0] = msg->data[0] - offset1;
         Left_Thigh_Human[1] = msg->data[1];
         Left_Thigh_Human[2] = msg->data[2];
     }
 
     void subscriber2_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-
+        if(flag2)
+        {
+            offset1 = msg->data[0];
+            flag1 = false;
+        }
         Left_Calf_Human[0] = msg->data[0];
         Left_Calf_Human[1] = msg->data[1];
         Left_Calf_Human[2] = msg->data[2];
@@ -228,6 +237,9 @@ private:
 
     bool                                                                start;
     double                                                              start_time;
+
+    bool                                                                flag1,flag2,flag3,flag4;
+    float                                                               offset1,offset2,offset3,offset4;
 };
 
 class PublisherNode : public rclcpp::Node

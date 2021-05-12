@@ -124,6 +124,5 @@ plot6.set_title('5st Filter Plot')
 plot6.set_xlabel('Time/s')
 plot6.set_ylabel('Pressure')
 
-
 plt.legend()
 plt.show()
