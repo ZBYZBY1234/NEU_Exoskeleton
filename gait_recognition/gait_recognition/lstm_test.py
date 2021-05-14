@@ -28,7 +28,7 @@ def example_0():
     lstm_param = LstmParam(mem_cell_ct, x_dim)
     lstm_net = LstmNetwork(lstm_param)
     # 训练输出 output
-    y_list = [-0.5, 0.2]
+    y_list = [ -0.5, 0.2]
     # 输入列表 input
     input_val_arr = [np.random.random(x_dim) for _ in y_list]
     print(input_val_arr)
