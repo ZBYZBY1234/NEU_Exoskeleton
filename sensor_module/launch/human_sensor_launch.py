@@ -53,10 +53,11 @@ def generate_launch_description():
     # Create the launch description and populate
     ld = LaunchDescription()
     # Declare the launch options
-    ld.add_action(Piezoelectric_cmd)
+    ld.add_action(Piezoelectric_cmd)        #Interaction Force
     ld.add_action(Human_Left_Thigh_cmd)
     ld.add_action(Human_Left_Calf_cmd)
     ld.add_action(Human_Right_Thigh_cmd)
     ld.add_action(Human_Right_Calf_cmd)
+
     ld.add_action(Sensor_Human_cmd)
     return ld

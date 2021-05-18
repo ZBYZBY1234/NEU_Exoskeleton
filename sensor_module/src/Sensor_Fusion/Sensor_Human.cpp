@@ -20,11 +20,12 @@
 
 using namespace std::chrono_literals;
 
-#define Piezoelectric_topic                            "Piezoelectric"
+#define Piezoelectric_topic                            "Interaction_Force"
 #define Human_Left_Thigh_topic                         "Human_Left_Thigh"
 #define Human_Left_Calf_topic                          "Human_Left_Calf"
 #define Human_Right_Thigh_topic                        "Human_Right_Thigh"
 #define Human_Right_Calf_topic                         "Human_Right_Calf"
+
 #define Sensor_topic                                   "Sensor_Human"
 
 float Left_Thigh_Human[3]={0,0,0};
@@ -32,7 +33,10 @@ float Left_Calf_Human[3]={0,0,0};
 float Right_Thigh_Human[3]={0,0,0};
 float Right_Calf_Human[3]={0,0,0};
 
-float Pressor[3]={0,0,0};
+float Left_Thigh_Interaction_Force[2]={0,0};
+float Left_Calf_Interaction_Force[2]={0,0};
+float Right_Thigh_Interaction_Force[2]={0,0};
+float Right_Calf_Interaction_Force[2]={0,0};
 
 std::string string_thread_id()
 {
@@ -51,7 +55,7 @@ double convertFromString(std::string str)
 
 /*
     * @Name: class Force_Node
-    * @Description: create a class for Piezoelectric Sensor
+    * @Description: create a class for Piezoelectric Sensor for Interaction Force
 */
 class Force_Node : public rclcpp::Node
 {
@@ -81,9 +85,17 @@ private:
 
     void subscriber1_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        Pressor[0] = msg->data[0];
-        Pressor[1] = msg->data[1];
-        Pressor[2] = msg->data[2];
+        Left_Thigh_Interaction_Force[0] = msg->data[0];
+        Left_Thigh_Interaction_Force[1] = msg->data[1];
+
+        Left_Calf_Interaction_Force[0]  = msg->data[2];
+        Left_Calf_Interaction_Force[1]  = msg->data[3];
+
+        Right_Thigh_Interaction_Force[0] = msg->data[4];
+        Right_Thigh_Interaction_Force[1] = msg->data[5];
+
+        Right_Calf_Interaction_Force[0] = msg->data[6];
+        Right_Calf_Interaction_Force[1] = msg->data[7];
     }
 
     rclcpp::CallbackGroup::SharedPtr                                    Force_Callback;
@@ -277,12 +289,21 @@ public:
                             Right_Thigh_Human[1],
                             Right_Calf_Human[1],
 
-                            /* Acceleration */
-                            Left_Thigh_Human[2],
-                            Left_Calf_Human[2],
-                            Right_Thigh_Human[2],
-                            Right_Calf_Human[2],
+                            // /* Acceleration */
+                            // Left_Thigh_Human[2],
+                            // Left_Calf_Human[2],
+                            // Right_Thigh_Human[2],
+                            // Right_Calf_Human[2],
 
+                            /* Interaction Force*/
+                            Left_Thigh_Interaction_Force[0],
+                            Left_Thigh_Interaction_Force[1],
+                            Left_Calf_Interaction_Force[0],
+                            Left_Calf_Interaction_Force[1],
+                            Right_Thigh_Interaction_Force[0],
+                            Right_Thigh_Interaction_Force[1],
+                            Right_Calf_Interaction_Force[0],
+                            Right_Calf_Interaction_Force[1],
                             /* Time */
                             time};
             this->publisher_->publish(message);
