@@ -63,22 +63,15 @@ public:
     Force_Node()
     : Node("Human_Force_Node")
     {
-        Force_Callback = this->create_callback_group(
-            rclcpp::CallbackGroupType::MutuallyExclusive
-        );
-
-        auto sub1_opt = rclcpp::SubscriptionOptions();
-        sub1_opt.callback_group = Force_Callback;
 
         Force_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Piezoelectric_topic,
-            rclcpp::QoS(2),
+            10,
             std::bind(
                 &Force_Node::subscriber1_cb,
                 this,
                 std::placeholders::_1
-            ),
-            sub1_opt
+            )
         );
     }
 private:
@@ -98,7 +91,6 @@ private:
         Right_Calf_Interaction_Force[1] = msg->data[7];
     }
 
-    rclcpp::CallbackGroup::SharedPtr                                    Force_Callback;
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Force_Subscription;
 };
 
@@ -179,6 +171,10 @@ public:
         );
 
         start = true;
+        flag1 = true;
+        flag2 = true;
+        flag3 = true;
+        flag4 = true;
     }
 
 private:
@@ -308,7 +304,7 @@ public:
                             time};
             this->publisher_->publish(message);
         };
-        timer_ = this->create_wall_timer(2ms, timer_callback);
+        timer_ = this->create_wall_timer(1ms, timer_callback);
     }
 
 private:
@@ -339,11 +335,11 @@ int main(int argc, char * argv[])
     rclcpp::init(argc, argv);
 
     rclcpp::executors::MultiThreadedExecutor executor;
-    // auto piezoelectric_sensor = std::make_shared<Force_Node>();
+    auto piezoelectric_sensor = std::make_shared<Force_Node>();
     auto mpu6050_sensors = std::make_shared<IMU_Node>();
     auto pubnode = std::make_shared<PublisherNode>();
 
-    // executor.add_node(piezoelectric_sensor);
+    executor.add_node(piezoelectric_sensor);
     executor.add_node(mpu6050_sensors);
     executor.add_node(pubnode);
     executor.spin();

@@ -201,7 +201,8 @@ private:
         Force_Left  << 0.0, Left_Thigh_Force, Left_Calf_Force, 0.0;
         Force_Right << 0.0, Right_Thigh_Force, Right_Calf_Force, 0.0;
 
-
+        std::cout<<"Force_Left"<<Force_Left<<std::endl;
+        std::cout<<"Force_Right"<<Force_Right<<std::endl;
         //Angle Test
 
 
