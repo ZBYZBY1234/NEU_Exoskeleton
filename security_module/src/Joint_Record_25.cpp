@@ -14,7 +14,7 @@ using namespace std;
 #define Joint_Angle_Topic           "Joint_State_Send"
 #define Interaction_Force_Topic     "Interaction_Force"
 
-#define CSV_File_Path       "/home/hemingshan/exo_ws/src/security_module/csv_File/4.csv"
+#define CSV_File_Path       "/home/hemingshan/exo_ws/src/security_module/csv_File/7.csv"
 class Joint_Record :
     public rclcpp::Node
 {
@@ -33,6 +33,7 @@ public:
                 << "Human_Right_Thigh (Ang)" << "," << "Human_Right_Thigh (Vel)"<< "," <<"Human_Right_Thigh (Acc)"<< ","
                 << "Human_Right_Calf (Ang)" << "," << "Human_Right_Calf (Vel)"<< "," <<"Human_Right_Calf (Acc)"<< ","
 
+                << "Force_Left_Thigh" << "," << "Force_Left_Calf" << "," << "Force_Right_Thigh" << "," << "Force_Right_Calf" << ","
                 << "Angle_Driver_LT (Output)"<< "," << "Angle_Driver_LC (Output)"<< "," << "Angle_Driver_RT (Output)"<<","<<"Angle_Driver_RC (Output)"<< endl;
 
         /* Define Callback Groups*/
@@ -171,6 +172,7 @@ private:
                 << Sensor_Human[2] << "," << Sensor_Human[6] << "," << Sensor_Human[10] << ","
                 << Sensor_Human[3] << "," << Sensor_Human[7] << "," << Sensor_Human[11] << ","
 
+                << Force_Left[0] << "," << Force_Left[1] << "," << Force_Right[0] << "," << Force_Right[1] << ","
                 << Angle[0]<<","<<Angle[1]<<","<<Angle[2]<<","<<Angle[3]<<endl;
         // oFile   <<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","
         //         <<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","<<1<<","

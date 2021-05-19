@@ -128,19 +128,19 @@ private:
         float Human_Right_Thigh_Velocity        = Sensor_Data[6];
         float Human_Right_Calf_Velocity         = Sensor_Data[7];
         // Acceleration Data
-        // float Human_Left_Thigh_Acceleration     = Sensor_Data[8];
-        // float Human_Left_Calf_Acceleration      = Sensor_Data[9];
-        // float Human_Right_Thigh_Acceleration    = Sensor_Data[10];
-        // float Human_Right_Calf_Acceleration     = Sensor_Data[11];
+        float Human_Left_Thigh_Acceleration     = Sensor_Data[8];
+        float Human_Left_Calf_Acceleration      = Sensor_Data[9];
+        float Human_Right_Thigh_Acceleration    = Sensor_Data[10];
+        float Human_Right_Calf_Acceleration     = Sensor_Data[11];
         // Interaction Force
-        float Left_Thigh_Front_Force            = Sensor_Data[8];
-        float Left_Thigh_Back_Force             = Sensor_Data[9];
-        float Left_Calf_Front_Force             = Sensor_Data[10];
-        float Left_Calf_Back_Force              = Sensor_Data[11];
-        float Right_Thigh_Front_Force           = Sensor_Data[12];
-        float Right_Thigh_Back_Force            = Sensor_Data[13];
-        float Right_Calf_Front_Force            = Sensor_Data[14];
-        float Right_Calf_Back_Force             = Sensor_Data[15];
+        float Left_Thigh_Front_Force            = Sensor_Data[12];
+        float Left_Thigh_Back_Force             = Sensor_Data[13];
+        float Left_Calf_Front_Force             = Sensor_Data[14];
+        float Left_Calf_Back_Force              = Sensor_Data[15];
+        float Right_Thigh_Front_Force           = Sensor_Data[16];
+        float Right_Thigh_Back_Force            = Sensor_Data[17];
+        float Right_Calf_Front_Force            = Sensor_Data[18];
+        float Right_Calf_Back_Force             = Sensor_Data[19];
 
         /* Force/Torque Data */
         //TODO: Force
@@ -171,22 +171,22 @@ private:
         Human_Right_Calf_Velocity,
         0.0;
         // Acceleration Data
-        Expected_Acceleration_Left << 0.0,
-        0.0,
-        0.0,
-        0.0;
-        Expected_Acceleration_Right << 0.0,
-        0.0,
-        0.0,
-        0.0;
         // Expected_Acceleration_Left << 0.0,
-        // Human_Left_Thigh_Acceleration,
-        // Human_Left_Calf_Acceleration,
+        // 0.0,
+        // 0.0,
         // 0.0;
         // Expected_Acceleration_Right << 0.0,
-        // Human_Right_Thigh_Acceleration,
-        // Human_Right_Calf_Acceleration,
+        // 0.0,
+        // 0.0,
         // 0.0;
+        Expected_Acceleration_Left << 0.0,
+        Human_Left_Thigh_Acceleration,
+        Human_Left_Calf_Acceleration,
+        0.0;
+        Expected_Acceleration_Right << 0.0,
+        Human_Right_Thigh_Acceleration,
+        Human_Right_Calf_Acceleration,
+        0.0;
         // Interaction Force
         float K_T_F = 1.0;
         float K_T_B = 1.0;
@@ -198,8 +198,10 @@ private:
         float Left_Calf_Force  = Left_Calf_Back_Force*K_C_B  - Left_Calf_Front_Force*K_C_F;
         float Right_Thigh_Force = Right_Thigh_Back_Force*K_T_B - Right_Thigh_Front_Force*K_T_F;
         float Right_Calf_Force  = Right_Calf_Back_Force*K_C_B  - Right_Calf_Front_Force*K_C_F;
-        Force_Left  << 0.0, Left_Thigh_Force, Left_Calf_Force, 0.0;
-        Force_Right << 0.0, Right_Thigh_Force, Right_Calf_Force, 0.0;
+
+        float K = 0.0005;
+        Force_Left  << 0.0, Left_Thigh_Force*K, -Left_Calf_Force*K, 0.0;
+        Force_Right << 0.0, Right_Thigh_Force*K, Right_Calf_Force*K, 0.0;
 
         std::cout<<"Force_Left"<<Force_Left<<std::endl;
         std::cout<<"Force_Right"<<Force_Right<<std::endl;

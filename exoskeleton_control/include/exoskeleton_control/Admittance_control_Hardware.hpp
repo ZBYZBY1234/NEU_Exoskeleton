@@ -99,8 +99,8 @@ Admittance_control::Admittance_control()
     //系数设定
 
     m_M_JointSpace  <<  1.00,
-                        0.05,
-                        0.05,
+                        1.00,
+                        1.00,
                         1.00;
 
     m_D_JointSpace  <<  1.00,
@@ -182,14 +182,15 @@ Eigen::Matrix<float,4,1> Admittance_control::main(
     // T_ext(3,0) = 0.0;  // Ankle Joint
 
 
-    Eigen::Matrix<float,4,1> Exp_Acc;
+    Eigen::Matrix<float,4,1> Exp_;
     Eigen::Matrix<float,4,1> Angle;
-    Exp_Acc = Admittance_Control_Algorithm_JointSpace ();
+    Exp_ = Admittance_Control_Algorithm_JointSpace ();
     // std::cout<<"Angle: "<<Angle.transpose()<<std::endl;
     // std::cout<<"Feedback_Angle: "<<Feedback_Angle<<std::endl;
-    Exp_Acc = Feedback_Acceleration.transpose() - Exp_Acc;
-    float dt = 0.01;
-    Angle   = ((Exp_Acc*dt+Feedback_Velocity.transpose())*dt+Feedback_Angle.transpose());
+    Angle = Exp_ + Expected_Angle.transpose();
+    // Exp_Acc = Feedback_Acceleration.transpose() - Exp_Acc;
+    // float dt = 0.001;
+    // Angle   = ((-Exp_Acc*dt+Feedback_Velocity.transpose())*dt+Feedback_Angle.transpose());
     // std::cout<<"Angle: "<<Angle<<std::endl;
     return Angle;
 
@@ -232,19 +233,19 @@ Eigen::Matrix<float,4,1> Admittance_control::Admittance_Control_Algorithm_JointS
     // M*(Feedback_Velocity_/dt + Expected_Acceleration_).transpose() +
     // D*Expected_Velocity_JointSpace_.transpose();
 
-    // tmp = T_ext -
-    // D*(Feedback_Velocity - Expected_Velocity).transpose() -
-    // K*(Feedback_Acceleration - Expected_Acceleration).transpose();
-
     tmp = T_ext -
-    M*(Feedback_Angle - Expected_Angle).transpose() -
-    D*(Feedback_Velocity - Expected_Velocity).transpose();
+    D*(Feedback_Velocity - Expected_Velocity).transpose() -
+    K*(Feedback_Acceleration - Expected_Acceleration).transpose();
+
+    // tmp = T_ext -
+    // M*(Feedback_Angle - Expected_Angle).transpose() -
+    // D*(Feedback_Velocity - Expected_Velocity).transpose();
 
     Eigen::Matrix<float,4,1> dx;
 
     if (tmp.norm()>1e-10)
     {
-        dx = K.inverse()*tmp;
+        dx = M.inverse()*tmp;
     }
     else
     {

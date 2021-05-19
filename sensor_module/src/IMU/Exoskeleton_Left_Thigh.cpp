@@ -12,7 +12,7 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-#define     USB_DEVICE  "/dev/ttyUSB0"
+#define     USB_DEVICE  "/dev/ttyUSB5"
 #define     topic       "Exoskeleton_Left_Thigh"
 #define     offset      0
 using namespace std::chrono_literals;
@@ -47,7 +47,7 @@ private:
         // std::cout << mpu6050.Ang[0] << ","
         // << mpu6050.Vel[0] << ","
         // << mpu6050.Acc[0] << std::endl;
-        message.data = {mpu6050.Ang[0]+offset,mpu6050.Vel[0],mpu6050.Acc[0]};
+        message.data = {mpu6050.Ang[0],mpu6050.Vel[0],mpu6050.Acc[0]};
         publisher_->publish(message);
     }
     rclcpp::TimerBase::SharedPtr timer_;

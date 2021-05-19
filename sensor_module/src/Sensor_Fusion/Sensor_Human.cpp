@@ -73,25 +73,44 @@ public:
                 std::placeholders::_1
             )
         );
+
+        flag = true;
     }
 private:
 
     void subscriber1_cb(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
-        Left_Thigh_Interaction_Force[0] = msg->data[0];
-        Left_Thigh_Interaction_Force[1] = msg->data[1];
+        if(flag)
+        {
+            offset1 = msg->data[0];
+            offset2 = msg->data[1];
+            offset3 = msg->data[2];
+            offset4 = msg->data[3];
 
-        Left_Calf_Interaction_Force[0]  = msg->data[2];
-        Left_Calf_Interaction_Force[1]  = msg->data[3];
+            offset5 = msg->data[4];
+            offset6 = msg->data[5];
+            offset7 = msg->data[6];
+            offset8 = msg->data[7];
 
-        Right_Thigh_Interaction_Force[0] = msg->data[4];
-        Right_Thigh_Interaction_Force[1] = msg->data[5];
+            flag = false;
+        }
+        Left_Thigh_Interaction_Force[0] = msg->data[0]-offset1;
+        Left_Thigh_Interaction_Force[1] = msg->data[1]-offset2;
 
-        Right_Calf_Interaction_Force[0] = msg->data[6];
-        Right_Calf_Interaction_Force[1] = msg->data[7];
+        Left_Calf_Interaction_Force[0]  = msg->data[2]-offset3;
+        Left_Calf_Interaction_Force[1]  = msg->data[3]-offset4;
+
+        Right_Thigh_Interaction_Force[0] = msg->data[4]-offset5;
+        Right_Thigh_Interaction_Force[1] = msg->data[5]-offset6;
+
+        Right_Calf_Interaction_Force[0] = msg->data[6]-offset7;
+        Right_Calf_Interaction_Force[1] = msg->data[7]-offset8;
     }
 
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr   Force_Subscription;
+    bool flag;
+    float offset1,offset2,offset3,offset4;
+    float offset5,offset6,offset7,offset8;
 };
 
 /*
@@ -286,10 +305,10 @@ public:
                             Right_Calf_Human[1],
 
                             // /* Acceleration */
-                            // Left_Thigh_Human[2],
-                            // Left_Calf_Human[2],
-                            // Right_Thigh_Human[2],
-                            // Right_Calf_Human[2],
+                            Left_Thigh_Human[2],
+                            Left_Calf_Human[2],
+                            Right_Thigh_Human[2],
+                            Right_Calf_Human[2],
 
                             /* Interaction Force*/
                             Left_Thigh_Interaction_Force[0],
