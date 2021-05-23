@@ -1,17 +1,19 @@
 /* * @Author: Beal.MS
    * @Date: 2021-04-21 10:55:36
  * @Last Modified by: Beal.MS
- * @Last Modified time: 2021-04-26 22:19:52
+ * @Last Modified time: 2021-05-23 23:08:51
    * @Description: This is for Hardware to control exoskeleton
 */
 
 #include <iostream>
-#include "exoskeleton_control/Admittance_control_Hardware.hpp"
 #include <unistd.h>
 #include <math.h>
 #include <memory>
 #include <chrono>
 #include <functional>
+
+#include "exoskeleton_control/Admittance_control_Hardware.hpp"
+#include "exoskeleton_control/Force_Data_Filter.hpp"
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
@@ -51,13 +53,9 @@ public:
         Interaction_force_callback_group_subscriber = this->create_callback_group(
             rclcpp::CallbackGroupType::MutuallyExclusive
         );
+        /* Human Sensor Data Subscribed */
         auto Human_sub_opt = rclcpp::SubscriptionOptions();
         Human_sub_opt.callback_group = Human_callback_group_subscriber;
-        auto Exoskeleton_sub_opt = rclcpp::SubscriptionOptions();
-        Exoskeleton_sub_opt.callback_group = Exoskeleton_callback_group_subscriber;
-        auto Interaction_sub_opt = rclcpp::SubscriptionOptions();
-        Interaction_sub_opt.callback_group = Interaction_force_callback_group_subscriber;
-
         Human_Joint_State_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Human_Sensor_Subscription_Topic,
             rclcpp::QoS(2),
@@ -68,6 +66,9 @@ public:
             ),
             Human_sub_opt
         );
+        /* Exoskeleton Sensor Data Subscribed */
+        auto Exoskeleton_sub_opt = rclcpp::SubscriptionOptions();
+        Exoskeleton_sub_opt.callback_group = Exoskeleton_callback_group_subscriber;
         Exoskeleton_Joint_State_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Exoskeleton_Sensor_Subscription_Topic,
             rclcpp::QoS(2),
@@ -78,6 +79,10 @@ public:
             ),
             Exoskeleton_sub_opt
         );
+        /* Interaction Force Subscribed */
+        auto Interaction_sub_opt = rclcpp::SubscriptionOptions();
+        Interaction_sub_opt.callback_group = Interaction_force_callback_group_subscriber;
+
         Interaction_Force_Subscription = this->create_subscription<std_msgs::msg::Float64MultiArray>(
             Interaction_Force_Subscription_Topic,
             rclcpp::QoS(2),
@@ -88,9 +93,12 @@ public:
             ),
             Interaction_sub_opt
         );
+
         /* Publish Node Initialized */
         Joint_State_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_State_Publisher_Topic, 1);
         Joint_Error_Publisher = this->create_publisher<std_msgs::msg::Float64MultiArray>(Joint_Error_Publisher_Topic, 1);
+
+
 
         /* Data Preinitialized */
         Expected_Angle_Left << 0.0,0.0,0.0,0.0;
@@ -187,24 +195,19 @@ private:
         Human_Right_Thigh_Acceleration,
         Human_Right_Calf_Acceleration,
         0.0;
+
         // Interaction Force
-        float K_T_F = 1.0;
-        float K_T_B = 1.0;
-
-        float K_C_F = 1.0;
-        float K_C_B = 1.0;
-
-        float Left_Thigh_Force = Left_Thigh_Back_Force*K_T_B - Left_Thigh_Front_Force*K_T_F;
-        float Left_Calf_Force  = Left_Calf_Back_Force*K_C_B  - Left_Calf_Front_Force*K_C_F;
-        float Right_Thigh_Force = Right_Thigh_Back_Force*K_T_B - Right_Thigh_Front_Force*K_T_F;
-        float Right_Calf_Force  = Right_Calf_Back_Force*K_C_B  - Right_Calf_Front_Force*K_C_F;
+        float Left_Thigh_Force  = Left_Thigh_Back_Force  - Left_Thigh_Front_Force;
+        float Left_Calf_Force   = Left_Calf_Back_Force   - Left_Calf_Front_Force;
+        float Right_Thigh_Force = Right_Thigh_Back_Force - Right_Thigh_Front_Force;
+        float Right_Calf_Force  = Right_Calf_Back_Force  - Right_Calf_Front_Force;
 
         float K = 0.0005;
-        Force_Left  << 0.0, Left_Thigh_Force*K, -Left_Calf_Force*K, 0.0;
+        Force_Left  << 0.0, Left_Thigh_Force*K ,  Left_Calf_Force*K, 0.0;
         Force_Right << 0.0, Right_Thigh_Force*K, Right_Calf_Force*K, 0.0;
 
-        std::cout<<"Force_Left"<<Force_Left<<std::endl;
-        std::cout<<"Force_Right"<<Force_Right<<std::endl;
+        Force_Left  = Force_Filter(Force_Left);
+        Force_Right = Force_Filter(Force_Right);
         //Angle Test
 
 
@@ -217,6 +220,7 @@ private:
             Expected_Acceleration_Left,
             Force_Left
             );
+
         Right_Angle = main(
             Feedback_Angle_Right,
             Feedback_Velocity_Left,

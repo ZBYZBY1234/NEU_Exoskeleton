@@ -1,7 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 
-csvFile = open('security_module/csv_File/2.csv','r')
+csvFile = open('security_module/csv_File/4.csv','r')
 reader  = csv.reader(csvFile)
 
 i = 0
@@ -24,6 +24,8 @@ plt.plot(x,L_T_A_Expect,label="Left_Thigh_Angle_Expect")
 plt.plot(x,R_T_A_Expect,label="Right_Thigh_Angle_Expect")
 plt.plot(x,L_T_A_Feedbk,label="Left_Thigh_Angle_Feedback")
 plt.plot(x,R_T_A_Feedbk,label="Right_Thigh_Angle_Feedback")
-
+plt.title("Motor Following Experiment")
+plt.xlabel("Time/s")
+plt.ylabel("Angle/rad")
 plt.legend()
 plt.show()

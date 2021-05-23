@@ -1,3 +1,9 @@
+/* * @Author: Beal.MS
+   * @Date: 2021-05-23 22:25:11
+   * @Last Modified by:   Beal.MS
+   * @Last Modified time: 2021-05-23 22:25:11
+   * @Description: 
+*/
 #include "sensor_module/Piezoelectric.hpp"
 #include <chrono>
 #include <functional>

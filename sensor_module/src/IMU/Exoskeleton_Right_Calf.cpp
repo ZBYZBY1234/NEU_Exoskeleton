@@ -1,3 +1,9 @@
+/* * @Author: Beal.MS
+   * @Date: 2021-05-23 22:24:46
+   * @Last Modified by:   Beal.MS
+   * @Last Modified time: 2021-05-23 22:24:46
+   * @Description: 
+*/
 #include "sensor_module/MPU6050.hpp"
 #include <chrono>
 #include <functional>

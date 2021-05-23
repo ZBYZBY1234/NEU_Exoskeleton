@@ -1,3 +1,9 @@
+/* * @Author: Beal.MS
+   * @Date: 2021-05-23 22:24:56
+   * @Last Modified by:   Beal.MS
+   * @Last Modified time: 2021-05-23 22:24:56
+   * @Description: 
+*/
 #include "sensor_module/MPU6050.hpp"
 #include <chrono>
 #include <functional>
@@ -12,7 +18,7 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-#define     USB_DEVICE  "/dev/ttyUSB2"
+#define     USB_DEVICE  "/dev/ttyUSB1"
 #define     topic       "Human_Left_Calf"
 
 using namespace std::chrono_literals;

@@ -219,7 +219,8 @@ private:
             offset1 = msg->data[0];
             flag1 = false;
         }
-        Left_Thigh_Human[0] = msg->data[0] - offset1;
+        // Left_Thigh_Human[0] = msg->data[0] - offset1;
+        Left_Thigh_Human[0] = msg->data[0];
         Left_Thigh_Human[1] = msg->data[1];
         Left_Thigh_Human[2] = msg->data[2];
     }
@@ -231,7 +232,8 @@ private:
             offset2 = msg->data[0];
             flag2 = false;
         }
-        Left_Calf_Human[0] = msg->data[0]-offset2;
+        // Left_Calf_Human[0] = msg->data[0]-offset2;
+        Left_Calf_Human[0] = msg->data[0];
         Left_Calf_Human[1] = msg->data[1];
         Left_Calf_Human[2] = msg->data[2];
     }
@@ -243,7 +245,8 @@ private:
             offset3 = msg->data[0];
             flag3 = false;
         }
-        Right_Thigh_Human[0] = msg->data[0]-offset3;
+        // Right_Thigh_Human[0] = msg->data[0];
+        Right_Thigh_Human[0] = msg->data[0];
         Right_Thigh_Human[1] = msg->data[1];
         Right_Thigh_Human[2] = msg->data[2];
     }
@@ -255,7 +258,8 @@ private:
             offset4 = msg->data[0];
             flag4 = false;
         }
-        Right_Calf_Human[0] = msg->data[0]-offset4;
+        // Right_Calf_Human[0] = msg->data[0]-offset4;
+        Right_Calf_Human[0] = msg->data[0];
         Right_Calf_Human[1] = msg->data[1];
         Right_Calf_Human[2] = msg->data[2];
     }

@@ -52,7 +52,13 @@ def LSTM_NN(train_x,train_y, N):
     # 迭代训练
     loss_1 = []
     loss_2 = []
-    loss = [loss_1,loss_2]
+    loss_3 = []
+    loss_4 = []
+    loss_5 = []
+    loss_6 = []
+
+    loss = [loss_1,loss_2,loss_3,loss_4,loss_5,loss_6]
+
     for i in range(M):
         print("iter", "%2s" % str(i), end=": \n")
 
@@ -76,31 +82,67 @@ def LSTM_NN(train_x,train_y, N):
 
 def test():
     np.random.seed(0)
-    y_list = [[1,0],[0,1]]
+    y_list = [
+                [0.1,0.9,0.8,0.2,0.3,0.4],
+                [0.2,0.5,0.2,0.4,0.5,0.6],
+                [0.3,0.6,0.4,0.3,0.2,0.2],
+                [0.4,0.4,0.6,0.8,0.4,0.1],
+                [0.5,0.2,0.5,0.6,0.5,0.3],
+                [0.6,0.3,0.9,0.5,0.2,0.4]
+            ]
     x_dim = 8
     input_val_arr = [np.random.random(x_dim) for _ in range(len(y_list))]
 
-    loss = LSTM_NN(input_val_arr,y_list, 2)
+    loss = LSTM_NN(input_val_arr,y_list, 6)
     print(loss)
     x = []
     for i in range(M):
         x.append(i)
+
     # 创建图像布局对象fig
     fig = plt.figure(figsize = (12, 6))
     # 原图
-    plot1 = fig.add_subplot(121)
+    plot1 = fig.add_subplot(231)
     plot1.plot(x,loss[0],label="loss")
     plot1.legend()
     plot1.set_title('LSTM 1 Loss')
     plot1.set_xlabel('Iteration/time')
     plot1.set_ylabel('Loss')
 
-    plot2 = fig.add_subplot(122)
+    plot2 = fig.add_subplot(232)
     plot2.plot(x,loss[1],label="loss")
     plot2.legend()
     plot2.set_title('LSTM 2 Loss')
     plot2.set_xlabel('Iteration/time')
     plot2.set_ylabel('Loss')
+
+    plot3 = fig.add_subplot(233)
+    plot3.plot(x,loss[2],label="loss")
+    plot3.legend()
+    plot3.set_title('LSTM 3 Loss')
+    plot3.set_xlabel('Iteration/time')
+    plot3.set_ylabel('Loss')
+
+    plot4 = fig.add_subplot(234)
+    plot4.plot(x,loss[3],label="loss")
+    plot4.legend()
+    plot4.set_title('LSTM 3 Loss')
+    plot4.set_xlabel('Iteration/time')
+    plot4.set_ylabel('Loss')
+
+    plot5 = fig.add_subplot(235)
+    plot5.plot(x,loss[3],label="loss")
+    plot5.legend()
+    plot5.set_title('LSTM 3 Loss')
+    plot5.set_xlabel('Iteration/time')
+    plot5.set_ylabel('Loss')
+
+    plot6 = fig.add_subplot(236)
+    plot6.plot(x,loss[3],label="loss")
+    plot6.legend()
+    plot6.set_title('LSTM 3 Loss')
+    plot6.set_xlabel('Iteration/time')
+    plot6.set_ylabel('Loss')
 
     plt.legend()
     plt.show()

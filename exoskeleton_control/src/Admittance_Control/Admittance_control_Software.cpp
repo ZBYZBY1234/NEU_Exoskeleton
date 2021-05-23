@@ -24,17 +24,19 @@ using namespace std::chrono_literals;
 
 Eigen::Matrix<float,1,4> Feedback_Angle_;
 Eigen::Matrix<float,1,4> Expected_Angle_;
+Eigen::Matrix<float,1,4> Expected_Left_Ang;
+Eigen::Matrix<float,1,4> Expected_Right_Ang;
 Eigen::Matrix<float,1,4> Expected_Velocity_;
 Eigen::Matrix<float,1,4> Expected_Acceleration_;
 
 bool flag_;
 
 #define Joint_Subscription_Topic                "joint_states"
-#define Sensor_Subscription_Topic               "Sensor"
+#define Sensor_Subscription_Topic               "Sensor_Human"
 #define Interaction_Force_Subscription_Topic    "Interaction_Force"
 
 #define Joint_Thigh_Offset          -0.7046042369967704
-#define JOint_Calf_Offset           -0.7046042369967704+0.4744191163880517
+#define Joint_Calf_Offset           -0.7046042369967704+0.4744191163880517
 
 class Admittance_Control_Subscription :
     public rclcpp::Node,
@@ -78,28 +80,32 @@ private:
 
         Feedback_Angle_ << -position[0], -position[1], -position[2], -position[3];
         // Expected_Angle_(0,1) = ((Angle_Thigh)/180)*PI-Joint_Thigh_Offset;
-        // Expected_Angle_(0,2) = ((Angle_Calf - Angle_Thigh )/180)*PI-JOint_Calf_Offset;
+        // Expected_Angle_(0,2) = ((Angle_Calf - Angle_Thigh )/180)*PI-Joint_Calf_Offset;
+        Expected_Left_Ang(0,1) = ((Left_Thigh_Angle)/180)*PI+Joint_Thigh_Offset;
+        Expected_Left_Ang(0,2) = ((Left_Calf_Angle - Left_Thigh_Angle )/180)*PI+Joint_Calf_Offset-1.1;
 
-        // Force_ << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
+        Expected_Right_Ang(0,1) = ((Right_Thigh_Angle)/180)*PI+Joint_Thigh_Offset+Joint_Thigh_Offset+0.2;
+        Expected_Right_Ang(0,2) = ((Right_Calf_Angle - Right_Thigh_Angle )/180)*PI+Joint_Calf_Offset-0.2;
+        Force_ << 0.0, 0.0, 0.0, 0.0;
 
-        Left_Angle = main(
-            Feedback_Angle_,
-            Expected_Angle_,
-            Expected_Velocity_,
-            Expected_Acceleration_,
-            Force_
-            );
-        Right_Angle = main(
-            Feedback_Angle_,
-            Expected_Angle_,
-            Expected_Velocity_,
-            Expected_Acceleration_,
-            Force_
-            );
+        // Left_Angle = main(
+        //     Feedback_Angle_,
+        //     Expected_Left_Ang,
+        //     Expected_Velocity_,
+        //     Expected_Acceleration_,
+        //     Force_
+        //     );
+        // Right_Angle = main(
+        //     Feedback_Angle_,
+        //     Expected_Right_Ang,
+        //     Expected_Velocity_,
+        //     Expected_Acceleration_,
+        //     Force_
+        //     );
 
         auto message = std_msgs::msg::Float64MultiArray();
-        message.data = {  -Left_Angle(0,0),  -Left_Angle(1,0),  -Left_Angle(2,0),  -Left_Angle(3,0),
-                        -Right_Angle(0,0), -Right_Angle(1,0), -Right_Angle(2,0), -Right_Angle(3,0) };
+        message.data = {  -Expected_Left_Ang(0,0),  Expected_Left_Ang(0,1),  Expected_Left_Ang(0,2),  -Expected_Left_Ang(0,3),
+                        -Expected_Right_Ang(0,0), Expected_Right_Ang(0,1), Expected_Right_Ang(0,2), -Expected_Right_Ang(0,3) };
 
         Joint_Publisher->publish(message);
 
@@ -113,15 +119,13 @@ private:
     void Sensor_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
     {
         auto Sensor_Data = msg->data;
-        RCLCPP_INFO(this->get_logger(), "Piezoelectric: '%f','%f','%f'",
-        Sensor_Data[0], Sensor_Data[1], Sensor_Data[2],
-        "Angle_Thigh: '%f','%f','%f'",
-        Sensor_Data[3], Sensor_Data[4], Sensor_Data[5],
-        "Angle_Calf: '%f','%f','%f'",
-        Sensor_Data[6], Sensor_Data[7], Sensor_Data[8]
-        );
-        Angle_Thigh = Sensor_Data[3];
-        Angle_Calf  = Sensor_Data[6];
+        // Angle_Thigh = Sensor_Data[3];
+        // Angle_Calf  = Sensor_Data[6];
+
+        Left_Thigh_Angle = Sensor_Data[0];
+        Left_Calf_Angle  = Sensor_Data[1];
+        Right_Thigh_Angle = Sensor_Data[2];
+        Right_Calf_Angle = Sensor_Data[3];
     }
 
     void Interaction_Force_Callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg)
@@ -147,12 +151,21 @@ private:
 
     float Angle_Thigh;
     float Angle_Calf;
+
+    float Left_Thigh_Angle;
+    float Left_Calf_Angle;
+    float Right_Thigh_Angle;
+    float Right_Calf_Angle;
 };
 
 int main(int argc, char * argv[])
 {
 
     Expected_Angle_ << 0.0,0.0,0.0,0.0;
+
+    Expected_Left_Ang << 0.0,0.0,0.0,0.0;
+    Expected_Right_Ang << 0.0,0.0,0.0,0.0;
+
     Expected_Velocity_ << 0.0,0.0,0.0,0.0;
     Expected_Acceleration_ << 0.0,0.0,0.0,0.0;
 
