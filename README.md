@@ -15,11 +15,11 @@
 ## Run Environment
 
 * Operating System: Ubuntu 20.04     <code><img height="40" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/ubuntu/ubuntu.png" alt="ubuntu"></code>
-* Robot Operate System: Foxy             <code><img height=40 src="Image/ros.jpeg" alt="ros"></code>
+* Robot Operate System Version: Foxy             <code><img height=40 src="Image/ros.jpeg" alt="ros"></code>
 
 ## Consist Packages of Project
 
-### exoskeleton_description
+* **exoskeleton_description**
 
 This package is mainly about the `rviz2` for showing the state of the exoskeleton robot and visualization. The command is mainly like following and run it under the root folder in the package.
 
@@ -28,38 +28,39 @@ $ ros2 launch exoskeleton_description view_robot_launch.py
 ```
 
 And this will run the `rviz2` and visual the robot under it.
-### exoskeleton_control
+* **exoskeleton_control**
 
 This package is mainly about the **Control Algorithm** which could be used in exoskeleton robot. I have mainly designed the Admittance and Impedance control. There are have two mode for this Project: Software simulation and Hardware simulation.
 
-### sensor_module
+* **sensor_module**
 
 This package is mainly about the Sensor to get the data of the Control Algorithm Inputs.
 
 * IMU (Inertial Measurement Unit)
 * Piezoelectric Module
 
-### joint_state_publisher
+* **joint_state_publisher**
 
 This package is developed by official and can be used to control the joint by position mode.
 
-### security_module
+* **security_module**
 
 This package is mainly for programming the security module for this exoskeleton. And there are some tips for record data as csv file to do some treatment.
 
-### gait_recognition
+* **gait_recognition**
 
 This package is mainly for recognize the gait by real-time. So It's mainly for the data filter and Neural Network which is used to make some recognition.
 
-## Run
+## How to Run?
 
-### Hard Ware Mode
+* **Hard Ware Mode**
 
 This mode will need the IMU and Piezoelectric Sensors for get the human body state. So at first, I need to run the launch file for running the sensors.
 
 ```bash
-$ ros2 launch sensor_module exoskeleton_sensor_launch.py
-$ ros2 launch sensor_module human_sensor_launch.py
+$ ros2 launch sensor_module exoskeleton_sensor_launch.py   # running for the Exoskeleton Sensor to get the data
+$ ros2 launch sensor_module human_sensor_launch.py         # running for the Human Sensor to get the data
+$ ros2 launch sensor_module gait_sensor_launch.py		   # running for the Gait Sensor to get the data
 ```
 
 The first command is mainly for running the IMU Sensor which is at the link of the exoskeleton, the second command is mainly for running the IMU and Piezoelectric Sensors which is at the link of the human body.
@@ -67,19 +68,19 @@ The first command is mainly for running the IMU Sensor which is at the link of t
 Next, it need to run the Motor Driver to drive the motor to turn. The command is
 
 ```bash
-$ ros2 run exoskeleton_control Angle_Driver
+$ ros2 run exoskeleton_control Angle_Driver                # running for the Angle Driver to send the Joint Angle Data
 ```
 
 Lastly, the control algorithm is used Admittance Control and I have programmed it, can run it as
 
 ```bash
-$ ros2 run exoskeleton_control Admittance_control_Hardware
+$ ros2 run exoskeleton_control Admittance_control_Hardware # running for the Admittance Control Hardware for Control Algorithm
 ```
 
 For Data Visualization, the command can record the data which you needed.
 
 ```bash
-$ ros2 run security_module Joint_Record
+$ ros2 run security_module Joint_Record                    # running for the security module for recording the joint angle
 ```
 
 And there are some codes for visualizing the data of Sensor and Angle Driver
