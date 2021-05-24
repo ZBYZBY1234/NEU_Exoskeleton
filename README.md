@@ -1,14 +1,12 @@
 # NEU Exoskeleton (Northeastern University Exoskeleton)
 
-<img src="Image/Badge.jpeg" style="zoom:25%;" />
+<img src="/home/hemingshan/exo_ws/src/Image/Badge1.png" style="zoom: 67%;" />
 
-<img src="Image/7a01a4c3d211c52d62569bd966712d81.jpeg" style="zoom:25%;" /><img src="Image/src=http___www.logoids.com_upload_image_201711_15106296517805174.jpg&refer=http___www.logoids.jpeg" style="zoom:23%;" />
+  Developed by Human and Robot Collaboration Laboratory, Faculty of Robot Science and Engineering.
 
-Developed by Human and Robot Collaboration Laboratory, Faculty of Robot Science and Engineering.
+------
 
-
-
-This package is built by `ROS2` foxy version, which aim to have the real-time control version.
+  This package is built by `ROS2` foxy version, which aim to have the real-time control version.
 
 |                     Version: NEUX 1.0.0                      |                      Build: Environment                      |                        Size: Packages                        |                   Language: Python && C++                    |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
