@@ -1,8 +1,6 @@
 # NEU Exoskeleton (Northeastern University Exoskeleton)
 
-<img src="/home/hemingshan/Downloads/IMG_0943.JPG" style="zoom: 25%;" />
-
-## <img src="/home/hemingshan/Downloads/src=http___i1.hdslb.com_bfs_face_2da2a5052d47842ef31df69c8a6a451b538062ef.jpg&refer=http___i1.hdslb.jpeg" style="zoom:12%;" />
+<img src="/home/hemingshan/exo_ws/src/Image/IMG_0943.JPG" style="zoom:25%;" />
 
 Developed by Human and Robot Collaboration Laboratory, Faculty of Robot Science and Engineering.
 
