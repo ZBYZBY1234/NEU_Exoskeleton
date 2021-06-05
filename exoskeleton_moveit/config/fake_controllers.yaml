@@ -1,0 +1,13 @@
+controller_list:
+  - name: fake_right_lower_limb_controller
+    joints:
+      - Right_Hip_Joint
+      - Right_Thigh_Joint
+      - Right_Calf_Joint
+      - Right_Ankle_Joint
+  - name: fake_left_lower_limb_controller
+    joints:
+      - Left_Hip_Joint
+      - Left_Thigh_Joint
+      - Left_Calf_Joint
+      - Left_Ankle_Joint

@@ -1,0 +1,20 @@
+controller_list:
+  - name: "left_limb_controller"
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - Left_Hip_Joint
+      - Left_Thight_Joint
+      - Left_Calf_Joint
+      - Left_Ankle_Joint
+
+  - name: "right_limb_controller"
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - Right_Hip_Joint
+      - Right_Thigh_Joint
+      - Right_Calf_Joint
+      - Right_Ankle_Joint

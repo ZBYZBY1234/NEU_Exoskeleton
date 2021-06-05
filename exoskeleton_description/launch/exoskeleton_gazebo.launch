@@ -1,0 +1,46 @@
+<launch>
+  <arg name="paused" default="true" />
+  <arg name="gui" default="true" />
+  <arg name="sim" default="true" />
+  <arg name="debug" default="false" />
+  <arg name="urdf_path" default="$(find exoskeleton_description)/urdf/lower_limb.urdf" />
+
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="/home/hms/catkin_ws/src/Exoskeleton/exoskeleton_description/worlds/empty.world" />
+    <arg name="paused" value="$(arg paused)" />
+    <arg name="gui" value="$(arg gui)" />
+  </include>
+
+  <!-- send robot urdf to param server -->
+  <param name="robot_description" textfile="$(arg urdf_path)" />
+  <!-- <rosparam file="$(find exoskeleton_control)/config/exoskeleton_control.yaml" command="load" /> -->
+
+  <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -x 0 -y 0 -z 2.0
+          -J Left_Hip_Joint      0.0
+          -J Left_Thigh_Joint    0.35
+          -J Left_Calf_Joint     0.2
+          -J Left_Ankle_Joint   -0.55
+          -J Right_Hip_Joint     0.0
+          -J Right_Thigh_Joint   0.35
+          -J Right_Calf_Joint    0.2
+          -J Right_Ankle_Joint  -0.55" respawn="false" output="screen" />
+
+  <!-- Launch moveit -->
+  <!-- <include file="$(find exoskeleton_moveit)/launch/move_group.launch">
+    <arg name="debug" default="$(arg debug)" />
+  </include>-->  
+
+  <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+      output="screen" ns="/lower_limb" args="joint_state_controller
+      Left_Hip_Joint_position_controller Left_Thigh_Joint_position_controller Left_Calf_Joint_position_controller Left_Ankle_Joint_position_controller
+      Right_Hip_Joint_position_controller Right_Thigh_Joint_position_controller Right_Calf_Joint_position_controller Right_Ankle_Joint_position_controller"/> -->
+
+  <!-- <include file="$(find exoskeleton_description)/launch/display_rviz.launch"/> -->
+  <!-- <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="100.0" />
+    <remap from="/joint_states" to="/lower_limb/joint_states" />
+  </node>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> -->
+</launch>

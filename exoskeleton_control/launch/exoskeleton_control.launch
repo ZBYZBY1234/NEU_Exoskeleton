@@ -1,0 +1,26 @@
+<!--/*
+ * @Author: MingshanHe
+ * @Email: hemingshan_1999@163.com
+ * @Date: 2021-01-13 06:24:08
+ * @Last Modified by:   MingshanHe
+ * @Last Modified time: 2021-01-13 06:24:08
+ * @Description: Running the ros_control package for the robot which
+ * is simulation in Gazebo
+ */-->
+<launch>
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find exoskeleton_control)/config/exoskeleton_control.yaml" command="load"/>
+  
+    <!-- load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+      output="screen" ns="/lower_limb" args="joint_state_controller
+      Left_Hip_Joint_position_controller Left_Thigh_Joint_position_controller Left_Calf_Joint_position_controller Left_Ankle_Joint_position_controller
+      Right_Hip_Joint_position_controller Right_Thigh_Joint_position_controller Right_Calf_Joint_position_controller Right_Ankle_Joint_position_controller"/>
+    <!-- convert joint states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+      respawn="false" output="screen">
+      <remap from="/joint_states" to="/lower_limb/joint_states" />
+    </node>
+  
+  </launch>

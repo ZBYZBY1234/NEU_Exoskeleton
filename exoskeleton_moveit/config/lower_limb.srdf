@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="lower_limb">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="right_lower_limb">
+        <link name="Right_Hip_Link" />
+        <link name="Right_Thigh_Link" />
+        <link name="Right_Calf_Link" />
+        <link name="Right_Ankle_Link" />
+        <joint name="Right_Hip_Joint" />
+        <joint name="Right_Thigh_Joint" />
+        <joint name="Right_Calf_Joint" />
+        <joint name="Right_Ankle_Joint" />
+        <chain base_link="Back_Base_Link" tip_link="Right_Ankle_Link" />
+    </group>
+    <group name="left_lower_limb">
+        <link name="Left_Hip_Link" />
+        <link name="Left_Thigh_Link" />
+        <link name="Left_Calf_Link" />
+        <link name="Left_Ankle_Link" />
+        <joint name="Left_Hip_Joint" />
+        <joint name="Left_Thigh_Joint" />
+        <joint name="Left_Calf_Joint" />
+        <joint name="Left_Ankle_Joint" />
+        <chain base_link="Back_Base_Link" tip_link="Left_Ankle_Link" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="stand" group="right_lower_limb">
+        <joint name="Right_Ankle_Joint" value="0.5" />
+        <joint name="Right_Calf_Joint" value="-1.2" />
+        <joint name="Right_Hip_Joint" value="0" />
+        <joint name="Right_Thigh_Joint" value="0.7" />
+    </group_state>
+    <group_state name="stand" group="left_lower_limb">
+        <joint name="Left_Ankle_Joint" value="0.5" />
+        <joint name="Left_Calf_Joint" value="-1.2" />
+        <joint name="Left_Hip_Joint" value="0" />
+        <joint name="Left_Thigh_Joint" value="0.7" />
+    </group_state>
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="Back_Base_Link" link2="Left_Hip_Link" reason="Adjacent" />
+    <disable_collisions link1="Back_Base_Link" link2="Right_Hip_Link" reason="Adjacent" />
+    <disable_collisions link1="Left_Ankle_Link" link2="Left_Calf_Link" reason="Adjacent" />
+    <disable_collisions link1="Left_Calf_Link" link2="Left_Thigh_Link" reason="Adjacent" />
+    <disable_collisions link1="Left_Hip_Link" link2="Left_Thigh_Link" reason="Adjacent" />
+    <disable_collisions link1="Left_Hip_Link" link2="Right_Hip_Link" reason="Never" />
+    <disable_collisions link1="Right_Ankle_Link" link2="Right_Calf_Link" reason="Adjacent" />
+    <disable_collisions link1="Right_Calf_Link" link2="Right_Thigh_Link" reason="Adjacent" />
+    <disable_collisions link1="Right_Hip_Link" link2="Right_Thigh_Link" reason="Adjacent" />
+</robot>

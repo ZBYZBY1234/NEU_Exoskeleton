@@ -1,0 +1,12 @@
+
+controllers:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - Left_Hip_Joint
+    - Left_Thight_Joint
+    - Left_Calf_Joint
+    - Left_Ankle_Joint
+    - Right_Hip_Joint
+    - Right_Thigh_Joint
+    - Right_Calf_Joint
+    - Right_Ankle_Joint

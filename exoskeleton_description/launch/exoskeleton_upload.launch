@@ -1,0 +1,3 @@
+<launch>
+    <param name="robot_description" textfile="$(find exoskeleton_description)/urdf/lower_limb.urdf" />
+</launch>

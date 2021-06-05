@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: exoskeleton_description
+    relative_path: urdf/lower_limb.urdf
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/lower_limb.srdf
+  CONFIG:
+    author_name: hemingshan
+    author_email: hemingshan_1999@163.com
+    generated_timestamp: 1610546433

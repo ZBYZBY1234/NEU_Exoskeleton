@@ -1,0 +1,14 @@
+<launch>
+  <include file="$(find exoskeleton_description)/launch/exoskeleton_upload.launch"/>
+
+  <arg name="model" />
+  <arg name="gui" default="False" />
+  <param name="use_gui" value="$(arg gui)" />
+
+  <node name="rviz" pkg="rviz" type="rviz"
+    args="-d $(find exoskeleton_description)/rviz/default.rviz" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+    <param name="use_gui" value="true"/>
+  </node>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+</launch>
