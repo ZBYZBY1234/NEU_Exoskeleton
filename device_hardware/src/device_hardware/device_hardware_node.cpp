@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 
     ros::NodeHandle node_root;
 
-    std::string controllers_namespace, state_controller, trajectory_controller;
+    std::string controllers_namespace, state_controller, position_controller;
     double control_frequency;
 
 
@@ -25,9 +25,9 @@ int main(int argc, char **argv)
         ROS_ERROR_STREAM("ros con't find paramber \"controllers_namespace\"");
         return 0;
     }
-    if(!node_root.getParam("trajectory_controller", trajectory_controller))
+    if(!node_root.getParam("position_controller", position_controller))
     {
-        ROS_ERROR_STREAM("ros con't find paramber \"trajectory_controller\"");
+        ROS_ERROR_STREAM("ros con't find paramber \"position_controller\"");
         return 0;
     }
     if(!node_root.getParam("state_controller", state_controller))
@@ -48,9 +48,9 @@ int main(int argc, char **argv)
     controller_manager::ControllerManager cm(&robot_hw, node_root);
 
     //load controller
-    if (!cm.loadController(controllers_namespace+"/"+trajectory_controller))
+    if (!cm.loadController(controllers_namespace+"/"+position_controller))
     {
-        ROS_ERROR_STREAM(trajectory_controller<<" controller load failure!");
+        ROS_ERROR_STREAM(position_controller<<" controller load failure!");
         return 0;
     }
     if (!cm.loadController(controllers_namespace+"/"+state_controller))

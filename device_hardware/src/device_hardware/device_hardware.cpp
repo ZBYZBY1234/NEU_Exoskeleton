@@ -5,12 +5,11 @@ namespace device_hardware
     bool device_hardware::init(ros::NodeHandle& root_nh, ros::NodeHandle &robot_hw_nh)
     {
 
-        if (!robot_hw_nh.getParam("joint_trajectory_controller/joints", Robot.joints))
+        if (!robot_hw_nh.getParam("joint_position_controller/joints", Robot.joints))
         {
             ROS_ERROR_STREAM("hardware can't get robot joints!");
             return false;
         }
-
         Robot.joints_num = Robot.joints.size();
 
         // Initialize raw data
@@ -71,15 +70,15 @@ namespace device_hardware
 
         init_hardware();
 
-        std::vector<double> position_tmp;
-        position_tmp.resize(4);
-        position_tmp = read_position();
-        write_position(position_tmp);
-        for (size_t j = 0;j < Robot.joints_num;j++)
-        {
-            Robot.joint_position_command_[j] = position_tmp[j];
-            Robot.joint_position_state_[j] = position_tmp[j];
-        }
+
+        Robot.joint_position_state_ = read_position();
+        write_position(Robot.joint_position_state_);
+
+        // for (size_t j = 0;j < Robot.joints_num;j++)
+        // {
+        //     Robot.joint_position_command_[j] = position_tmp[j];
+        //     Robot.joint_position_state_[j] = position_tmp[j];
+        // }
 
 
         registerInterface(&js_interface_);
@@ -87,27 +86,30 @@ namespace device_hardware
         registerInterface(&vj_interface_);
         registerInterface(&ej_interface_);
 
-        position_tmp.resize(Robot.joints_num);
         ROS_INFO("device initialize finish");
         return true;
     }
 
     void device_hardware::read(const ros::Time& time, const ros::Duration& period)
     {
-        position_tmp = read_position();
-        for(size_t i = 0; i < Robot.joints_num; i++)
-        {
-            Robot.joint_position_state_[i] = position_tmp[i];
-        }
+        Robot.joint_position_state_ = read_position();
+        Robot.joint_velocity_state_ = read_position();
+        Robot.joint_effort_state_   = read_position();
+
+        // for(size_t i = 0; i < Robot.joints_num; i++)
+        // {
+        //     Robot.joint_position_state_[i] = position_tmp[i];
+        // }
 
     }
 
     void device_hardware::write(const ros::Time& time, const ros::Duration& period)
     {
-        for(size_t i = 0; i < Robot.joints_num; i++)
-        {
-            position_tmp[i] = Robot.joint_position_command_[i];
-        }
+        // for(size_t i = 0; i < Robot.joints_num; i++)
+        // {
+        //     position_tmp[i] = Robot.joint_position_command_[i];
+        // }
+        write_position(Robot.joint_position_command_);
     }
 
 
