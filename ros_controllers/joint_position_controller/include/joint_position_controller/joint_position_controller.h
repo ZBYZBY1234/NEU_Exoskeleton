@@ -47,9 +47,9 @@ protected:
 
     std::vector<hardware_interface::JointHandle>    joint_handles_;
     std::vector<std::string>                        joints;
-    std::vector<double>                             joint_position;
-    std::vector<double>                             joint_velocity;
-    std::vector<double>                             joint_effort;
+    std::vector<double>                             joint_position_state;
+    std::vector<double>                             joint_velocity_state;
+    std::vector<double>                             joint_effort_state;
     std::vector<double>                             joint_position_command;
     // boost::shared_ptr<realtime_tools::RealtimePublisher<
     //     cartesian_state_msgs::PoseTwist> > realtime_pub_;

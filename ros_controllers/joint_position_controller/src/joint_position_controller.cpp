@@ -23,7 +23,7 @@ bool Joint_Position_Controller::init(
         return false;
     }
 
-    if (!n.getParam("joint_position_controller/joints", joints))
+    if (!n.getParam("joints", joints))
     {
         ROS_ERROR_STREAM("hardware can't get robot joints!");
         return false;
@@ -39,26 +39,29 @@ bool Joint_Position_Controller::init(
         ros::TransportHints().reliable().tcpNoDelay());
 
     joint_position_command.resize(4);
+    joint_position_state.resize(4);
+    joint_velocity_state.resize(4);
+    joint_effort_state.resize(4);
     return true;
 }
 
 
 void Joint_Position_Controller::starting(const ros::Time& time){
-    for(std::size_t i=0; i < this->joint_handles_.size(); i++) {
-        joint_position[i] = 0.0;
-        joint_velocity[i] = 0.0;
-        joint_effort[i] = 0.0;
+    for(std::size_t i=0; i < 4; i++) {
+        joint_position_state[i] = 0.0;
+        joint_velocity_state[i] = 0.0;
+        joint_effort_state[i] = 0.0;
     }
-//   End_Vel_Cmd_ = KDL::Twist::Zero();
+// //   End_Vel_Cmd_ = KDL::Twist::Zero();
     last_publish_time_ = time;
 }
 
 void Joint_Position_Controller::update(const ros::Time& time, const ros::Duration& period) {
     for(std::size_t i=0; i < this->joint_handles_.size(); i++)
     {
-        joint_position[i] = joint_handles_[i].getPosition();
-        joint_velocity[i] = joint_handles_[i].getVelocity();
-        joint_effort[i] = joint_handles_[i].getEffort();
+        joint_position_state[i] = joint_handles_[i].getPosition();
+        joint_velocity_state[i] = joint_handles_[i].getVelocity();
+        joint_effort_state[i] = joint_handles_[i].getEffort();
     }
 
     writePositionCommands(period);
