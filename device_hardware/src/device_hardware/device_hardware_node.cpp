@@ -59,35 +59,34 @@ int main(int argc, char **argv)
         return 0;
     }
 
+    struct timeval start,end;
     // Set up timers
     ros::Time timestamp;
     ros::Duration period;
-    auto stopwatch_last = std::chrono::steady_clock::now();
-    auto stopwatch_now = stopwatch_last;
+    int dtime=0;
+    
 
     double expected_cycle_time = 1.0 / (static_cast<double>(control_frequency));
 
     while (ros::ok())
     {
-
+        gettimeofday(&start,NULL);
         robot_hw.read(timestamp, period);
 
         // Get current time and elapsed time since last read
         timestamp = ros::Time::now();
-        stopwatch_now = std::chrono::steady_clock::now();
-        period.fromSec(std::chrono::duration_cast<std::chrono::duration<double>>(stopwatch_now - stopwatch_last).count());
-        stopwatch_last = stopwatch_now;
+       
 
         cm.update(timestamp, period);
 
         robot_hw.write(timestamp, period);
-
-        if (period.toSec() > expected_cycle_time)
+        gettimeofday(&end,NULL);
+        dtime=(end.tv_sec*1000000+end.tv_usec)-(start.tv_sec*1000000+start.tv_usec);
+        if(dtime>expected_cycle_time)
         {
-        // ROS_WARN_STREAM("Could not keep cycle rate of " << expected_cycle_time * 1000 << "ms");
-        // ROS_WARN_STREAM("Actual cycle time:" << period.toNSec() / 1000000.0 << "ms");
+            ROS_ERROR("over time");
         }
-
+        
     }
     spinner.stop();
     ROS_INFO_STREAM_NAMED("hardware_interface", "Shutting down.");
