@@ -6,7 +6,7 @@
  * @Licence: MIT Licence
  */
 #include <pluginlib/class_list_macros.h>
-#include "/home/zby/exo_ws/src/ros_controllers/pid_controller/include/joint_position_controller/pid_controller.hpp"
+#include "/home/zby/exo_ws/src/ros_controllers/pid_controller/include/pid_controller/pid_controller.hpp"
 //#include <yaml.h>
 //#include <yaml_config_reader.h>
 #include "yaml-cpp/yaml.h"
