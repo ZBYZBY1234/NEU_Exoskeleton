@@ -1,0 +1,7 @@
+<library path="lib/libpi_controller">
+  <class name="pid_controller/PIDController" type="pid_controller::PID_Controller" base_class_type="controller_interface::ControllerBase">
+    <description>
+        PID control
+    </description>
+  </class>
+</library>
