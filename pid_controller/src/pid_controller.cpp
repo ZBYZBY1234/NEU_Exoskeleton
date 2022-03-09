@@ -7,7 +7,9 @@
  */
 #include <pluginlib/class_list_macros.h>
 #include "/home/zby/exo_ws/src/ros_controllers/pid_controller/include/joint_position_controller/pid_controller.hpp"
-
+//#include <yaml.h>
+//#include <yaml_config_reader.h>
+#include "yaml-cpp/yaml.h"
 
 namespace pid_controller
 {
@@ -64,9 +66,14 @@ void PID_Controller::starting(const ros::Time& time){
         last_error2[i] = 0.0;
         last_error3[i] = 0.0;
         //casual parameters, we need to try to get a better set of PID parameters
-        Kp = 0.1;
-        Kd = 0.1;
-        Ki = 0.1;
+        YAML::Node pid_param = YAML::LoadFile("/home/zby/exo_ws/src/ros_controllers/pid_controller/config/pid_param.yaml");
+        Kp = pid_param["Kp"].as<double>();
+        Ki = pid_param["Ki"].as<double>();
+        Kd = pid_param["Kd"].as<double>();
+
+        // Kp = 0.1;
+        // Kd = 0.1;
+        // Ki = 0.1;
     }
 // //   End_Vel_Cmd_ = KDL::Twist::Zero();
     last_publish_time_ = time;
