@@ -6,7 +6,7 @@
  * @Licence: MIT Licence
  */
 #include <pluginlib/class_list_macros.h>
-#include "/home/zby/exo_ws/src/ros_controllers/pid_controller/include/joint_position_controller/pid_controller.hpp"
+#include "/home/zby/exo_ws/src/ros_controllers/pid_controller/include/pid_controller/pid_controller.hpp"
 //#include <yaml.h>
 //#include <yaml_config_reader.h>
 #include "yaml-cpp/yaml.h"
@@ -84,21 +84,21 @@ void PID_Controller::update(const ros::Time& time, const ros::Duration& period) 
     {
         error1[i] = joint_handles_[i].getPosition()-joint_position_state[i];
         plus1[i] = Kp*(error1[i]-next_error1[i])+Ki*error1[i]+Kd*(error1[i]-2*next_error1[i]+last_error1[i]);
-        joint_position_state[i+1] += plus1[i];
-        last_error1[i+1]=next_error1[i];
-        next_error1[i+1]=error1[i]; 
+        joint_position_state[i] += plus1[i];
+        last_error1[i]=next_error1[i];
+        next_error1[i]=error1[i]; 
 
         error2[i] = joint_handles_[i].getVelocity()-joint_velocity_state[i];
         plus2[i] = Kp*(error2[i]-next_error2[i])+Ki*error2[i]+Kd*(error2[i]-2*next_error2[i]+last_error2[i]);
         joint_velocity_state[i+1] += plus2[i];
-        last_error2[i+1]=next_error2[i];
-        next_error2[i+1]=error2[i]; 
+        last_error2[i]=next_error2[i];
+        next_error2[i]=error2[i]; 
 
         error3[i] = joint_handles_[i].getEffort()-joint_effort_state[i];
         plus3[i] = Kp*(error3[i]-next_error3[i])+Ki*error3[i]+Kd*(error3[i]-2*next_error3[i]+last_error3[i]);
-        joint_effort_state[i+1] += plus3[i];
-        last_error3[i+1]=next_error3[i];
-        next_error3[i+1]=error3[i]; 
+        joint_effort_state[i] += plus3[i];
+        last_error3[i]=next_error3[i];
+        next_error3[i]=error3[i]; 
 
         // joint_position_state[i] = joint_handles_[i].getPosition();
         // joint_velocity_state[i] = joint_handles_[i].getVelocity();
