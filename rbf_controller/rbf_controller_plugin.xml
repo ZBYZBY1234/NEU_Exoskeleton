@@ -1,0 +1,7 @@
+<library path="lib/librbf_controller">
+  <class name="rbf_controller/RBFController" type="rbf_controller::RBF_Controller" base_class_type="controller_interface::ControllerBase">
+    <description>
+        RBF control
+    </description>
+  </class>
+</library>
