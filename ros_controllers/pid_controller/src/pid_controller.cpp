@@ -6,15 +6,17 @@
  * @Licence: MIT Licence
  */
 #include <pluginlib/class_list_macros.h>
-#include "joint_position_controller/joint_position_controller.h"
+#include "/home/zby/exo_ws/src/ros_controllers/pid_controller/include/pid_controller/pid_controller.hpp"
+//#include <yaml.h>
+//#include <yaml_config_reader.h>
+#include "yaml-cpp/yaml.h"
 
-
-namespace joint_position_controller
+namespace pid_controller
 {
 /** \brief Initialize the kinematic chain for kinematics-based computation.
  *
  */
-bool Joint_Position_Controller::init(
+bool PID_Controller::init(
     hardware_interface::PositionJointInterface *robot, ros::NodeHandle &n) {
 
     // get publishing period
@@ -35,7 +37,7 @@ bool Joint_Position_Controller::init(
     }
 
     sub_command_ = n.subscribe("command_joint_pos", 5,
-        &Joint_Position_Controller::command_joint_pos, this,
+        &PID_Controller::command_joint_pos, this,
         ros::TransportHints().reliable().tcpNoDelay());
 
     joint_position_command.resize(4);
@@ -46,24 +48,63 @@ bool Joint_Position_Controller::init(
 }
 
 
-void Joint_Position_Controller::starting(const ros::Time& time){
+void PID_Controller::starting(const ros::Time& time){
     for(std::size_t i=0; i < 4; i++) {
         joint_position_state[i] = 0.0;
         joint_velocity_state[i] = 0.0;
         joint_effort_state[i] = 0.0;
+        plus1[i] = 0.0;
+        plus2[i] = 0.0;
+        plus3[i] = 0.0;
+        error1[i] = 0.0;
+        error2[i] = 0.0;
+        error3[i] = 0.0;
+        next_error1[i] = 0.0;
+        next_error2[i] = 0.0;
+        next_error3[i] = 0.0;
+        last_error1[i] = 0.0;
+        last_error2[i] = 0.0;
+        last_error3[i] = 0.0;
+        //casual parameters, we need to try to get a better set of PID parameters
+        YAML::Node pid_param = YAML::LoadFile("/home/zby/exo_ws/src/ros_controllers/pid_controller/config/pid_param.yaml");
+        Kp = pid_param["Kp"].as<double>();
+        Ki = pid_param["Ki"].as<double>();
+        Kd = pid_param["Kd"].as<double>();
+
+        // Kp = 0.1;
+        // Kd = 0.1;
+        // Ki = 0.1;
     }
 // //   End_Vel_Cmd_ = KDL::Twist::Zero();
     last_publish_time_ = time;
 }
 
-void Joint_Position_Controller::update(const ros::Time& time, const ros::Duration& period) {
+void PID_Controller::update(const ros::Time& time, const ros::Duration& period) {
     for(std::size_t i=0; i < this->joint_handles_.size(); i++)
     {
-        joint_position_state[i] = joint_handles_[i].getPosition();
-        joint_velocity_state[i] = joint_handles_[i].getVelocity();
-        joint_effort_state[i] = joint_handles_[i].getEffort();
+        error1[i] = joint_handles_[i].getPosition()-joint_position_state[i];
+        plus1[i] = Kp*(error1[i]-next_error1[i])+Ki*error1[i]+Kd*(error1[i]-2*next_error1[i]+last_error1[i]);
+        joint_position_state[i] += plus1[i];
+        last_error1[i]=next_error1[i];
+        next_error1[i]=error1[i]; 
+
+        error2[i] = joint_handles_[i].getVelocity()-joint_velocity_state[i];
+        plus2[i] = Kp*(error2[i]-next_error2[i])+Ki*error2[i]+Kd*(error2[i]-2*next_error2[i]+last_error2[i]);
+        joint_velocity_state[i+1] += plus2[i];
+        last_error2[i]=next_error2[i];
+        next_error2[i]=error2[i]; 
+
+        error3[i] = joint_handles_[i].getEffort()-joint_effort_state[i];
+        plus3[i] = Kp*(error3[i]-next_error3[i])+Ki*error3[i]+Kd*(error3[i]-2*next_error3[i]+last_error3[i]);
+        joint_effort_state[i] += plus3[i];
+        last_error3[i]=next_error3[i];
+        next_error3[i]=error3[i]; 
+
+        // joint_position_state[i] = joint_handles_[i].getPosition();
+        // joint_velocity_state[i] = joint_handles_[i].getVelocity();
+        // joint_effort_state[i] = joint_handles_[i].getEffort();
     }
-//TODO: Add the joint trajectory.
+
     writePositionCommands(period);
 
 
@@ -88,12 +129,11 @@ void Joint_Position_Controller::update(const ros::Time& time, const ros::Duratio
 /*!
  * \brief Subscriber's callback: copies twist commands
  */
-void Joint_Position_Controller::command_joint_pos(const joint_control_msg::JointControl &msg) {
-    std::cout<<"In callback.----------------------------------------"<<std::endl;
-    joint_position_command[0] = msg.joint1;
-    joint_position_command[1] = msg.joint2;
-    joint_position_command[2] = msg.joint3;
-    joint_position_command[3] = msg.joint4;
+void PID_Controller::command_joint_pos(const geometry_msgs::Quaternion &msg) {
+    joint_position_command[0] = msg.x;
+    joint_position_command[1] = msg.y;
+    joint_position_command[2] = msg.z;
+    joint_position_command[3] = msg.w;
 
 }
 
@@ -106,10 +146,10 @@ void Joint_Position_Controller::command_joint_pos(const joint_control_msg::Joint
  * for a VelocityJointInterface
  * \param period The duration of an update cycle
  */
-void Joint_Position_Controller::writePositionCommands(
+void PID_Controller::writePositionCommands(
                                     const ros::Duration& period) {
     for(std::size_t i=0; i < this->joint_handles_.size(); i++) {
-        this->joint_handles_[i].setCommand(joint_position_command[i]);
+      this->joint_handles_[i].setCommand(joint_position_command[i]);
     }
 }
 
@@ -117,4 +157,4 @@ void Joint_Position_Controller::writePositionCommands(
 
 // Register controllers with the PLUGINLIB_EXPORT_CLASS macro to enable dynamic
 // loading with the controller manager
-PLUGINLIB_EXPORT_CLASS(joint_position_controller::Joint_Position_Controller, controller_interface::ControllerBase)
+PLUGINLIB_EXPORT_CLASS(pid_controller::PID_Controller, controller_interface::ControllerBase)

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(joint_position_controller)
+project(pid_controller)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -15,7 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   geometry_msgs
-  joint_control_msg
 )
 
 ## System dependencies are found with CMake's conventions
@@ -111,7 +110,7 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES joint_position_controller
 #  CATKIN_DEPENDS control_msgs control_toolbox controller_interface realtime_tools roscpp std_msgs
-  DEPENDS joint_control_msg
+#  DEPENDS system_lib
 )
 
 ###########
@@ -127,7 +126,7 @@ include_directories(
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME}
-  src/joint_position_controller.cpp
+  src/pid_controller.cpp
 )
 
 ## Add cmake target dependencies of the library
