@@ -58,7 +58,6 @@ int main(int argc, char **argv)
         ROS_ERROR_STREAM(state_controller<<" controller load failure!");
         return 0;
     }
-
     struct timeval start,end;
     // Set up timers
     ros::Time timestamp;
